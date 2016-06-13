@@ -1,9 +1,9 @@
-# Thunderboard
+l# Thunderboard
 
 Thunderboard is a native Android app for demonstrating the capabilities of the Thunderboard React sensor board. 
 It includes Motion, Environment, and I/O demos.
 
-Source code for the [iOS app](https://github.com/SiliconLabs/thunderboard-react-ios) and [Firebase web interface](https://github.com/SiliconLabs/thunderboard-react-web) is also available.
+Source code for the [iOS app](https://github.com/SiliconLabs/thunderboard-ios) and [Firebase web interface](https://github.com/SiliconLabs/thundercloud) is also available.
 
 ## Screenshots
 
