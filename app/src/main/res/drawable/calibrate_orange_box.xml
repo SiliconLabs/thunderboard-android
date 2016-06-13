@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <stroke
+        android:color="@color/sl_bromine_orange"
+        android:width="@dimen/button_stroke_width" />
+
+    <padding
+        android:top="@dimen/space_XS"
+        android:right="@dimen/space_XS"
+        android:left="@dimen/space_XS"
+        android:bottom="@dimen/space_XS" />
+
+</shape>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_color">@color/sl_silicon_grey</color>
+    <color name="primary_color_semi_transparent">#993F51B5</color>
+    <color name="primary_color_dark">#303F9F</color>
+    <color name="primary_color_light">#C5CAE9</color>
+    <color name="accent_color">@color/sl_blue</color>
+
+    <!-- Use for primary text colors -->
+    <color name="grey_dark">#212121</color>
+
+    <!-- Use for secondary text colors -->
+    <color name="grey_medium">#727272</color>
+
+    <!-- Use for dividers and other UI elements -->
+    <color name="grey_light">#b6b6b6</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="black_semi_trans">#1E000000</color>
+    <color name="white_sem_trans">#99ffffff</color>
+
+    <color name="search_opaque">#ffaa3f</color>
+    <color name="default_background">#3d3d3d</color>
+    <color name="background_gradient_start">#000000</color>
+    <color name="background_gradient_end">#DDDDDD</color>
+    <color name="icon_background">#4A4F51</color>
+    <color name="icon_alt_background">#2A2F51</color>
+    <color name="transparent_background">#8000</color>
+
+    <color name="transparent">#00000000</color>
+
+
+    <color name="sl_dark_grey">#ff333333</color>
+    <color name="sl_footer_grey">#ff464646</color>
+    <color name="sl_silicon_grey">#ff555555</color>
+    <color name="sl_medium_grey">#ff6c6c6c</color>
+    <color name="sl_grey">#ffc1c1c1</color>
+    <color name="sl_light_grey">#ffefefef</color>
+    <color name="sl_white">#ffffffff</color>
+
+    <color name="sl_yellow">#ffffcc00</color>
+    <color name="sl_gold">#fff0b323</color>
+    <color name="sl_yellow_orange">#ffffa200</color>
+    <color name="sl_bromine_orange">#ffff7100</color>
+    <color name="sl_red_orange">#ffe65100</color>
+    <color name="sl_red">#fffb2f3c</color>
+    <color name="sl_blue">#ff00aeff</color>
+    <color name="sl_light_blue">#ff78d6ff</color>
+
+    <color name="sl_bright_green">#ffcaf200</color>
+    <color name="sl_terbium_green">#ffa1b92e</color>
+    <color name="sl_medium_green">#ff87a10d</color>
+    <color name="sl_violet">#ff9196ff</color>
+    <color name="sl_dark_violet">#ff857cff</color>
+    <color name="sl_light_violet">#ffc3caf8</color>
+    <color name="sl_white_violet">#ffe9e3ff</color>
+    <color name="sl_pink">#ffff7469</color>
+    <color name="sl_light_peach">#fffff4f1</color>
+    <color name="sl_peach_gold">#ffffe7cf</color>
+
+    <color name="red">#ffd91e2a</color>
+    <color name="silicon_grey">#ff797777</color>
+    <color name="terbium_green">#ffa1b92e</color>
+    <color name="bromine_orange">#ffe27f26</color>
+    <color name="indium_blue">#ff007695</color>
+    <color name="prometium_blue">#ff0597aa</color>
+    <color name="gold_yellow">#fff0b323</color>
+
+    <color name="settings_text_background">@color/silicon_grey</color>
+    <color name="text_color">@color/white</color>
+
+    <color name="divider_line">#2effffff</color>
+</resources>

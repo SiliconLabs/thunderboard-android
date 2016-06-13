@@ -1,0 +1,164 @@
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 1
+def versionBuild = 0 // bump for dogfood builds, public betas, etc.
+
+def gitSha = grgit.head().abbreviatedId
+def gitBranchName = grgit.branch.getCurrent().name
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+def projectName = "thunderboard"
+
+// adjust variable below to detect your CI builds
+def isCIBuild = System.getenv()['bamboo_planName'] ? true : false
+
+// use your local.properties file to setup your own application keys and links
+Properties properties = new Properties()
+properties.load(project.rootProject.file('keystores/thunderboard.properties').newDataInputStream())
+/*
+ * Example for the firebase urls:
+ *   cloud.data.url=https://fire-inferno-0001.firebaseio.com/
+ *   cloud.demo.url=https://fire-inferno-0001.firebaseapp.com/#/
+ *
+ */
+def cloudDataUrl = properties.getProperty('cloud.data.url')
+def cloudDemoUrl = properties.getProperty('cloud.demo.url')
+
+/* signing configs */
+def sf = properties.getProperty('store.file')  // ../keystores/storeFile.jks
+def sp = properties.getProperty('store.password')
+def ka = properties.getProperty('key.alias')
+def kp = properties.getProperty('key.password')
+
+/* firebase key */
+def keyFirebase = properties.getProperty('key.firebase')
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+}
+
+
+//apply plugin: 'android-sdk-manager'
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'de.felixschulze.gradle.hockeyapp'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    signingConfigs {
+        release {
+            storeFile file("${sf}")
+            storePassword "${sp}"
+            keyAlias "${ka}"
+            keyPassword "${kp}"
+        }
+    }
+
+    defaultConfig {
+        applicationId 'com.silabs.thunderboard'
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode versionMajor * 10000000 + versionMinor * 100000 + versionPatch * 1000 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "String", "BRANCH_NAME", "\"${gitBranchName}\""
+        buildConfigField 'String', 'CLOUD_DATA_URL', "\"${cloudDataUrl}\""
+        buildConfigField 'String', 'CLOUD_DEMO_URL', "\"${cloudDemoUrl}\""
+        buildConfigField 'String', 'KEY_FIREBASE', "\"${keyFirebase}\""
+        buildConfigField 'String', 'MICROSITE_URL', "\"http://www.silabs.com/thunderboard\""
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    dexOptions {
+        preDexLibraries = preDexEnabled
+    }
+
+    packagingOptions {
+        // recommended from Firebase
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    // Rename the output apk
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            // don't use gitSha with dev builds because AS gets confused
+
+            //The following is commented out because Silicon Labs is not running a CI environment  
+            // def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${versionName}-${gitSha}" : "${projectName}-${variant.name}-${versionName}"
+            def filePrefix = "${projectName}-${variant.name}-${versionName}-${gitSha}"
+
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                output.outputFile = file("$project.buildDir/${filePrefix}.apk")
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    // Android
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:mediarouter-v7:23.3.0'
+    compile 'com.android.support:palette-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    // Timber
+    compile 'com.jakewharton.timber:timber:3.1.0'
+    // Butterknife
+    compile 'com.jakewharton:butterknife:7.0.0'
+    // Dagger 2
+    compile 'com.google.dagger:dagger:2.0.1'
+    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    // RxJava, RxAndroid
+    compile 'io.reactivex:rxjava:1.1.3'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    // Gson
+    compile 'com.google.code.gson:gson:2.4'
+    // Firebase
+    compile 'com.firebase:firebase-client-android:2.3.1'
+    // Retrofit
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    // AltBeacon Android library
+    compile 'org.altbeacon:android-beacon-library:2.6.1@aar'
+}
+
+hockeyapp {
+    apiToken = "${hockeyApiKey}"
+    releaseType = 2 // alpha
+    notify = 0
+    status = 2
+    notesType = 1
+    notes = "Some notes."
+    variantToApplicationId = [
+            'release': "${hockeyIdAppRelease}",
+            'debug'  : "${hockeyIdAppDebug}"
+    ]
+}
+

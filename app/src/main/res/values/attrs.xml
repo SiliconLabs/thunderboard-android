@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LEDControl">
+        <attr name="highlightColor" format="enum">
+            <enum name="green" value="0" />
+            <enum name="blue" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

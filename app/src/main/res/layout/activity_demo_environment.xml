@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/space_S"
+        android:paddingRight="@dimen/space_S">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_S">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:text="@string/environment_temp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/sl_grey"
+                    android:textSize="@dimen/text_size_SM"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/space_XXXXL"
+                    android:layout_height="@dimen/space_XXXXL"
+                    android:layout_marginTop="@dimen/space_XS"
+                    android:background="@drawable/grey_rect">
+
+                    <com.silabs.thunderboard.demos.ui.DemoEnvironmentTemperatureControl
+                        android:id="@+id/temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/environment_control_topmargin"
+                        android:layout_marginBottom="@dimen/environment_control_bottommargin" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:text="@string/environment_humidity"
+                    android:textAllCaps="true"
+                    android:textColor="@color/sl_grey"
+                    android:textSize="@dimen/text_size_SM"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/space_XXXXL"
+                    android:layout_height="@dimen/space_XXXXL"
+                    android:layout_marginTop="@dimen/space_XS"
+                    android:background="@drawable/grey_rect">
+
+                    <com.silabs.thunderboard.demos.ui.DemoEnvironmentHumidityControl
+                        android:id="@+id/humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/environment_control_topmargin"
+                        android:layout_marginBottom="@dimen/environment_control_bottommargin" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_S"
+            android:layout_marginBottom="@dimen/space_XS">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:text="@string/environment_ambient"
+                    android:textAllCaps="true"
+                    android:textColor="@color/sl_grey"
+                    android:textSize="@dimen/text_size_SM"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/space_XXXXL"
+                    android:layout_height="@dimen/space_XXXXL"
+                    android:layout_marginTop="@dimen/space_XS"
+                    android:background="@drawable/grey_rect">
+
+                    <com.silabs.thunderboard.demos.ui.DemoEnvironmentAmbientLightControl
+                        android:id="@+id/ambient_light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/environment_control_topmargin"
+                        android:layout_marginBottom="@dimen/environment_control_bottommargin" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left"
+                    android:text="@string/environment_uv"
+                    android:textAllCaps="true"
+                    android:textColor="@color/sl_grey"
+                    android:textSize="@dimen/text_size_SM"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/space_XXXXL"
+                    android:layout_height="@dimen/space_XXXXL"
+                    android:layout_marginTop="@dimen/space_XS"
+                    android:background="@drawable/grey_rect">
+
+                    <com.silabs.thunderboard.demos.ui.DemoEnvironmentUVControl
+                        android:id="@+id/uv_index"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/environment_control_topmargin"
+                        android:layout_marginBottom="@dimen/environment_control_bottommargin"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
+

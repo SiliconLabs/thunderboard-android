@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_140" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_141" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_142" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_143" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_144" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_145" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_146" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_147" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_148" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_149" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_150" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_151" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_152" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_153" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_154" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_155" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_156" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_157" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_158" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_159" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_160" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_161" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_162" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_163" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_164" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_165" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_166" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_167" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_168" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_169" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_170" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_171" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_172" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_173" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_174" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_175" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_176" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_177" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_178" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_179" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_180" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_181" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_182" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_183" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_184" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_185" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_186" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_187" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_188" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_189" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_190" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_191" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_192" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_193" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_194" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_195" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_196" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_197" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_198" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_199" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_200" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_201" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_202" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_203" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_204" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_205" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_206" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_207" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_208" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_209" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_210" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_211" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_212" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_213" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_214" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_215" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_216" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_217" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_218" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_219" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_220" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_221" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_222" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_223" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_224" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_225" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_226" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_227" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_228" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_229" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_230" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_231" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_232" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_233" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_234" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_235" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_236" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_237" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_238" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_239" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_240" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_241" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_242" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_243" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_244" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_245" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_246" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_247" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_248" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_249" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_250" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_251" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_252" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_253" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_254" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_255" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_256" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_257" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_258" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_259" />
+    <item
+        android:duration="33"
+        android:drawable="@drawable/animated_switch_260" />
+
+
+</animation-list>

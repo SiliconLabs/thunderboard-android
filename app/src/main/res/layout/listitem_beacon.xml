@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/beacon_listitem_height">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/beacon_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sl_grey"
+            android:textSize="@dimen/text_size_S"/>
+
+        <TextView
+            android:id="@+id/beacon_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sl_light_grey"
+            android:textSize="@dimen/text_size_SM"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/beacon_action"
+        android:layout_width="@dimen/beacon_button_width"
+        android:layout_height="@dimen/beacon_button_height"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAllCaps="true"
+        android:textColor="@color/sl_light_blue"
+        android:textSize="@dimen/text_size_SM" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_line" />
+</RelativeLayout>

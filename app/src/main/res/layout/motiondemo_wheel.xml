@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wheel_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/space_S"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="@string/motion_wheel"
+        android:textAllCaps="true"
+        android:textColor="@color/sl_grey"
+        android:textSize="@dimen/motion_textsize"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_XS">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/motion_diameter"
+            android:textAllCaps="true"
+            android:textColor="@color/sl_light_grey"
+            android:textSize="@dimen/motion_textsize"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/wheel_diameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/sl_grey"
+            android:textSize="@dimen/motion_textsize"/>
+    </RelativeLayout>
+
+</LinearLayout>
