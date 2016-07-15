@@ -2,8 +2,6 @@ package com.silabs.thunderboard.ble;
 
 import android.os.SystemClock;
 
-import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
-
 import timber.log.Timber;
 
 public class ThunderBoardSensorMotion extends ThunderBoardSensor {
@@ -133,7 +131,7 @@ public class ThunderBoardSensorMotion extends ThunderBoardSensor {
         isSensorDataChanged = true;
     }
 
-    public static class SensorData {
+    public static class SensorData implements ThunderboardSensorData {
         @Override
         public String toString() {
             return String.format("%f %f %f %f %f %f", ax, ay, az, ox, oy, oz);
@@ -155,6 +153,21 @@ public class ThunderBoardSensorMotion extends ThunderBoardSensor {
         // CSC
         public double speed;
         public double distance;
+
+        public SensorData clone() {
+            SensorData d = new SensorData();
+
+            d.ax = ax;
+            d.ay = ay;
+            d.az = az;
+            d.ox = ox;
+            d.oy = oy;
+            d.oz = oz;
+            d.distance = distance;
+            d.speed = speed;
+
+            return d;
+        }
 
     }
 }

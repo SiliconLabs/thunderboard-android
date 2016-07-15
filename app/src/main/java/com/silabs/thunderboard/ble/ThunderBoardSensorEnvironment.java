@@ -49,7 +49,7 @@ public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
         return sensorData;
     }
 
-    public static class SensorData {
+    public static class SensorData implements ThunderboardSensorData {
 
         public float getTemperature() {
             return temperature;
@@ -96,5 +96,16 @@ public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
         private int uvIndex;
         // Lux
         private long ambientLight = Long.MIN_VALUE; // not initialized
+
+        public SensorData clone() {
+            SensorData d = new SensorData();
+
+            d.temperature = temperature;
+            d.humidity = humidity;
+            d.uvIndex = uvIndex;
+            d.ambientLight = ambientLight;
+
+            return d;
+        }
     }
 }

@@ -178,7 +178,7 @@ public class CloudManager implements Firebase.AuthResultHandler {
 
         try {
             long time = System.currentTimeMillis();
-            data.put(time, sensor.getSensorData());
+            data.put(time, sensor.getSensorData().clone());
             Timber.d("%d: %s", time, sensor.getSensorData().toString());
         } catch (FirebaseException e) {
             e.printStackTrace();

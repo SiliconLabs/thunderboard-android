@@ -24,7 +24,7 @@ public class ThunderBoardSensorIo extends ThunderBoardSensor {
         return sensorData;
     }
 
-    public static class SensorData {
+    public static class SensorData implements ThunderboardSensorData {
         public int ledb;
         public int ledg;
         public int sw0;
@@ -37,9 +37,22 @@ public class ThunderBoardSensorIo extends ThunderBoardSensor {
             sw1 = (b & IO_1_ON) != 0 ? 1 : 0;
         }
 
+        public SensorData() {}
+
         @Override
         public String toString() {
             return String.format("%d %d %d %d", ledb, ledg, sw0, sw1);
+        }
+
+        public ThunderboardSensorData clone() {
+            SensorData d = new SensorData();
+
+            d.ledb = ledb;
+            d.ledg = ledg;
+            d.sw0 = sw0;
+            d.sw1 = sw1;
+
+            return d;
         }
     }
 }
