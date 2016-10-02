@@ -8,6 +8,8 @@ import com.silabs.thunderboard.R;
 
 public class BatteryMeter extends ImageView {
 
+    public static final int USB_POWER = -1;
+
     public BatteryMeter(Context context) {
         this(context, null, 0);
     }

@@ -1,7 +1,15 @@
 def versionMajor = 1
-def versionMinor = 0
-def versionPatch = 1
-def versionBuild = 0 // bump for dogfood builds, public betas, etc.
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = {
+    if (project.hasProperty("buildNumber")) {
+        return project.buildNumber as int
+    } else if (System.getenv("BUILD_NUMBER")) {
+        return System.getenv("BUILD_NUMBER") as int
+    } else {
+        return 0
+    }
+}.call()
 
 def gitSha = grgit.head().abbreviatedId
 def gitBranchName = grgit.branch.getCurrent().name
@@ -106,11 +114,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             // don't use gitSha with dev builds because AS gets confused
-
-            //The following is commented out because Silicon Labs is not running a CI environment  
-            // def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${versionName}-${gitSha}" : "${projectName}-${variant.name}-${versionName}"
-            def filePrefix = "${projectName}-${variant.name}-${versionName}-${gitSha}"
-
+            def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${versionName}-${gitSha}" : "${projectName}-${variant.name}-${versionName}"
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 output.outputFile = file("$project.buildDir/${filePrefix}.apk")
             }

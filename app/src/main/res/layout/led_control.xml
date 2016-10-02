@@ -22,6 +22,6 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center_horizontal"
         android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_M" />
+        android:textColor="@color/sl_silicon_grey"
+        android:textSize="@dimen/text_size_S" />
 </LinearLayout>

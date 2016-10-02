@@ -178,27 +178,21 @@ public class CloudManager implements Firebase.AuthResultHandler {
 
         try {
             long time = System.currentTimeMillis();
-            data.put(time, sensor.getSensorData());
             Timber.d("%d: %s", time, sensor.getSensorData().toString());
+            data.put(time, sensor.getSensorData().clone());
         } catch (FirebaseException e) {
             e.printStackTrace();
             Timber.d(e.getMessage());
         }
     }
 
-    private void push(Map<Long, Object> data) {
+    private void pushDataMap(Map<Long, Object> data) {
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            Timber.d("%d", pair.getKey());
+            Timber.d("%s", pair.toString());
             rootDataSessionsDemoReference.child(DATA).child(String.valueOf(pair.getKey())).setValue(pair.getValue());
-            if (it.hasNext()) {
-                it.remove();
-            } else {
-                it.remove();
-                long time = System.currentTimeMillis();
-                data.put(time, pair.getValue());
-            }
+            it.remove();
         }
     }
 
@@ -250,7 +244,7 @@ public class CloudManager implements Firebase.AuthResultHandler {
 
         @Override
         public void onFinish() {
-            push(data);
+            pushDataMap(data);
             start();
         }
     };

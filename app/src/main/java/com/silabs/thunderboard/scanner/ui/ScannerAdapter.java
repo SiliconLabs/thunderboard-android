@@ -86,7 +86,6 @@ public class ScannerAdapter extends RecyclerView.Adapter<ScannerAdapter.DeviceHo
         @Bind(R.id.signal_strength)
         SignalStrengthIndicator signalStrengthIndicator;
 
-
         View rootView;
 
         public DeviceHolder(View view) {

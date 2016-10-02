@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/match"
     android:orientation="vertical"
     android:layout_marginTop="@dimen/space_S">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/sm_silicon_grey"
         android:layout_gravity="left"
         android:text="@string/motion_orientation"
-        android:textAllCaps="true"
-        android:textColor="@color/sl_grey"
-        android:textSize="@dimen/motion_textsize"/>
+        android:textAllCaps="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,74 +17,54 @@
         android:layout_marginTop="@dimen/space_XS">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/sm_silicon_grey"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="@string/motion_x"
-            android:textColor="@color/sl_light_grey"
-            android:textSize="@dimen/motion_textsize"
             android:textStyle="bold"/>
 
         <TextView
+            style="@style/sm_silicon_grey"
             android:id="@+id/orientation_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/sl_grey"
-            android:textSize="@dimen/motion_textsize"/>
+            android:fontFamily="sans-serif-light" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/block">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/sm_silicon_grey"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="@string/motion_y"
-            android:textColor="@color/sl_light_grey"
-            android:textSize="@dimen/motion_textsize"
             android:textStyle="bold"/>
 
         <TextView
+            style="@style/sm_silicon_grey"
             android:id="@+id/orientation_y"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/sl_grey"
-            android:textSize="@dimen/motion_textsize"/>
+            android:fontFamily="sans-serif-light" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/block">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/sm_silicon_grey"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="@string/motion_z"
-            android:textColor="@color/sl_light_grey"
-            android:textSize="@dimen/motion_textsize"
             android:textStyle="bold"/>
 
         <TextView
+            style="@style/sm_silicon_grey"
             android:id="@+id/orientation_z"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/sl_grey"
-            android:textSize="@dimen/motion_textsize"/>
+            android:fontFamily="sans-serif-light" />
     </RelativeLayout>
 
 </LinearLayout>

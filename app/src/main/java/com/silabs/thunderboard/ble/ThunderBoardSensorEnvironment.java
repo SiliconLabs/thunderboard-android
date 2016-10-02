@@ -1,5 +1,8 @@
 package com.silabs.thunderboard.ble;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
 
     public final int TEMPERATURE_TYPE;
@@ -44,27 +47,75 @@ public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
         isSensorDataChanged = true;
     }
 
+    public void setSoundLevel(int soundLevel) {
+        // units of 0.01dB
+        float soundLevelF = (float) soundLevel / 100.0f;
+        sensorData.setSound(soundLevelF);
+        readStatus |= 0x0300;
+        isSensorDataChanged = true;
+    }
+
+    public void setPressure(long pressure) {
+        // pressure is in units of 0.1Pa, convert to millibars
+        float pressuref = (float) pressure / 1000.0f;
+        sensorData.setPressure(pressuref);
+        readStatus |= 0x0c00;
+        isSensorDataChanged = true;
+    }
+
+    public void setCO2Level(int co2Level) {
+        // units of ppm
+        sensorData.setCO2Level(co2Level);
+        readStatus |= 0x3000;
+        isSensorDataChanged = true;
+    }
+
+    public void setTVOCLevel(int tvocLevel) {
+        // units of ppb
+        sensorData.setTVOCLevel(tvocLevel);
+        readStatus |= 0xc000;
+        isSensorDataChanged = true;
+    }
+
     @Override
     public SensorData getSensorData() {
         return sensorData;
     }
 
-    public static class SensorData {
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
+    public static class SensorData implements ThunderboardSensorData {
 
         public float getTemperature() {
             return temperature;
         }
 
         public int getHumidity() {
-            return humidity;
+            return humidity != null ? humidity : 0;
         }
 
         public int getUvIndex() {
-            return uvIndex;
+            return  uvIndex != null ? uvIndex : 0;
         }
 
         public long getAmbientLight() {
-            return ambientLight;
+            return ambientLight != null ? ambientLight : 0;
+        }
+
+        public Float getSound() {
+            return sound != null ? sound : 0;
+        }
+
+        public float getPressure() {
+            return pressure != null ? pressure : 0;
+        }
+
+        public int getCO2Level() {
+            return co2 != null ? co2 : 0;
+        }
+
+        public int getTVOCLevel() {
+            return voc != null ? voc : 0;
         }
 
         private void setTemperature(float temperature) {
@@ -83,18 +134,58 @@ public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
             this.ambientLight = ambientLight;
         }
 
+        public void setSound(float sound) {
+            this.sound = sound;
+        }
+
+        public void setPressure(float pressure) {
+            this.pressure = pressure;
+        }
+
+        public void setCO2Level(int co2Level) {
+            this.co2 = co2Level;
+        }
+
+        public void setTVOCLevel(int tvocLevel) {
+            this.voc = tvocLevel;
+        }
+
         @Override
         public String toString() {
             return String.format("temperature: %.2f, humidity: %d, uvIndex: %d, ambientLight: %d", temperature, humidity, uvIndex, ambientLight);
         }
 
         // Units in deg C with resolution of 0.01 deg C
-        private float temperature;
+        private Float temperature;
         // Unit in % with resolution of 0.01%
-        private int humidity;
+        private Integer humidity;
         // Unitless
-        private int uvIndex;
+        private Integer uvIndex;
         // Lux
-        private long ambientLight = Long.MIN_VALUE; // not initialized
+        private Long ambientLight = Long.MIN_VALUE; // not initialized
+        // Units in 0.01 dBA
+        private Float sound;
+        // Units in 0.1 Pa
+        private Float pressure;
+        // Units in ppm
+        private Integer co2;
+        // Units in ppb
+        private Integer voc;
+
+        @Override
+        public ThunderboardSensorData clone() {
+            SensorData d = new SensorData();
+
+            d.temperature = temperature;
+            d.humidity = humidity;
+            d.uvIndex = uvIndex;
+            d.ambientLight = ambientLight;
+            d.sound = sound;
+            d.pressure = pressure;
+            d.co2 = co2;
+            d.voc = voc;
+
+            return d;
+        }
     }
 }

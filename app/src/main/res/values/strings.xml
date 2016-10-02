@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Thunder Board</string>
+    <string name="app_name">Thunderboard</string>
+    <string name="thunderboard">Thunderboard</string>
     <string name="ok">OK</string>
 
     <string name="action_settings">Settings</string>
@@ -9,6 +10,10 @@
     <string name="scanner_signal_strength">%d dBm</string>
     <string name="scanner_no_devices">No Devices Found</string>
     <string name="scanner_looking_for_devices">Looking for Devices</string>
+
+    <string name="usb_power">USB Power</string>
+    <string name="unknown_power">--</string>
+    <string name="unknown">Unknown</string>
 
     <string name="settings_personalize">Personalize</string>
     <string name="settings_name">Name</string>
@@ -85,11 +90,13 @@
     <string name="iodemo_lights">Lights</string>
     <string name="iodemo_alert_configuration_failed">Could not configure IO</string>
     <string name="iodemo_alert_action_failed">Could not update IO</string>
+    <string name="iodemo_color">Color</string>
+    <string name="iodemo_brightness">Brightness</string>
 
     <string name="share">Share</string>
     <string name="share_link">Share link</string>
     <string name="share_subject">Silicon Labs Demo Device Data</string>
-    <string name="share_message">Here is the link to access your synced data. It will remain active for 30 days after your sync ends.\n%1$s\n\nLearn more about ThunderBoard at %2$s.</string>
+    <string name="share_message">Here is the link to access your synced data. It will remain active for 30 days after your sync ends.\n%1$s\n\nLearn more about Thunderboard at %2$s.</string>
 
     <string name="motion_orientation">Orientation</string>
     <string name="motion_acceleration">Acceleration</string>
@@ -97,7 +104,7 @@
     <string name="motion_y">Y:</string>
     <string name="motion_z">Z:</string>
     <string name="motion_orientation_degree">%.0f&#176;</string>
-    <string name="motion_acceleration_g">%.2f g</string>
+    <string name="motion_acceleration_g">%.02f g</string>
 
     <string name="motion_wheel">Wheel</string>
     <string name="motion_diameter">DIA:</string>
@@ -106,7 +113,7 @@
 
     <string name="motion_calibrate">Calibrate</string>
     <string name="motion_calibrating">Calibrating</string>
-    <string name="motion_calibrating_message">Please don\'t move the ThunderBoard while it\'s calibrating its position and orientation.</string>
+    <string name="motion_calibrating_message">Please don\'t move the Thunderboard while it\'s calibrating its position and orientation.</string>
     <string name="motion_speed">Speed</string>
     <string name="motion_distance">Distance</string>
 
@@ -122,11 +129,20 @@
     <string name="environment_humidity">Humidity</string>
     <string name="environment_ambient">Ambient Light</string>
     <string name="environment_uv">UV Index</string>
+    <string name="environment_uv_unit">%d</string>
+    <string name="environment_pressure">Air Pressure</string>
+    <string name="environment_sound_level">Sound Level</string>
+    <string name="environment_co2">Carbon Dioxide</string>
+    <string name="environment_vocs">VOCs</string>
 
     <string name="environment_temp_f">%.1f&#176;F</string>
     <string name="environment_temp_c">%.1f&#176;C</string>
     <string name="environment_humidity_measure">%d%%</string>
     <string name="environment_ambient_irradiance">%.2f W / m&#178;</string>
     <string name="environment_ambient_lx">%d lx</string>
+    <string name="environment_pressure_measure">%d mbar</string>
+    <string name="environment_sound_level_measure">%d dB</string>
+    <string name="environment_co2_measure">%d ppm</string>
+    <string name="environment_voc_measure">%d ppb</string>
     <string name="environment_not_initialized">--</string>
 </resources>

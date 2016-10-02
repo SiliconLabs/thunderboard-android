@@ -20,8 +20,6 @@ public class DemoEnvironmentAmbientLightControl extends LinearLayout {
     private AmbientLightMeter ambientLightMeter;
     private TextView textView;
 
-    private Context context;
-
     public DemoEnvironmentAmbientLightControl(Context context) {
         this(context, null, 0);
     }
@@ -32,8 +30,6 @@ public class DemoEnvironmentAmbientLightControl extends LinearLayout {
 
     public DemoEnvironmentAmbientLightControl(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        this.context = context;
 
         Resources res = context.getResources();
 
@@ -48,8 +44,8 @@ public class DemoEnvironmentAmbientLightControl extends LinearLayout {
         setEnabled(false);
 
         textView = new TextView(context);
-        textView.setTextColor(res.getColor(R.color.sl_light_grey));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_M));
+        textView.setTextColor(res.getColor(R.color.sl_silicon_grey));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_S));
         textView.setPadding(0, res.getDimensionPixelSize(R.dimen.space_S), 0, 0);
         addView(textView, layoutParams);
 
@@ -59,10 +55,10 @@ public class DemoEnvironmentAmbientLightControl extends LinearLayout {
     public void setAmbientLight(long ambientLight) {
 
         if (isEnabled()) {
-            textView.setText(String.format(context.getString(R.string.environment_ambient_lx), ambientLight));
+            textView.setText(String.format(getContext().getString(R.string.environment_ambient_lx), ambientLight));
         } else {
             textView.setText(R.string.environment_not_initialized);
         }
-        ambientLightMeter.setValue(ambientLight, 0, isEnabled());
+        ambientLightMeter.setValue(ambientLight, isEnabled());
     }
 }

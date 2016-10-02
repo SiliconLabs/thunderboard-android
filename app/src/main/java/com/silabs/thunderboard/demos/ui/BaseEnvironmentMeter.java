@@ -1,9 +1,12 @@
 package com.silabs.thunderboard.demos.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -11,10 +14,12 @@ import com.silabs.thunderboard.R;
 
 public abstract class BaseEnvironmentMeter extends View {
 
-    protected final Bitmap startBitmap;
-    protected final Bitmap colorBitmap;
+    protected final Bitmap inactiveBitmap;
+    protected final Bitmap activeBitmap;
+    protected final Paint backgroundBrush;
 
     private int color;
+    private boolean enabled;
 
     public BaseEnvironmentMeter(Context context) {
         this(context, null, 0);
@@ -28,60 +33,62 @@ public abstract class BaseEnvironmentMeter extends View {
         super(context, attrs, defStyleAttr);
 
         color = 0xff000000;
+        enabled = false;
+        Resources res = context.getResources();
 
-        startBitmap = BitmapFactory.decodeResource(context.getResources(), getIconResource());
-        colorBitmap = Bitmap.createBitmap(startBitmap.getWidth(), startBitmap.getHeight(),
-                Bitmap.Config.ARGB_8888);
+        inactiveBitmap = BitmapFactory.decodeResource(res, getInactiveIconResource());
+        activeBitmap = BitmapFactory.decodeResource(res, getActiveIconResource());
+
+        backgroundBrush = new Paint();
+        backgroundBrush.setAntiAlias(true);
+        backgroundBrush.setStyle(Paint.Style.FILL_AND_STROKE);
+        backgroundBrush.setColor(color);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightNMeasureSpec) {
-        setMeasuredDimension(startBitmap.getWidth(), startBitmap.getHeight());
+        setMeasuredDimension(inactiveBitmap.getWidth(), inactiveBitmap.getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawBitmap(colorBitmap, 0, 0, null);
+        if (enabled) {
+            int width = getWidth();
+            int height = getHeight();
+
+            canvas.drawCircle(width / 2, height / 2, width / 2, backgroundBrush);
+            canvas.drawBitmap(activeBitmap, (width - activeBitmap.getWidth()) / 2, (height - activeBitmap.getHeight()) / 2, null);
+        } else {
+            canvas.drawBitmap(inactiveBitmap, 0, 0, null);
+        }
     }
 
     /**
      * setValue
-     *
-     * Changes the color of the non-transparent pixels in the bitmaps
-     * for the different environment quantities.
-     *
-     * This will only run if the color changes.
-     *
-     * The bitmap is converted to an integer array and those array
-     * members that are not 0 and changed to the updated color integer.
+     * <p/>
+     * Changes the color of the background brush and forces a redraw
+     * This will only run if the color changes, or we change the enable state.
      *
      * @param value
-     * @param valueType
+     * @param enabled
      */
-    public void setValue(float value, int valueType, boolean enabled) {
+    public void setValue(float value, boolean enabled) {
 
-        int newColor = enabled ? getColor(value, valueType) :
-                getResources().getColor(R.color.primary_color);
+        int newColor = enabled ? ContextCompat.getColor(getContext(), getColorResource(value)) :
+                ContextCompat.getColor(getContext(), R.color.primary_color);
 
-        if (color != newColor) {
+        if (color != newColor || this.enabled != enabled) {
+            this.enabled = enabled;
             color = newColor;
-
-            int allpixels[] = new int[startBitmap.getWidth() * startBitmap.getHeight()];
-            startBitmap.getPixels(allpixels, 0, startBitmap.getWidth(), 0, 0,
-                    startBitmap.getWidth(), startBitmap.getHeight());
-
-            for (int i = 0; i < allpixels.length; i++) {
-                if (allpixels[i] != 0) {
-                    allpixels[i] = color;
-                }
-            }
-            colorBitmap.setPixels(allpixels, 0, startBitmap.getWidth(), 0, 0,
-                    startBitmap.getWidth(), startBitmap.getHeight());
+            backgroundBrush.setColor(color);
             invalidate();
         }
     }
 
-    protected abstract int getIconResource();
-    protected abstract int getColor(float value, int valueType);
+    protected abstract int getColorResource(float value);
+
+    protected abstract int getInactiveIconResource();
+
+    protected abstract int getActiveIconResource();
 }

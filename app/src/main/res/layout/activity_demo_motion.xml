@@ -67,6 +67,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/speed_distance_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

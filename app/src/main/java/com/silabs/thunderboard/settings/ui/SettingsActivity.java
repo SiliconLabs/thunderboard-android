@@ -111,21 +111,21 @@ public class SettingsActivity extends ThunderBoardActivity {
         setupToolbar();
 
         temperatureSpinner.getBackground()
-                .setColorFilter(getResources().getColor(R.color.sl_white), PorterDuff.Mode.SRC_ATOP);
+                .setColorFilter(getResources().getColor(R.color.sl_silicon_grey), PorterDuff.Mode.SRC_ATOP);
         ArrayAdapter<CharSequence> temperatureAdapter = ArrayAdapter.createFromResource(this,
                 R.array.temperature_array, R.layout.simple_spinner_item);
         temperatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         temperatureSpinner.setAdapter(temperatureAdapter);
 
         measurementSpinner.getBackground()
-                .setColorFilter(getResources().getColor(R.color.sl_white), PorterDuff.Mode.SRC_ATOP);
+                .setColorFilter(getResources().getColor(R.color.sl_silicon_grey), PorterDuff.Mode.SRC_ATOP);
         ArrayAdapter<CharSequence> measurementAdapter = ArrayAdapter.createFromResource(this,
                 R.array.measurement_array, R.layout.simple_spinner_item);
         measurementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         measurementSpinner.setAdapter(measurementAdapter);
 
         modelTypeSpinner.getBackground()
-                .setColorFilter(getResources().getColor(R.color.sl_white), PorterDuff.Mode.SRC_ATOP);
+                .setColorFilter(getResources().getColor(R.color.sl_silicon_grey), PorterDuff.Mode.SRC_ATOP);
         ArrayAdapter<CharSequence> modelTypeAdapter = ArrayAdapter.createFromResource(this,
                 R.array.model_type_array, R.layout.simple_spinner_item);
         modelTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -160,7 +160,7 @@ public class SettingsActivity extends ThunderBoardActivity {
 
     protected void setupToolbar() {
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResourceColor(R.color.sl_blue));
+        toolbar.setBackgroundColor(getResourceColor(R.color.sl_terbium_green));
         toolbar.setTitle(R.string.action_settings);
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
@@ -174,7 +174,6 @@ public class SettingsActivity extends ThunderBoardActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
-
 
     /**
      * loadPersonalize

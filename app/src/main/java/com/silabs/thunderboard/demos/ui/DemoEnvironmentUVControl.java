@@ -18,6 +18,7 @@ import com.silabs.thunderboard.R;
  */
 public class DemoEnvironmentUVControl extends LinearLayout {
 
+    private final String measurementString;
     private UVMeter uvMeter;
     private TextView textView;
 
@@ -45,20 +46,22 @@ public class DemoEnvironmentUVControl extends LinearLayout {
         setEnabled(false);
 
         textView = new TextView(context);
-        textView.setTextColor(res.getColor(R.color.sl_light_grey));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_M));
+        textView.setTextColor(res.getColor(R.color.sl_silicon_grey));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_S));
         textView.setPadding(0, res.getDimensionPixelSize(R.dimen.space_S), 0, 0);
         addView(textView, layoutParams);
+
+        measurementString = context.getString(R.string.environment_uv_unit);
 
         setUVIndex(0);
     }
 
-    public void setUVIndex(float uvIndex) {
+    public void setUVIndex(int uvIndex) {
         if (isEnabled()) {
-            textView.setText(String.format("%.01f", uvIndex));
+            textView.setText(String.format(measurementString, uvIndex));
         } else {
             textView.setText(R.string.environment_not_initialized);
         }
-        uvMeter.setValue(uvIndex, 0, isEnabled());
+        uvMeter.setValue(uvIndex, isEnabled());
     }
 }

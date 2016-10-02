@@ -164,6 +164,8 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
 
     protected abstract BaseDemoPresenter getDemoPresenter();
 
+    protected abstract void initControls();
+
     /**
      * setMenuItemsStreaming
      *

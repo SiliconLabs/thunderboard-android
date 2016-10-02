@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
+import com.silabs.thunderboard.common.app.ThunderBoardConstants;
+import com.silabs.thunderboard.common.app.ThunderBoardType;
 import com.silabs.thunderboard.common.injection.component.ActivityComponent;
 import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 import com.silabs.thunderboard.demos.ui.BaseDemoActivity;
@@ -65,7 +67,7 @@ public class ThunderBoardStatusFragment extends Fragment implements StatusViewLi
         component().inject(this);
 
         batteryIndicator.setVisibility(View.INVISIBLE);
-        batteryIndicator.setBatteryValue(0);
+        batteryIndicator.setBatteryValue(ThunderBoardConstants.POWER_SOURCE_TYPE_UNKNOWN, 0);
         return view;
     }
 
@@ -136,7 +138,14 @@ public class ThunderBoardStatusFragment extends Fragment implements StatusViewLi
 
         }
         deviceStatus.setText(getString(resourceId));
-        batteryIndicator.setBatteryValue(device.getBatteryLavel());
+        int powerSource;
+        if (device.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+            powerSource = device.getPowerSource();
+        } else {
+            powerSource = ThunderBoardConstants.POWER_SOURCE_TYPE_COIN_CELL;
+        }
+        Timber.d("Power source: %d", powerSource);
+        batteryIndicator.setBatteryValue(powerSource, device.getBatteryLavel());
     }
 
     protected ActivityComponent component() {

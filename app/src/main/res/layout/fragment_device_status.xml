@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/sl_footer_grey">
+    android:background="@color/sl_white">
 
     <LinearLayout
         android:id="@+id/device_info_holder"
@@ -23,14 +23,14 @@
             android:textAllCaps="true"
             android:textColor="@color/sl_grey"
             android:textSize="@dimen/text_size_XS"
-            android:textStyle="normal"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/device_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textColor="@color/text_color"
+            android:textColor="@color/sl_silicon_grey"
             android:textSize="@dimen/text_size_SM"
             android:textStyle="bold"/>
 
@@ -38,7 +38,7 @@
             android:id="@+id/device_firmware"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/sl_grey"
+            android:textColor="@color/sl_silicon_grey"
             android:textSize="@dimen/text_size_XS"
             android:textStyle="normal"/>
     </LinearLayout>

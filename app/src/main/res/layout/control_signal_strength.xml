@@ -12,11 +12,10 @@
         android:layout_gravity="center_horizontal"/>
 
     <TextView
+        style="@style/wrap"
         android:id="@+id/signal_strength_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:textColor="@color/white"
+        android:textColor="@color/sl_silicon_grey"
         android:textSize="@dimen/text_size_XS"/>
 </LinearLayout>

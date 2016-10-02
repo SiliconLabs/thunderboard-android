@@ -6,16 +6,14 @@
     android:layout_height="@dimen/device_item_height">
 
     <com.silabs.thunderboard.scanner.ui.SignalStrengthIndicator
+        style="@style/wrap"
         android:id="@+id/signal_strength"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/space_S"
         android:layout_centerVertical="true" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/signal_strength"
         android:layout_marginLeft="@dimen/space_S"
@@ -23,26 +21,19 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/l_silicon_grey"
             android:id="@+id/device_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_M"/>
+            android:maxLines="2" />
 
         <TextView
-            android:id="@+id/device_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_S"/>
+            style="@style/s_silicon_grey"
+            android:id="@+id/device_address" />
+
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:layout_alignParentBottom="true"
-        android:background="@color/grey_light" />
+        style="@style/divider_line"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
 

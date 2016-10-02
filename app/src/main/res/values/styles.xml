@@ -1,5 +1,26 @@
 <resources>
 
+    <style name="wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="block">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="divider_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:background">@color/divider_line</item>
+    </style>
+
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:background">@color/primary_color</item>
     </style>
@@ -64,6 +85,37 @@
         <item name="android:gravity">left</item>
     </style>
 
+    <style name="silicon_gray_text" parent="wrap">
+        <item name="android:textColor">@color/sl_silicon_grey</item>
+    </style>
+
+    <style name="l_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_L</item>
+    </style>
+
+    <style name="m_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_M</item>
+    </style>
+
+    <style name="sm_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="s_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_S</item>
+    </style>
+
+    <style name="terbium_green_text" parent="wrap">
+        <item name="android:textColor">@color/terbium_green</item>
+    </style>
+
+    <style name="sm_terbium_green" parent="terbium_green_text">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="s_terbium_green" parent="terbium_green_text">
+        <item name="android:textSize">@dimen/text_size_S</item>
+    </style>
 
     <!-- General Text style to be used throughout the app for TextListCell -->
     <style name="TextTitle">
@@ -172,9 +224,55 @@
     </style>
 
     <style name="ColorBlueSwitchStyle">
-        <item name="colorControlNormal">@color/sl_blue</item>
-        <item name="colorControlActivated">@color/sl_blue</item>
-        <item name="colorControlHighlight">@color/sl_blue</item>
+        <item name="colorControlNormal">@color/sl_terbium_green</item>
+        <item name="colorControlActivated">@color/sl_terbium_green</item>
+        <item name="colorControlHighlight">@color/sl_terbium_green</item>
     </style>
+
+    <style name="envtitle" parent="sm_silicon_grey">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">left</item>
+        <item name="android:background">@drawable/clear_rect</item>
+
+    </style>
+
+    <style name="envbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/white_rect</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:clipChildren">false</item>
+    </style>
+
+    <style name="envcontrol" parent="wrap">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+    </style>
+
+    <style name="environment_box">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/space_XXXXL</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="environment_box_left" parent="environment_box">
+        <!--<item name="android:layout_marginRight">@dimen/space_XS</item>-->
+    </style>
+
+    <style name="environment_box_right" parent="environment_box">
+        <!--<item name="android:layout_marginLeft">@dimen/space_XS</item>-->
+    </style>
+
+    <style name="seekbar" parent="block">
+        <item name="android:paddingTop">@dimen/space_S</item>
+        <item name="android:paddingBottom">@dimen/space_S</item>
+    </style>
+
 
 </resources>

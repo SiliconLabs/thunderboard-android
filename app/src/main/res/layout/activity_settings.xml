@@ -2,9 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primary_color">
+    style="@style/match"
+    android:background="@color/sl_white">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,28 +13,24 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/Popup" />
 
-
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/match"
         android:layout_below="@id/toolbar"
         android:fillViewport="true">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/block"
             android:orientation="vertical"
             android:paddingLeft="@dimen/space_S"
             android:paddingRight="@dimen/space_S">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/sm_terbium_green"
+                android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/space_S"
                 android:layout_gravity="left"
                 android:text="@string/settings_personal_info"
-                android:textAllCaps="true"
-                android:textColor="@color/sl_blue"
-                android:textSize="@dimen/text_size_SM" />
+                android:textAllCaps="true" />
 
             <!-- name -->
             <RelativeLayout
@@ -45,21 +40,16 @@
                 android:visibility="visible">
 
                 <TextView
+                    style="@style/m_silicon_grey"
                     android:id="@+id/name_display_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/space_XXS"
                     android:hint="@string/settings_name"
-                    android:textColor="@color/sl_white"
-                    android:textColorHint="@color/sl_grey"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:textColorHint="@color/sl_grey" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -69,30 +59,24 @@
                 android:visibility="gone">
 
                 <EditText
-                    android:id="@+id/name_edit_text"
+                    style="@style/m_silicon_grey"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/name_edit_text"
                     android:layout_alignParentBottom="true"
                     android:background="@color/transparent"
                     android:padding="0dp"
-                    android:singleLine="true"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:singleLine="true"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/s_terbium_green"
                     android:layout_above="@id/name_edit_text"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/settings_name"
-                    android:textColor="@color/sl_blue"
-                    android:textSize="@dimen/text_size_S"/>
+                    android:text="@string/settings_name" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    style="@style/divider_line"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/sl_blue" />
+                    android:background="@color/sl_terbium_green"/>
 
             </RelativeLayout>
 
@@ -104,21 +88,16 @@
                 android:visibility="visible">
 
                 <TextView
+                    style="@style/m_silicon_grey"
                     android:id="@+id/title_display_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/space_XXS"
                     android:hint="@string/settings_title"
-                    android:textColor="@color/sl_white"
-                    android:textColorHint="@color/sl_grey"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:textColorHint="@color/sl_grey" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -128,30 +107,24 @@
                 android:visibility="gone">
 
                 <EditText
+                    style="@style/m_silicon_grey"
                     android:id="@+id/title_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:background="@color/transparent"
                     android:padding="0dp"
-                    android:singleLine="true"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:singleLine="true" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/s_terbium_green"
                     android:layout_above="@id/title_edit_text"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/settings_title"
-                    android:textColor="@color/sl_blue"
-                    android:textSize="@dimen/text_size_S"/>
+                    android:text="@string/settings_title" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    style="@style/divider_line"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/sl_blue" />
+                    android:background="@color/sl_terbium_green" />
 
             </RelativeLayout>
 
@@ -163,21 +136,17 @@
                 android:visibility="visible">
 
                 <TextView
+                    style="@style/m_silicon_grey"
                     android:id="@+id/email_display_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/space_XXS"
                     android:hint="@string/settings_email"
-                    android:textColor="@color/sl_white"
-                    android:textColorHint="@color/sl_grey"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:textColorHint="@color/sl_grey"/>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -187,31 +156,25 @@
                 android:visibility="gone">
 
                 <EditText
-                    android:id="@+id/email_edit_text"
+                    style="@style/m_silicon_grey"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/email_edit_text"
                     android:layout_alignParentBottom="true"
                     android:background="@color/transparent"
                     android:inputType="textEmailAddress"
                     android:padding="0dp"
-                    android:singleLine="true"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:singleLine="true" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/s_terbium_green"
                     android:layout_above="@id/email_edit_text"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/settings_email"
-                    android:textColor="@color/sl_blue"
-                    android:textSize="@dimen/text_size_S"/>
+                    android:text="@string/settings_email" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    style="@style/divider_line"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/sl_blue" />
+                    android:background="@color/sl_terbium_green" />
 
             </RelativeLayout>
 
@@ -223,21 +186,17 @@
                 android:visibility="visible">
 
                 <TextView
+                    style="@style/m_silicon_grey"
                     android:id="@+id/phone_display_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/space_XXS"
                     android:hint="@string/settings_phone"
-                    android:textColor="@color/sl_white"
-                    android:textColorHint="@color/sl_grey"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:textColorHint="@color/sl_grey" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -247,31 +206,26 @@
                 android:visibility="gone">
 
                 <EditText
-                    android:id="@+id/phone_edit_text"
+                    style="@style/m_silicon_grey"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/phone_edit_text"
                     android:layout_alignParentBottom="true"
                     android:background="@color/transparent"
                     android:inputType="phone"
                     android:padding="0dp"
-                    android:singleLine="true"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_M"/>
+                    android:singleLine="true" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/s_terbium_green"
                     android:layout_above="@id/phone_edit_text"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/settings_phone"
-                    android:textColor="@color/sl_blue"
-                    android:textSize="@dimen/text_size_S"/>
+                    android:text="@string/settings_phone" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    style="@style/divider_line"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/sl_blue" />
+                    android:background="@color/sl_terbium_green" />
+
             </RelativeLayout>
 
             <!-- not used as per the latest requirement -->
@@ -281,13 +235,10 @@
                 android:layout_height="@dimen/material_listitem_height">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/sm_silicon_grey"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/settings_cc_myself"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_SM"/>
+                    android:text="@string/settings_cc_myself" />
 
                 <Switch
                     android:id="@+id/cc_switch"
@@ -304,14 +255,11 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/sm_terbium_green"
                 android:layout_marginTop="@dimen/space_M"
                 android:layout_gravity="left"
                 android:text="@string/settings_preferences"
-                android:textAllCaps="true"
-                android:textColor="@color/sl_blue"
-                android:textSize="@dimen/text_size_SM"/>
+                android:textAllCaps="true" />
 
             <!-- Measurement -->
             <RelativeLayout
@@ -319,39 +267,30 @@
                 android:layout_height="@dimen/material_listitem_height">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/block"
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/s_terbium_green"
                         android:layout_marginTop="@dimen/space_S"
-                        android:text="@string/settings_measurements"
-                        android:textColor="@color/sl_grey"
-                        android:textSize="@dimen/text_size_S"/>
+                        android:text="@string/settings_measurements" />
 
                     <Spinner
+                        style="@style/block"
                         android:id="@+id/measurement_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_XS"
                         android:layout_marginBottom="@dimen/space_XS"
-                        android:textColor="@color/sl_white"
+                        android:textColor="@color/sl_silicon_grey"
                         android:textSize="@dimen/text_size_SM" />
 
                 </LinearLayout>
 
-
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
 
             </RelativeLayout>
-
 
             <!-- Temperature -->
             <RelativeLayout
@@ -359,33 +298,28 @@
                 android:layout_height="@dimen/material_listitem_height">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/block"
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/s_terbium_green"
                         android:layout_marginTop="@dimen/space_S"
-                        android:text="@string/settings_temperature"
-                        android:textColor="@color/sl_grey"
-                        android:textSize="@dimen/text_size_S"/>
+                        android:text="@string/settings_temperature" />
 
                     <Spinner
+                        style="@style/block"
                         android:id="@+id/temperature_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_XS"
                         android:layout_marginBottom="@dimen/space_XS"
-                        android:textColor="@color/sl_white"
+                        android:textColor="@color/sl_silicon_grey"
                         android:textSize="@dimen/text_size_SM" />
                 </LinearLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
             </RelativeLayout>
 
             <!-- Model Type -->
@@ -394,34 +328,28 @@
                 android:layout_height="@dimen/material_listitem_height">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/block"
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/s_terbium_green"
                         android:layout_marginTop="@dimen/space_S"
-                        android:text="@string/settings_model_type"
-                        android:textColor="@color/sl_grey"
-                        android:textSize="@dimen/text_size_S"/>
+                        android:text="@string/settings_model_type" />
 
                     <Spinner
+                        style="@style/block"
                         android:id="@+id/model_type_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_XS"
                         android:layout_marginBottom="@dimen/space_XS"
-                        android:textColor="@color/sl_white"
+                        android:textColor="@color/sl_silicon_grey"
                         android:textSize="@dimen/text_size_SM" />
                 </LinearLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_line" />
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -430,38 +358,29 @@
                 android:layout_height="@dimen/material_listitem_height">
 
                 <TextView
+                    style="@style/sm_silicon_grey"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/settings_beacon_notifications"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_SM"/>
+                    android:text="@string/settings_beacon_notifications" />
 
                 <TextView
+                    style="@style/sm_silicon_grey"
                     android:id="@+id/beacons_status"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/material_container_margin"
-                    android:textColor="@color/sl_white"
-                    android:textSize="@dimen/text_size_SM"/>
+                    android:layout_marginRight="@dimen/material_container_margin" />
             </RelativeLayout>
 
             <TextView
+                style="@style/s_silicon_grey"
                 android:id="@+id/version_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/space_XS"
                 android:layout_marginBottom="@dimen/space_S"
-                android:gravity="center_horizontal"
-                android:textColor="@color/sl_grey"
-                android:textSize="@dimen/text_size_S"/>
+                android:gravity="center_horizontal" />
 
         </LinearLayout>
-
     </ScrollView>
-
 </RelativeLayout>

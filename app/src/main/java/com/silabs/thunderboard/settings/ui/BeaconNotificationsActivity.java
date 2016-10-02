@@ -71,7 +71,7 @@ public class BeaconNotificationsActivity extends ThunderBoardActivity {
 
     protected void setupToolbar() {
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResourceColor(R.color.sl_blue));
+        toolbar.setBackgroundColor(getResourceColor(R.color.sl_terbium_green));
         toolbar.setTitle(R.string.settings_beacon_notifications);
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();

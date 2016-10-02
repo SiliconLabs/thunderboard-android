@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.silabs.thunderboard.BuildConfig;
 import com.silabs.thunderboard.R;
@@ -62,11 +63,18 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
         component().inject(this);
 
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResourceColor(R.color.primary_color));
+        toolbar.setBackgroundColor(getResourceColor(R.color.sl_terbium_green));
+        toolbar.setTitle(getString(R.string.thunderboard));
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
+        params.height += getStatusBarHeight();
+        toolbar.setLayoutParams(params);
+        toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
+            //actionBar.setDisplayShowTitleEnabled(false);
         }
 
         changeStatusBarColor(getResourceColor(R.color.primary_color));
@@ -93,6 +101,14 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
         demosRecyclerView.setVisibility(View.INVISIBLE);
 
         presenter.setViewListener(this, deviceAddress);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // clear all notifications per iOS spec
+        presenter.resetDemoConfiguration();
     }
 
     @Override
@@ -175,7 +191,7 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
                 DemoMotionActivity.class,
                 DemoMotionActivity.isDemoAllowed()));
         demosList.add(new Demo(getString(R.string.demo_environment),
-                R.drawable.ic_environment,
+                R.drawable.ic_environmental,
                 DemoEnvironmentActivity.class,
                 DemoEnvironmentActivity.isDemoAllowed()));
         demosList.add(new Demo(getString(R.string.demo_io),

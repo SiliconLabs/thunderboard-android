@@ -5,25 +5,20 @@
     android:layout_height="@dimen/beacon_listitem_height">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/wrap"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/space_S"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/beacon_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/s_silicon_grey"
             android:textColor="@color/sl_grey"
-            android:textSize="@dimen/text_size_S"/>
+            android:id="@+id/beacon_state" />
 
         <TextView
-            android:id="@+id/beacon_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/sl_light_grey"
-            android:textSize="@dimen/text_size_SM"/>
+            style="@style/sm_silicon_grey"
+            android:id="@+id/beacon_name" />
 
     </LinearLayout>
 
@@ -33,14 +28,16 @@
         android:layout_height="@dimen/beacon_button_height"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_S"
         android:gravity="center_horizontal|center_vertical"
         android:textAllCaps="true"
-        android:textColor="@color/sl_light_blue"
+        android:textColor="@color/sl_terbium_green"
         android:textSize="@dimen/text_size_SM" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:layout_alignParentBottom="true"
-        android:background="@color/divider_line" />
+        style="@style/divider_line"
+        android:layout_marginLeft="@dimen/space_S"
+        android:layout_marginRight="@dimen/space_S"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

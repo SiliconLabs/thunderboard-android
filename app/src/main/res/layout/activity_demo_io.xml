@@ -2,32 +2,27 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    style="@style/match">
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/block"
         android:orientation="vertical"
         android:paddingLeft="@dimen/iodemo_margin"
         android:paddingRight="@dimen/iodemo_margin" >
 
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/m_silicon_grey"
             android:layout_marginTop="@dimen/space_S"
             android:layout_gravity="left"
             android:fontFamily="sans-serif-light"
             android:text="@string/iodemo_switches"
-            android:textAllCaps="true"
-            android:textColor="@color/sl_light_grey"
-            android:textSize="@dimen/text_size_M"/>
+            android:textAllCaps="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_XXXXL"
             android:layout_marginTop="@dimen/space_XS"
-            android:background="@color/sl_medium_grey"
+            android:background="@color/sl_white"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -37,9 +32,8 @@
                 android:layout_weight="1">
 
                 <com.silabs.thunderboard.demos.ui.SwitchControl
+                    style="@style/wrap"
                     android:id="@+id/switch0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"/>
 
             </RelativeLayout>
@@ -50,32 +44,27 @@
                 android:layout_weight="1">
 
                 <com.silabs.thunderboard.demos.ui.SwitchControl
+                    style="@style/wrap"
                     android:id="@+id/switch1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"/>
 
             </RelativeLayout>
-
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/m_silicon_grey"
             android:layout_gravity="left"
             android:layout_marginTop="@dimen/space_S"
             android:fontFamily="sans-serif-light"
             android:text="@string/iodemo_lights"
-            android:textAllCaps="true"
-            android:textColor="@color/sl_light_grey"
-            android:textSize="@dimen/text_size_M"/>
+            android:textAllCaps="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_XXXXL"
             android:layout_marginTop="@dimen/space_XS"
             android:layout_marginBottom="@dimen/space_XS"
-            android:background="@color/sl_medium_grey"
+            android:background="@color/sl_white"
             android:orientation="horizontal"
             android:paddingTop="@dimen/space_S"
             android:paddingBottom="@dimen/space_S"
@@ -87,12 +76,10 @@
                 android:layout_weight="1">
 
                 <com.silabs.thunderboard.demos.ui.LEDControl
+                    style="@style/wrap"
                     android:id="@+id/led0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    app:highlightColor="blue"/>
-
+                    app:highlightColor="green"/>
 
             </RelativeLayout>
 
@@ -102,15 +89,20 @@
                 android:layout_weight="1">
 
                 <com.silabs.thunderboard.demos.ui.LEDControl
+                    style="@style/wrap"
                     android:id="@+id/led1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     app:highlightColor="green"/>
 
             </RelativeLayout>
 
         </LinearLayout>
+
+        <com.silabs.thunderboard.demos.ui.ColorLEDControl
+            style="@style/block"
+            android:id="@+id/color_led_control"
+            android:layout_marginTop="@dimen/space_XS"
+            android:layout_marginBottom="@dimen/space_XS" />
 
     </LinearLayout>
 

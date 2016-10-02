@@ -1,18 +1,22 @@
 package com.silabs.thunderboard.demos.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.silabs.thunderboard.R;
-import com.silabs.thunderboard.common.app.ThunderBoardConstants;
+import com.silabs.thunderboard.common.app.ThunderBoardType;
 import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
+import com.silabs.thunderboard.demos.model.LedRGBState;
 
 import javax.inject.Inject;
 
@@ -73,11 +77,20 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     @Bind(R.id.rpm_container)
     LinearLayout rpmContainer;
 
+    @Bind(R.id.linear_speed_container)
+    LinearLayout linearSpeedContainer;
+
     @Bind(R.id.revolutions_container)
     LinearLayout revolutionsContainer;
 
+    @Bind(R.id.linear_distance_container)
+    LinearLayout linearDistanceContainer;
+
     @Bind(R.id.speed_distance_container)
     LinearLayout speedDistanceContainer;
+
+    @Bind(R.id.speed_distance_scroll)
+    ScrollView speedDistanceScroll;
 
     @Bind(R.id.speed_container)
     LinearLayout speedContainer;
@@ -89,6 +102,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     private View gdx3dView;
     private DemoMotionGdxAdapter gdxAdapter;
     private int assetType;
+    private boolean sceneLoaded;
 
     public static boolean isDemoAllowed() {
         return true;
@@ -101,18 +115,23 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = LayoutInflater.from(this).inflate(R.layout.activity_demo_motion, null, false);
-        mainSection.addView(view);
-
-        ButterKnife.bind(this);
         component().inject(this);
 
-        assetType = prefsManager.getPreferences().modelType;
-        if (assetType == ThunderBoardPreferences.MODEL_TYPE_BOARD) {
-            setupBoardView();
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+            View view = LayoutInflater.from(this).inflate(R.layout.activity_demo_motion_sense, null, false);
+            mainSection.addView(view);
+        } else {
+            View view = LayoutInflater.from(this).inflate(R.layout.activity_demo_motion, null, false);
+            mainSection.addView(view);
         }
 
-        presenter.setViewListener(this, deviceAddress);
+        ButterKnife.bind(this);
+
+
+        assetType = prefsManager.getPreferences().modelType;
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE || assetType == ThunderBoardPreferences.MODEL_TYPE_BOARD) {
+            setupBoardView();
+        }
 
         // temp
         setOrientation(0f, 0f, 0f);
@@ -120,26 +139,14 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
         setSpeed(0f, 0, 0);
         setDistance(0f, 0, 0);
 
-        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        config.disableAudio = true;
-        config.hideStatusBar = false;
-        config.useAccelerometer = false;
-        config.useCompass = false;
-        config.useImmersiveMode = false;
-        config.useWakelock = false;
-
-        gdxAdapter = new DemoMotionGdxAdapter(getContext().getResources().getColor(R.color.sl_silicon_grey), assetType);
-
-        gdx3dView = initializeForView(gdxAdapter, config);
-        carAnimationHolder.addView(gdx3dView);
+        gdxAdapter = new DemoMotionGdxAdapter(getContext().getResources().getColor(R.color.sl_light_grey), assetType, presenter.getThunderBoardType());
+        initControls();
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
-
-        setWheelDiameterText();
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.clearViewListener();
     }
 
     private void setupBoardView() {
@@ -153,14 +160,20 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
         wheelContainer.setVisibility(View.INVISIBLE);
 
-        rpmContainer.setVisibility(View.GONE);
-        rpmContainer.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
+        linearSpeedContainer.setVisibility(View.GONE);
+        linearSpeedContainer.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
 
-        revolutionsContainer.setVisibility(View.GONE);
-        revolutionsContainer.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
+        linearDistanceContainer.setVisibility(View.GONE);
+        linearDistanceContainer.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
 
         speedDistanceContainer.setOrientation(LinearLayout.HORIZONTAL);
 
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+            wheelContainer.setVisibility(View.GONE);
+            speedDistanceScroll.setVisibility(View.GONE);
+        } else {
+            setWheelDiameterText();
+        }
     }
 
     @Override
@@ -170,7 +183,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     @Override
     public int getToolbarColor() {
-        return getResourceColor(R.color.sl_bromine_orange);
+        return getResourceColor(R.color.sl_terbium_green);
     }
 
     @Override
@@ -179,12 +192,11 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     }
 
     /**
-     *
      * setAcceleration
-     *
+     * <p/>
      * Listener for acceleration measurements.
      * Displays x, y, z acceleration vector magnitudes in TextViews
-     *
+     * <p/>
      * Acceleration values are in multiples of g (gravitational acceleration, 9.8 m / s^2)
      *
      * @param x
@@ -200,12 +212,11 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     }
 
     /**
-     *
      * setOrientation
-     *
+     * <p/>
      * Listener for orientation measurements.
      * Displays orientation of ThunderBoard around x, y, z axes.
-     *
+     * <p/>
      * Angles are measured in degrees ( -180 to 180)
      *
      * @param x
@@ -226,10 +237,9 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     /**
      * setWheelDiameterText
-     *
+     * <p/>
      * displays the value of the wheel's diameter, which can either be
      * found in the Preferences, or hard-coded in ThunderBoardPreferences.
-     *
      */
     public void setWheelDiameterText() {
         ThunderBoardPreferences preferences = prefsManager.getPreferences();
@@ -248,7 +258,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     /**
      * setSpeed
-     *
+     * <p/>
      * Listener method to display the speed of the car holding the ThunderBoard.
      * Both speed and rpm are given and the units for the speed can be either
      * metric (m / s) or US (ft / s)
@@ -270,7 +280,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     /**
      * setDistance
-     *
+     * <p/>
      * Listener method to display the distance covered and the number of wheel
      * revolutions for the model car holding the ThunderBoard. The distance can
      * be measured in either meters or feet.
@@ -292,32 +302,43 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     /**
      * onCalibrate
-     *
+     * <p/>
      * Click listener for the Calibrate button
-     *
      */
     @OnClick(R.id.calibrate)
     public void onCalibrate() {
-        presenter.calibrate();
         popupCalibratingDialog();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                presenter.calibrate();
+            }
+        }, 600);
     }
 
     /**
      * onCalibrateComleted
-     *
+     * <p/>
      * Listener method called when the calibration is completed. Closes the alert dialog.
-     *
      */
     @Override
     public void onCalibrateComleted() {
         closeCalibratingDialog();
     }
 
+    @Override
+    public void setColorLED(LedRGBState colorLED) {
+        if (!sceneLoaded) return;
+        if (colorLED.on) {
+            gdxAdapter.setLEDColor(Color.rgb(colorLED.color.red, colorLED.color.green, colorLED.color.blue));
+            gdxAdapter.turnOnLights();
+        }
+    }
+
     /**
      * popupCalibrateDialog
-     *
+     * <p/>
      * Creates an non-cancellable alert dialog to display while calibrating
-     *
      */
     private void popupCalibratingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -331,11 +352,37 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     /**
      * closeCalibratingDialog
-     *
+     * <p/>
      * Dismisses the calibrating dialog
-     *
      */
     private void closeCalibratingDialog() {
         calibratingDialog.dismiss();
+    }
+
+    @Override
+    public void initControls() {
+        gdxAdapter.setOnSceneLoadedListener(new DemoMotionGdxAdapter.OnSceneLoadedListener() {
+            @Override
+            public void onSceneLoaded() {
+                sceneLoaded = true;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        presenter.setViewListener(DemoMotionActivity.this, deviceAddress);
+                    }
+                });
+            }
+        });
+
+        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+        config.disableAudio = true;
+        config.hideStatusBar = false;
+        config.useAccelerometer = false;
+        config.useCompass = false;
+        config.useImmersiveMode = false;
+        config.useWakelock = false;
+
+        gdx3dView = initializeForView(gdxAdapter, config);
+        carAnimationHolder.addView(gdx3dView);
     }
 }

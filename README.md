@@ -1,9 +1,9 @@
-l# Thunderboard
+# Thunder Board
 
-Thunderboard is a native Android app for demonstrating the capabilities of the Thunderboard React sensor board. 
+ThunderBoard is a native Android app for demonstrating the capabilities of the ThunderBoard-React sensor board. 
 It includes Motion, Environment, and I/O demos.
 
-Source code for the [iOS app](https://github.com/SiliconLabs/thunderboard-ios) and [Firebase web interface](https://github.com/SiliconLabs/thundercloud) is also available.
+Source code for the [iOS app](https://github.com/SiliconLabs/thunderboard-react-ios) and [Firebase web interface](https://github.com/SiliconLabs/thunderboard-react-web) is also available.
 
 ## Screenshots
 
@@ -16,8 +16,8 @@ Source code for the [iOS app](https://github.com/SiliconLabs/thunderboard-ios) a
 
 ## 3D
 
-The motion demo of the Thunderboard application displays a 3D image of a car on the screen. 
-This image will rotate about its center, depending on the orientation of the Thunderboard device.
+The motion demo of the ThunderBoard application displays a 3D image of a car on the screen. 
+This image will rotate about its center, depending on the orientation of the ThunderBoard device.
 The activity displays the 3D image using the libGDX library from [Badlogic Games](http://www.badlogicgames.com/wordpress/).
 
 An object file describes the shape of the car, in terms of vectors and polygons. 
@@ -28,14 +28,14 @@ The original model pinewood_car.obj and the files generated in the process could
 
 ## Bluetooth
 
-Bluetooth Low Energy (BLE) is used to communicated with the Thunderboard React device. 
-Android devices that supports BLE are required to run the Thunderboard software.
+Bluetooth Low Energy (BLE) is used to communicated with the ThunderBoard-React device. 
+Android devices that supports BLE are required to run the ThunderBoard software.
 
 ## Beacons
 
-When powered on, Thunderboard React devices broadcast an iBeacon-compatible service. 
+When powered on, ThunderBoard-React devices broadcast an iBeacon-compatible service. 
 
-This makes it possible for the Android device to be notified of a nearby Thunderboard React automatically and 
+This makes it possible for the Android device to be notified of a nearby ThunderBoard-React automatically and 
 using the notification to connect to the board bypassing the discovery process.
 
 There are a few things about the Android implementation to keep in mind:
@@ -49,7 +49,7 @@ There are a few things about the Android implementation to keep in mind:
 
 ## Cloud Streaming
 
-Each Thunderboard demo can stream real time data to the cloud. 
+Each ThunderBoard demo can stream real time data to the cloud. 
 While streaming, the web URL displays live-updating graphs for each characteristic of the demo. 
 After a demo concludes, summary data is shown.
 
@@ -63,13 +63,13 @@ Without these values, the streaming feature will fail.
 
 ## Short URLs
 
-Thunderboard attempts to shorten all demo URLs with the [is.gd](http://is.gd) URL shortening service. 
+ThunderBoard attempts to shorten all demo URLs with the [is.gd](http://is.gd) URL shortening service. 
 URL stats are not supported, so no credentials are required for the URL shortener. 
 
 
 ## Building the code
 
-_The Thunderboard project is build with Android Studio 1.4.1_
+_The ThunderBoard project is build with Android Studio 1.4.1_
 
 
 ## Configuration Values
@@ -110,3 +110,19 @@ In order to stream realtime data to your own Firebase instance, you'll need to u
  * Use the calibration characteristic to cancel the calibration popup.
  * More demos to come.
 
+
+## License
+
+    Copyright 2015 Silicon Laboratories
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

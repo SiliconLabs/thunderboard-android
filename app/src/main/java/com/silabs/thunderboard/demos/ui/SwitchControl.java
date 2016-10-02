@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
+import com.silabs.thunderboard.common.ui.ButtonSpinnerDrawable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +22,8 @@ public class SwitchControl extends FrameLayout {
 
     @Bind(R.id.switch_text)
     TextView text;
+
+    ButtonSpinnerDrawable spinnerDrawable;
 
     private Context context;
 
@@ -40,17 +43,16 @@ public class SwitchControl extends FrameLayout {
         addView(view);
         ButterKnife.bind(this, view);
 
+        spinnerDrawable = new ButtonSpinnerDrawable(context);
+        image.setImageDrawable(spinnerDrawable);
         this.context = context;
     }
 
     public void setChecked(boolean checked) {
-        //image.setImageResource(checked ? R.drawable.animated_switch_183 : R.drawable.ic_switches_off);
         if (checked) {
-            image.setImageResource(R.drawable.switch_on_frames);
-            AnimationDrawable switchOnAnimation = (AnimationDrawable) image.getDrawable();
-            switchOnAnimation.start();
+            spinnerDrawable.start();
         } else {
-            image.setImageResource(R.drawable.ic_switches_off);
+            spinnerDrawable.stop();
         }
 
         text.setText(context.getString(checked ? R.string.on : R.string.off));

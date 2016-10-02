@@ -2,6 +2,7 @@ package com.silabs.thunderboard.demos.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,11 @@ public class LEDControl extends FrameLayout implements CompoundButton.OnCheckedC
 
         button.setOnCheckedChangeListener(this);
     }
+
+    public void setBackgroundResource(@DrawableRes int resid) {
+        button.setBackgroundResource(resid);
+    }
+
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

@@ -1,15 +1,15 @@
 package com.silabs.thunderboard.demos.ui;
 
-import android.os.CountDownTimer;
-
 import com.silabs.thunderboard.ble.BleManager;
+import com.silabs.thunderboard.ble.ThunderBoardSensorIo;
 import com.silabs.thunderboard.ble.ThunderBoardSensorMotion;
+import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
+import com.silabs.thunderboard.common.app.ThunderBoardType;
 import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
 import com.silabs.thunderboard.common.injection.scope.ActivityScope;
 import com.silabs.thunderboard.demos.model.MotionEvent;
 import com.silabs.thunderboard.demos.model.NotificationEvent;
 import com.silabs.thunderboard.web.CloudManager;
-import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 
 import javax.inject.Inject;
 
@@ -31,6 +31,8 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
     private Subscriber<NotificationEvent> notificationsSubscriber;
 
     private boolean isCalibrating;
+    private boolean revolutionsSupported;
+
 
     @Inject
     public DemoMotionPresenter(BleManager bleManager, CloudManager cloudManager) {
@@ -52,6 +54,7 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(notificationsSubscriber);
+
         bleManager.configureMotion();
     }
 
@@ -66,12 +69,9 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
             notificationsSubscriber.unsubscribe();
         }
         notificationsSubscriber = null;
-        bleManager.clearMotionNotifications();
-
-        Timber.d("cancel calibrate");
-        calibrateTimer.cancel();
+        Timber.d("cancel startCalibration");
         isCalibrating = false;
-
+        revolutionsSupported = false;
     }
 
     @Override
@@ -80,10 +80,11 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
     }
 
     public void calibrate() {
-        if(!isCalibrating) {
+        if (!isCalibrating) {
             Timber.d("request");
-            bleManager.calibrate(0x01);
             isCalibrating = true;
+            bleManager.startCalibration();
+            revolutionsSupported = false;
         }
     }
 
@@ -108,7 +109,27 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
 
             @Override
             public void onNext(ThunderBoardDevice device) {
-                unsubscribe();
+                if (getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+                    ThunderBoardSensorIo sensor = device.getSensorIo();
+                    if (sensor == null) {
+                        return;
+                    }
+
+                    if (sensor.isSensorDataChanged != null && sensor.isSensorDataChanged &&
+                            viewListener != null && sensor.getSensorData() != null && sensor
+                            .getSensorData().colorLed != null) {
+                        ThunderBoardSensorIo.SensorData sensorData = sensor.getSensorData();
+                        sensor.isSensorDataChanged = false;
+                        ((DemoMotionListener) viewListener).setColorLED(sensorData.colorLed);
+                    }
+
+                    if (sensor.getSensorData().colorLed == null) {
+                        bleManager.readColorLEDs();
+                    }
+                } else {
+                    // Unused
+                    unsubscribe();
+                }
             }
         };
     }
@@ -136,34 +157,48 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
 
                 Timber.d("motion for device: %s", event.device.getName());
 
-                if (event.action != null) {
-                    if(event.action == MotionEvent.ACTION_CALIBRATE && isCalibrating) {
-                        calibrateTimer.start();
-                    } else {
-
-                        if(event.action == MotionEvent.ACTION_CLEAR_ORIENTATION) {
-                            bleManager.enableCscMeasurement(false);
-                        } else if (event.action == MotionEvent.ACTION_CLEAR_MEASUREMENT) {
-                            bleManager.enableCscMeasurement(true);
+                if (event.action != null ) {
+                    if (isCalibrating) {
+                        if (event.action == MotionEvent.ACTION_CALIBRATE) {
+                            bleManager.resetOrientation();
+                            return;
                         }
 
-                        if(viewListener != null) {
-                            ((DemoMotionListener)viewListener).onCalibrateComleted();
+                        if (event.action == MotionEvent.ACTION_CLEAR_ORIENTATION) {
+                            revolutionsSupported = bleManager.resetRevolutions();
+                            if (revolutionsSupported) {
+                                return;
+                            }
+                            else {
+                                finishCalibration();
+                                return;
+                            }
+                        }
+
+                        if (event.action == MotionEvent.ACTION_CLEAR_MEASUREMENT) {
+                            bleManager.enableCscMeasurement(true);
+                            return;
+                        }
+                        if (event.action == MotionEvent.ACTION_CSC_CHANGED) {
+                            finishCalibration();
                         }
                     }
                 }
 
                 if (cloudModelName == null) {
-                    createCloudDeviceName(event.device.getName());
+                    createCloudDeviceName(event.device.getSystemId());
                 }
 
                 ThunderBoardSensorMotion sensor = event.device.getSensorMotion();
                 DemoMotionPresenter.this.sensor = sensor;
 
-                if (sensor != null && sensor.isSensorDataChanged && viewListener != null) {
+                if (sensor != null && sensor.isSensorDataChanged != null && sensor
+                        .isSensorDataChanged && viewListener != null) {
                     ThunderBoardSensorMotion.SensorData sensorData = sensor.getSensorData();
-                    ((DemoMotionListener) viewListener).setOrientation(sensorData.ox, sensorData.oy, sensorData.oz);
-                    ((DemoMotionListener) viewListener).setAcceleration(sensorData.ax, sensorData.ay, sensorData.az);
+                    ((DemoMotionListener) viewListener).setOrientation(sensorData.ox, sensorData.oy,
+                            sensorData.oz);
+                    ((DemoMotionListener) viewListener).setAcceleration(sensorData.ax,
+                            sensorData.ay, sensorData.az);
                     double d = sensorData.distance;
                     double s = sensorData.speed;
                     // convert to US
@@ -171,14 +206,21 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
                         d *= 3.28084f;
                         s *= 3.28084f;
                     }
-                    ((DemoMotionListener) viewListener).setDistance(d, sensor.getCumulativeWheelRevolutions(), sensor.MEASUREMENTS_TYPE);
-                    ((DemoMotionListener) viewListener).setSpeed(s, sensor.getRotationsPerMinute(), sensor.MEASUREMENTS_TYPE);
+                    ((DemoMotionListener) viewListener).setDistance(d,
+                            sensor.getCumulativeWheelRevolutions(), sensor.MEASUREMENTS_TYPE);
+                    ((DemoMotionListener) viewListener).setSpeed(s, sensor.getRotationsPerMinute(),
+                            sensor.MEASUREMENTS_TYPE);
                     sensor.isSensorDataChanged = false;
-
-                    pushToCloud();
                 }
             }
         };
+    }
+
+    private void finishCalibration() {
+        isCalibrating = false;
+        if (viewListener != null) {
+            ((DemoMotionListener) viewListener).onCalibrateComleted();
+        }
     }
 
     protected Subscriber<NotificationEvent> onNotification() {
@@ -201,8 +243,7 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
 
             @Override
             public void onNext(NotificationEvent event) {
-
-                if(NotificationEvent.ACTION_NOTIFICATIONS_SET != event.action) {
+                if (NotificationEvent.ACTION_NOTIFICATIONS_SET != event.action) {
                     return;
                 }
 
@@ -239,17 +280,9 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
         };
     }
 
-    private final CountDownTimer calibrateTimer = new CountDownTimer(10000, 400) {
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-        }
-
-        @Override
-        public void onFinish() {
-            Timber.d("calibrate timer finished, sending reset orientation");
-            bleManager.calibrate(0x02);
-            isCalibrating = false;
-        }
-    };
+    @Override
+    public int streamingSamplePeriod() {
+        // motion demo samples at 100ms
+        return 100;
+    }
 }

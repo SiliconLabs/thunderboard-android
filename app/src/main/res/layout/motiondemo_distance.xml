@@ -1,81 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/block"
     android:id="@+id/distance_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/space_XS"
     android:orientation="vertical"
     android:layout_weight="1">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/sm_silicon_grey"
         android:fontFamily="sans-serif-light"
         android:text="@string/motion_distance"
-        android:textAllCaps="true"
-        android:textColor="@color/sl_grey"
-        android:textSize="@dimen/motion_textsize" />
+        android:textAllCaps="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_XL"
         android:layout_marginTop="@dimen/space_XS"
-        android:background="@color/sl_medium_grey"
+        android:background="@color/sl_white"
         android:orientation="horizontal"
         android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/block"
+            android:id="@+id/linear_distance_container"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:orientation="vertical" >
 
             <TextView
+                style="@style/m_silicon_grey"
                 android:id="@+id/distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/sl_light_grey"
-                android:textSize="@dimen/motion_textsize_large"/>
+                android:fontFamily="sans-serif-light" />
 
             <TextView
+                style="@style/s_silicon_grey"
                 android:id="@+id/distance_units"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/sl_grey"
-                android:textSize="@dimen/motion_textsize_small"/>
+                android:fontFamily="sans-serif-light" />
         </LinearLayout>
 
         <LinearLayout
+            style="@style/block"
             android:id="@+id/revolutions_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:orientation="vertical" >
 
             <TextView
+                style="@style/m_silicon_grey"
                 android:id="@+id/revolutions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/sl_light_grey"
-                android:textSize="@dimen/motion_textsize_large"/>
+                android:fontFamily="sans-serif-light" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/s_silicon_grey"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/motion_total_revolutions"
-                android:textColor="@color/sl_grey"
-                android:textSize="@dimen/motion_textsize_small"/>
+                android:text="@string/motion_total_revolutions" />
         </LinearLayout>
 
     </LinearLayout>

@@ -3,7 +3,9 @@ package com.silabs.thunderboard.demos.ui;
 import com.silabs.thunderboard.ble.BleManager;
 import com.silabs.thunderboard.ble.ThunderBoardSensorIo;
 import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
+import com.silabs.thunderboard.common.app.ThunderBoardType;
 import com.silabs.thunderboard.common.injection.scope.ActivityScope;
+import com.silabs.thunderboard.demos.model.LedRGBState;
 import com.silabs.thunderboard.web.CloudManager;
 
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class DemoIOPresenter extends BaseDemoPresenter {
     @Override
     protected void subscribe(String deviceAddress) {
         super.subscribe(deviceAddress);
-        bleManager.configureIo();
+        bleManager.configureIO();
     }
 
     @Override
@@ -74,17 +76,22 @@ public class DemoIOPresenter extends BaseDemoPresenter {
 
             @Override
             public void onNext(ThunderBoardDevice device) {
-
                 Timber.d("device: %s", device.getName());
-
-                if (cloudModelName == null) {
-                    createCloudDeviceName(device.getName());
+                ThunderBoardSensorIo sensor = device.getSensorIo();
+                if ( sensor == null ) {
+                    return;
                 }
 
-                ThunderBoardSensorIo sensor = device.getSensorIo();
-                DemoIOPresenter.this.sensor = sensor;
+                if (cloudModelName == null) {
+                    createCloudDeviceName(device.getSystemId());
+                }
 
-                if (sensor != null && sensor.isSensorDataChanged && viewListener != null) {
+                DemoIOPresenter.this.sensor = sensor;
+                if (device.isPowerSourceConfigured != null && device.isPowerSourceConfigured && viewListener != null) {
+                    ((DemoIOViewListener) viewListener).setPowerSource(device.getPowerSource());
+                }
+
+                if (sensor.isSensorDataChanged && viewListener != null) {
                     ThunderBoardSensorIo.SensorData sensorData = sensor.getSensorData();
                     ((DemoIOViewListener) viewListener).setButton0State(sensorData.sw0);
                     ((DemoIOViewListener) viewListener).setButton1State(sensorData.sw1);
@@ -101,9 +108,23 @@ public class DemoIOPresenter extends BaseDemoPresenter {
                     }
                     sensor.isSensorDataChanged = false;
 
-                    pushToCloud();
+                    if (bleManager.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+                        if (sensorData.colorLed != null) {
+                            ((DemoIOViewListener) viewListener).setColorLEDsValue(sensorData.colorLed);
+                        } else {
+                            bleManager.readColorLEDs();
+                        }
+                    }
+                }
+
+                if (bleManager.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE && sensor != null && sensor.getSensorData().colorLed == null) {
+                    bleManager.readColorLEDs();
                 }
             }
         };
+    }
+
+    public void setColorLEDs(LedRGBState ledRGBState) {
+        bleManager.setColorLEDs(ledRGBState);
     }
 }

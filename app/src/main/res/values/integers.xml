@@ -8,4 +8,6 @@
     // LED on values
     <integer name="led0_on">1</integer>
     <integer name="led1_on">4</integer>
+
+    <integer name="scanner_animation_duration">300</integer>
 </resources>

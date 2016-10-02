@@ -1,6 +1,10 @@
 package com.silabs.thunderboard.scanner.ui;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,11 +21,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.RelativeLayout;
 
-import com.silabs.thunderboard.BuildConfig;
 import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 import com.silabs.thunderboard.demos.ui.DemosSelectionActivity;
@@ -45,11 +51,20 @@ public class ScannerActivity extends ThunderBoardActivity implements ScannerView
 
     private enum BluetoothState {BLUETOOTH_DISABLED, BLUETOOTH_ENABLED, NO_DEVICE_FOUND, DEVICE_FOUND };
 
+    private int animationDuration;
+    private final LinearInterpolator linearInterpolator = new LinearInterpolator();
+
     @Inject
     ScannerPresenter presenter;
 
     @Bind(R.id.scanner_toolbar)
     Toolbar toolbar;
+
+    @Bind(R.id.mm_logo)
+    ImageView mmLogo;
+
+    @Bind(R.id.bottom_panel)
+    FrameLayout bottomPanel;
 
     @Bind(R.id.scanner_device_list)
     RecyclerView scannerRecyclerView;
@@ -105,6 +120,9 @@ public class ScannerActivity extends ThunderBoardActivity implements ScannerView
             }
         }
 
+        animationDuration = getResources().getInteger(R.integer.scanner_animation_duration);
+
+        initializeItems();
     }
 
     @Override
@@ -201,6 +219,7 @@ public class ScannerActivity extends ThunderBoardActivity implements ScannerView
      */
     @Override
     public void onData(List<ThunderBoardDevice> devices) {
+        animateItems();
         if (devices.size() == 0) {
             setScannerVisibility(BluetoothState.NO_DEVICE_FOUND);
         } else {
@@ -321,14 +340,63 @@ public class ScannerActivity extends ThunderBoardActivity implements ScannerView
     private void configureProgressIndicator() {
         int color;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            color = getResources().getColor(R.color.sl_blue);
+            color = getResources().getColor(R.color.sl_terbium_green);
         } else {
-            color = getResources().getColor(R.color.sl_blue, null);
+            color = getResources().getColor(R.color.sl_terbium_green, null);
         }
         if (scannerProgress.getIndeterminateDrawable() != null) {
             scannerProgress.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
         } else {
             Timber.d("scannerProgress indeterminate drawable is null");
         }
+    }
+
+    private void initializeItems() {
+        bottomPanel.setVisibility(View.INVISIBLE);
+        toolbar.setVisibility(View.INVISIBLE);
+
+        mmLogo.setVisibility(View.VISIBLE);
+    }
+
+    private void animateItems() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        ArrayList<Animator> animatorList = new ArrayList<>();
+
+        animatorList.add(mmLogo.getVisibility() == View.VISIBLE ? animateLogo() : null);
+        animatorList.add(toolbar.getVisibility() == View.INVISIBLE ? animateToolbar() : null);
+        animatorList.add(bottomPanel.getVisibility() == View.INVISIBLE ? animateBottomPanel() : null);
+
+        animatorSet.playTogether(animatorList);
+        animatorSet.start();
+    }
+
+    private Animator animateLogo() {
+        ObjectAnimator mmLogoAnimator = ObjectAnimator.ofFloat(mmLogo, "alpha", 1.0f, 0.0f);
+        mmLogoAnimator.setDuration(animationDuration);
+        mmLogoAnimator.setInterpolator(linearInterpolator);
+        mmLogoAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mmLogo.setVisibility(View.INVISIBLE);
+            }
+        });
+        return mmLogoAnimator;
+    }
+
+    private Animator animateToolbar() {
+        toolbar.setVisibility(View.VISIBLE);
+        ObjectAnimator toolbarAnimator = ObjectAnimator.ofFloat(toolbar, "alpha", 0.0f, 1.0f);
+        toolbarAnimator.setDuration(animationDuration);
+        toolbarAnimator.setInterpolator(linearInterpolator);
+        return toolbarAnimator;
+    }
+
+    private Animator animateBottomPanel() {
+        bottomPanel.setVisibility(View.VISIBLE);
+        ObjectAnimator bottomPanelAnimator = ObjectAnimator.ofFloat(bottomPanel, "translationY", (float) bottomPanel.getHeight(), 0.0f);
+        bottomPanelAnimator.setDuration(animationDuration);
+        bottomPanelAnimator.setInterpolator(linearInterpolator);
+        return bottomPanelAnimator;
     }
 }

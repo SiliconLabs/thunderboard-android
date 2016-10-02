@@ -109,4 +109,9 @@
     <dimen name="environment_control_bottommargin">12dp</dimen>
 
     <dimen name="motion_speed_dist_padding">5dp</dimen>
+
+    <dimen name="color_led_diameter">24dp</dimen>
+    <dimen name="color_led_separation">8dp</dimen>
+
+    <dimen name="color_hue_selection_line_height">4dp</dimen>
 </resources>

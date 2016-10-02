@@ -21,8 +21,6 @@ public class DemoEnvironmentHumidityControl extends LinearLayout {
     private HumidityMeter humidityMeter;
     private TextView textView;
 
-    private Context context;
-
     public DemoEnvironmentHumidityControl(Context context) {
         this(context, null, 0);
     }
@@ -33,8 +31,6 @@ public class DemoEnvironmentHumidityControl extends LinearLayout {
 
     public DemoEnvironmentHumidityControl(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        this.context = context;
 
         Resources res = context.getResources();
 
@@ -49,8 +45,8 @@ public class DemoEnvironmentHumidityControl extends LinearLayout {
         setEnabled(false);
 
         textView = new TextView(context);
-        textView.setTextColor(res.getColor(R.color.sl_light_grey));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_M));
+        textView.setTextColor(res.getColor(R.color.sl_silicon_grey));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_S));
         textView.setPadding(0, res.getDimensionPixelSize(R.dimen.space_S), 0, 0);
         addView(textView, layoutParams);
         
@@ -59,11 +55,11 @@ public class DemoEnvironmentHumidityControl extends LinearLayout {
 
     public void setHumidity(int humidity) {
         if (isEnabled()) {
-            textView.setText(String.format(context.getString(R.string.environment_humidity_measure),
+            textView.setText(String.format(getContext().getString(R.string.environment_humidity_measure),
                     humidity));
         } else {
             textView.setText(R.string.environment_not_initialized);
         }
-        humidityMeter.setValue(humidity, 0, isEnabled());
+        humidityMeter.setValue((float) humidity, isEnabled());
     }
 }

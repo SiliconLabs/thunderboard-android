@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
+import com.silabs.thunderboard.common.app.ThunderBoardConstants;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,8 +39,16 @@ public class BatteryIndicator extends FrameLayout {
         ButterKnife.bind(this, view);
     }
 
-    public void setBatteryValue(int batteryValue) {
-        batteryPercent.setText(String.format("%d%%", batteryValue));
-        batteryMeter.setValue(batteryValue);
+    public void setBatteryValue(int powerSource, int batteryValue) {
+        if (powerSource == ThunderBoardConstants.POWER_SOURCE_TYPE_UNKNOWN) {
+            batteryPercent.setText(R.string.unknown_power);
+            batteryMeter.setImageResource(R.drawable.icn_signal_unknown);
+        } else if (powerSource == ThunderBoardConstants.POWER_SOURCE_TYPE_USB) {
+            batteryPercent.setText(R.string.usb_power);
+            batteryMeter.setImageResource(R.drawable.icn_usb);
+        } else {
+            batteryPercent.setText(String.format("%d%%", batteryValue));
+            batteryMeter.setValue(batteryValue);
+        }
     }
 }

@@ -2,10 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_color">
+    android:background="@color/sl_light_grey">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -21,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_XL"
         android:layout_below="@id/toolbar"
-        android:background="@color/sl_dark_grey">
+        android:background="@color/sl_grey">
 
         <TextView
             android:id="@+id/streaming_indicator"

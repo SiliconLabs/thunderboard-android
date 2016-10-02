@@ -121,8 +121,11 @@ public class DemosPresenter {
 
             @Override
             public void onNext(NotificationEvent event) {
+                if (bleManager.handleClearMotionNotifications(event)) {
+                    return;
+                }
 
-                if(NotificationEvent.ACTION_NOTIFICATIONS_CLEAR != event.action) {
+                if(NotificationEvent.ACTION_NOTIFICATIONS_SET != event.action) {
                     return;
                 }
 
@@ -157,5 +160,9 @@ public class DemosPresenter {
                 }
             }
         };
+    }
+
+    public void resetDemoConfiguration() {
+        bleManager.clearMotionNotifications();
     }
 }

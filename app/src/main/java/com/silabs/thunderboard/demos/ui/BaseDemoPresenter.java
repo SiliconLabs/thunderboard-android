@@ -1,7 +1,11 @@
 package com.silabs.thunderboard.demos.ui;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.silabs.thunderboard.ble.BleManager;
 import com.silabs.thunderboard.ble.ThunderBoardSensor;
+import com.silabs.thunderboard.common.app.ThunderBoardType;
 import com.silabs.thunderboard.web.CloudManager;
 import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 
@@ -33,7 +37,6 @@ public abstract class BaseDemoPresenter {
     protected ThunderBoardSensor sensor;
 
     protected BaseDemoViewListener viewListener;
-
 
     public BaseDemoPresenter(BleManager bleManager, CloudManager cloudManager) {
         this.bleManager = bleManager;
@@ -103,7 +106,13 @@ public abstract class BaseDemoPresenter {
             }
             sensor.isSensorDataChanged = false;
         }
+
+        streamSampleHandler.post(streamSampleRunnable);
         isStreaming = true;
+    }
+
+    public ThunderBoardType getThunderBoardType() {
+        return bleManager.getThunderBoardType();
     }
 
     private void initFirebase() {
@@ -121,6 +130,8 @@ public abstract class BaseDemoPresenter {
             isStreaming = false;
             cloudManager.clearFirebaseReference(uniqueID);
         }
+
+        streamSampleHandler.removeCallbacks(streamSampleRunnable);
         isFirebaseInstantiated = false;
     }
 
@@ -149,4 +160,32 @@ public abstract class BaseDemoPresenter {
             }
         };
     }
+
+    // Streaming Sampler
+
+    /**
+     * Sample period (in milliseconds) for data to be collected for streaming session.
+     * Subclasses may override this to modify how frequently samples are collected.
+     *
+     * @return Sample period (in milliseconds)
+     */
+    public int streamingSamplePeriod() {
+        return 1000;
+    }
+
+    private Handler streamSampleHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            streamSampleRunnable.run();
+            return true;
+        }
+    });
+
+    private Runnable streamSampleRunnable = new Runnable() {
+        @Override
+        public void run() {
+            pushToCloud();
+            streamSampleHandler.postDelayed(streamSampleRunnable, streamingSamplePeriod());
+        }
+    };
 }

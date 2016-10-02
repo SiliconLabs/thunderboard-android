@@ -2,7 +2,8 @@ package com.silabs.thunderboard.ble;
 
 import android.os.SystemClock;
 
-import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import timber.log.Timber;
 
@@ -133,7 +134,9 @@ public class ThunderBoardSensorMotion extends ThunderBoardSensor {
         isSensorDataChanged = true;
     }
 
-    public static class SensorData {
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
+    public static class SensorData implements ThunderboardSensorData {
         @Override
         public String toString() {
             return String.format("%f %f %f %f %f %f", ax, ay, az, ox, oy, oz);
@@ -156,5 +159,20 @@ public class ThunderBoardSensorMotion extends ThunderBoardSensor {
         public double speed;
         public double distance;
 
+        @Override
+        public ThunderboardSensorData clone() {
+            SensorData d = new SensorData();
+
+            d.ax = ax;
+            d.ay = ay;
+            d.az = az;
+            d.ox = ox;
+            d.oy = oy;
+            d.oz = oz;
+            d.distance = distance;
+            d.speed = speed;
+
+            return d;
+        }
     }
 }
