@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hall_state_container"
+    style="@style/environment_box"
+    android:orientation="vertical"
+    tools:layout_width="200dp"
+    >
+
+    <TextView
+        style="@style/envtitle"
+        android:text="@string/environment_hall_state"
+        />
+
+    <FrameLayout style="@style/envbox">
+
+        <com.silabs.thunderboard.demos.ui.DemoEnvironmentHallStateControl
+            android:id="@+id/hall_state"
+            style="@style/envcontrol"
+            />
+    </FrameLayout>
+</LinearLayout>

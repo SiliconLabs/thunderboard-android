@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/device_item_height">
+
+    <com.silabs.thunderboard.scanner.ui.SignalStrengthIndicator
+        style="@style/wrap"
+        android:id="@+id/signal_strength"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_S"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        style="@style/wrap"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/signal_strength"
+        android:layout_marginLeft="@dimen/space_S"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/l_silicon_grey"
+            android:id="@+id/device_name"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+        <TextView
+            style="@style/s_silicon_grey"
+            android:id="@+id/device_address" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/divider_line"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
+

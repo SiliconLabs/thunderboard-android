@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_S"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/iodemo_margin"
+    android:paddingRight="@dimen/iodemo_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/iodemo_lights"
+        android:textAllCaps="true"
+        android:textColor="@color/sl_light_grey"
+        android:textSize="@dimen/text_size_M"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_XS"
+        android:background="@color/sl_medium_grey"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/space_S"
+        android:paddingBottom="@dimen/space_S"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.silabs.thunderboard.demos.ui.LEDControl
+                android:id="@+id/led0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:highlightColor="blue"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.silabs.thunderboard.demos.ui.LEDControl
+                android:id="@+id/led1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:highlightColor="green"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

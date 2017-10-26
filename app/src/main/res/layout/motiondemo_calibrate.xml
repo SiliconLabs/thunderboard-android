@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calibrate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:background="@drawable/calibrate_background_selector"
+    android:text="@string/motion_calibrate"
+    android:textAllCaps="true"
+    android:textColor="@color/calibrate_text_selector"
+    android:textSize="@dimen/motion_textsize_small"
+    android:textStyle="bold"/>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrap"
+    android:orientation="horizontal" >
+
+    <ImageView
+        style="@style/wrap"
+        android:id="@+id/color_switch_image"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_led_lights_off"/>
+
+    <TextView
+        style="@style/m_silicon_grey"
+        android:id="@+id/color_switch_text"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/space_XS"
+        android:text="@string/off"/>
+
+</LinearLayout>

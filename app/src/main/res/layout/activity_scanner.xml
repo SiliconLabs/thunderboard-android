@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match"
+    android:background="@color/sl_terbium_green">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/scanner_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:theme="@style/SearchToolbar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/Popup" />
+
+    <LinearLayout
+        style="@style/block"
+        android:id="@+id/logo_block"
+        android:layout_below="@id/scanner_toolbar"
+        android:orientation="vertical">
+        
+        <ImageView
+            style="@style/wrap"
+            android:id="@+id/mm_logo"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo_splash_mm" />
+
+        <ImageView
+            style="@style/wrap"
+            android:layout_marginTop="@dimen/space_XXL"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo_splash_thunderboard" />
+    </LinearLayout>
+
+    <ImageView
+        style="@style/wrap"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/space_S"
+        android:src="@drawable/logo_splash"/>
+
+    <!-- Bottom panel -->
+    <FrameLayout
+        style="@style/match"
+        android:id="@+id/bottom_panel"
+        android:layout_below="@id/logo_block"
+        android:layout_marginTop="@dimen/space_SM"
+        android:background="@color/sl_white"
+        android:visibility="invisible">
+
+        <!-- Devices found -->
+        <RelativeLayout
+            android:id="@+id/bluetooth_devices_view"
+            style="@style/match"
+            android:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                style="@style/match"
+                android:id="@+id/scanner_device_list"
+                android:scrollbars="vertical" />
+
+        </RelativeLayout>
+
+        <!-- devices not found (yet) -->
+        <RelativeLayout
+            style="@style/match"
+            android:id="@+id/bluetooth_no_devices_view"
+            android:paddingLeft="@dimen/space_SM"
+            android:paddingRight="@dimen/space_SM"
+            android:visibility="gone">
+
+            <LinearLayout
+                style="@style/wrap"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/l_silicon_grey"
+                    android:id="@+id/scanner_status_report"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal" />
+
+                <ProgressBar
+                    style="@style/wrap"
+                    android:id="@+id/scanner_progress"
+                    android:layout_marginTop="@dimen/space_SM"
+                    android:layout_gravity="center_horizontal"
+                    android:indeterminate="true"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

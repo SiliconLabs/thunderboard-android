@@ -1,0 +1,13 @@
+.gradle
+.idea
+.DS_Store
+/bin
+/db
+/gen
+/local.properties
+/.apt_generated
+**/*.iml
+**/.idea
+**/build
+**/*.jks
+/keystores

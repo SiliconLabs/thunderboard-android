@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/environment_box"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/envtitle"
+        android:text="@string/environment_sound_level"
+        tools:text="@string/environment_sound_level" />
+
+    <FrameLayout style="@style/envbox">
+
+        <com.silabs.thunderboard.demos.ui.DemoEnvironmentSoundLevelControl
+            android:id="@+id/sound_level"
+            style="@style/envcontrol" />
+    </FrameLayout>
+</LinearLayout>
+

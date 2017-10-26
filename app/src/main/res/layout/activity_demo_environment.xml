@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match"
+    >
+
+    <LinearLayout
+        style="@style/block"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_XS"
+        android:paddingLeft="@dimen/space_S"
+        android:paddingRight="@dimen/space_S"
+        android:paddingTop="@dimen/space_XS"
+        >
+
+        <LinearLayout
+            style="@style/block"
+            android:layout_marginTop="@dimen/space_XS"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <include
+                layout="@layout/environmentdemo_temperature"/>
+
+            <include
+                layout="@layout/environmentdemo_humidity"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/block"
+            android:layout_marginBottom="@dimen/space_XS"
+            android:layout_marginTop="@dimen/space_XS"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <include
+                layout="@layout/environmentaldemo_ambient_light"/>
+
+            <include
+                layout="@layout/environmentdemo_uv"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/environmentdemo_pressure_sound_block"
+            style="@style/block"
+            android:layout_marginBottom="@dimen/space_XS"
+            android:layout_marginTop="@dimen/space_XS"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <include
+                layout="@layout/environmentdemo_pressure"/>
+
+            <include
+                layout="@layout/environmentdemo_sound_level"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/environmentdemo_air_quality_block"
+            style="@style/block"
+            android:layout_marginBottom="@dimen/space_XS"
+            android:layout_marginTop="@dimen/space_XS"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <include
+                layout="@layout/environmentdemo_co2"/>
+
+            <include
+                layout="@layout/environmentdemo_voc"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/environmentdemo_magnetic_field_block"
+            style="@style/block"
+            android:layout_marginBottom="@dimen/space_XS"
+            android:layout_marginTop="@dimen/space_XS"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <include
+                layout="@layout/environmentdemo_hall_strength"/>
+
+            <include
+                layout="@layout/environmentdemo_hall_state"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+

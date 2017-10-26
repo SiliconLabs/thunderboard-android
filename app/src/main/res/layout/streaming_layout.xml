@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_XL"
+    android:background="@color/sl_dark_grey">
+
+    <TextView
+        android:id="@+id/streaming_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/iodemo_margin"
+        android:textAllCaps="true"
+        android:textColor="@color/sl_white"
+        android:textSize="@dimen/text_size_M"/>
+
+    <Switch
+        android:id="@+id/streaming_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/iodemo_margin"
+        android:theme="@style/ColorBlueSwitchStyle"/>
+
+</RelativeLayout>

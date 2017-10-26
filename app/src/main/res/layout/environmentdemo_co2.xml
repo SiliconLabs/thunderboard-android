@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/environment_box"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/envtitle"
+        android:text="@string/environment_co2"
+        tools:text="CARBON DIOXIDE" />
+
+    <FrameLayout style="@style/envbox">
+        <com.silabs.thunderboard.demos.ui.DemoEnvironmentCO2Control
+            android:id="@+id/co2"
+            style="@style/envcontrol" />
+    </FrameLayout>
+</LinearLayout>
+
+

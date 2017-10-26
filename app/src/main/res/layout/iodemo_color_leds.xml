@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/block"
+    android:background="@color/sl_white"
+    android:orientation="vertical"
+    android:padding="@dimen/space_SM">
+
+    <RelativeLayout style="@style/block">
+
+        <com.silabs.thunderboard.demos.ui.ColorLEDsSwitch
+            android:id="@+id/iodemo_color_switch"
+            style="@style/wrap"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <com.silabs.thunderboard.demos.ui.ColorLEDs
+            android:id="@+id/iodemo_color_leds"
+            style="@style/wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <TextView
+        style="@style/m_silicon_grey"
+        android:layout_marginTop="@dimen/space_S"
+        android:text="@string/iodemo_color"
+        android:textAllCaps="true" />
+
+    <RelativeLayout
+        style="@style/block"
+        android:layout_marginTop="@dimen/space_XXS">
+
+        <com.silabs.thunderboard.demos.ui.HueBackgroundView
+            android:id="@+id/iodemo_hue_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_SM"
+            android:layout_centerVertical="true" />
+
+        <SeekBar
+            android:id="@+id/iodemo_hue_select"
+            style="@style/seekbar"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <TextView
+        style="@style/m_silicon_grey"
+        android:layout_marginTop="@dimen/space_S"
+        android:text="@string/iodemo_brightness"
+        android:textAllCaps="true" />
+
+    <SeekBar
+        android:id="@+id/iodemo_brightness_select"
+        style="@style/seekbar" />
+
+</LinearLayout>

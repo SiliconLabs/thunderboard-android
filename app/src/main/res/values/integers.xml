@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="overview_card_lines">4</integer>
+    <integer name="biography_card_lines">5</integer>
+    <integer name="tv_background_update_delay">300</integer>
+    <integer name="fragment_animation_duration">300</integer>
+
+    // LED on values
+    <integer name="led0_on">1</integer>
+    <integer name="led1_on">4</integer>
+
+    <integer name="scanner_animation_duration">300</integer>
+</resources>

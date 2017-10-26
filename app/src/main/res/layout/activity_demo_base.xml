@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sl_light_grey">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:theme="@style/SearchToolbar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/Popup" />
+
+    <RelativeLayout
+        android:id="@+id/streaming_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_XL"
+        android:layout_below="@id/toolbar"
+        android:background="@color/sl_grey">
+
+        <TextView
+            android:id="@+id/streaming_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/iodemo_margin"
+            android:textAllCaps="true"
+            android:textColor="@color/sl_white"
+            android:textSize="@dimen/text_size_M"/>
+
+        <Switch
+            android:id="@+id/streaming_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/iodemo_margin"
+            android:theme="@style/ColorBlueSwitchStyle"/>
+
+    </RelativeLayout>
+
+    <fragment
+        android:name="com.silabs.thunderboard.common.ui.ThunderBoardStatusFragment"
+        android:id="@+id/bluegecko_status_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+    <FrameLayout
+        android:id="@+id/main_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/streaming_layout"
+        android:layout_above="@id/bluegecko_status_fragment"/>
+
+
+</RelativeLayout>

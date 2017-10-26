@@ -1,0 +1,280 @@
+<resources>
+
+    <style name="wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="block">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="divider_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:background">@color/divider_line</item>
+    </style>
+
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/primary_color</item>
+    </style>
+
+    <style name="SearchToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:autoCompleteTextViewStyle">@style/SearchCursorColor</item>
+    </style>
+
+    <style name="SearchCursorColor" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+    </style>
+
+    <style name="Popup" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Tabs" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@color/primary_color</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabTextColor">@color/white_sem_trans</item>
+        <item name="tabIndicatorColor">@color/white</item>
+    </style>
+
+    <style name="ListDivider">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:color">@color/black_semi_trans</item>
+    </style>
+
+    <!-- General Text Style to be used throughout the app -->
+    <style name="TextLabel">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextBody">
+        <item name="android:textSize">@dimen/text_size_M</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextDrawerHeader">
+        <item name="android:textSize">@dimen/text_size_L</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextHeader">
+        <item name="android:textSize">@dimen/text_size_XL</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextCardHeader">
+        <item name="android:textColor">@color/grey_dark</item>
+        <item name="android:textSize">@dimen/text_size_L</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextSubHeader">
+        <item name="android:textSize">@dimen/text_size_S</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="silicon_gray_text" parent="wrap">
+        <item name="android:textColor">@color/sl_silicon_grey</item>
+    </style>
+
+    <style name="l_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_L</item>
+    </style>
+
+    <style name="m_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_M</item>
+    </style>
+
+    <style name="sm_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="s_silicon_grey" parent="silicon_gray_text">
+        <item name="android:textSize">@dimen/text_size_S</item>
+    </style>
+
+    <style name="terbium_green_text" parent="wrap">
+        <item name="android:textColor">@color/terbium_green</item>
+    </style>
+
+    <style name="sm_terbium_green" parent="terbium_green_text">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="s_terbium_green" parent="terbium_green_text">
+        <item name="android:textSize">@dimen/text_size_S</item>
+    </style>
+
+    <!-- General Text style to be used throughout the app for TextListCell -->
+    <style name="TextTitle">
+        <item name="android:textColor">@color/grey_dark</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextSubTitle">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/grey_medium</item>
+    </style>
+
+    <style name="TextListCellHeader" parent="TextTitle">
+        <item name="android:textSize">@dimen/text_size_M</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="SettingsText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/text_size_M</item>
+    </style>
+
+    <style name="TextListCellSubHeader" parent="TextSubTitle"></style>
+
+    <!-- General Text style to be used throughout the app for TextCardCell -->
+
+    <style name="TextCardCellHeader" parent="TextTitle">
+        <item name="android:lines">2</item>
+        <item name="android:textSize">@dimen/text_size_M</item>
+    </style>
+
+    <style name="TextCardCellSubHeader" parent="TextSubTitle"></style>
+
+    <!-- Outer container to use to style container layouts -->
+    <style name="Container">
+        <item name="android:paddingTop">@dimen/material_content_spacing</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="OuterCardContainer">
+        <item name="android:layout_marginLeft">@dimen/material_content_spacing</item>
+        <item name="android:layout_marginRight">@dimen/material_content_spacing</item>
+        <item name="android:layout_marginBottom">@dimen/card_margin</item>
+    </style>
+
+    <style name="InnerCardContainer">
+        <item name="android:paddingTop">@dimen/card_margin</item>
+        <item name="android:paddingBottom">@dimen/card_margin</item>
+        <item name="android:paddingLeft">@dimen/card_margin</item>
+        <item name="android:paddingRight">@dimen/card_margin</item>
+    </style>
+
+    <style name="ListItemTextContainer">
+        <item name="android:layout_marginLeft">@dimen/material_listitem_text_padding</item>
+        <item name="android:layout_marginRight">@dimen/space_S</item>
+    </style>
+
+    <style name="SeeMoreTextButton">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textColor">?attr/colorAccent</item>s
+    </style>
+
+    <style name="ReadMoreTextButton">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="CollapsingToolbarExpandedTitle" parent="Widget.Design.CollapsingToolbar">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="FloatingActionButtonBottomRight" parent="Widget.Design.FloatingActionButton">
+        <item name="android:layout_marginRight">@dimen/material_container_margin</item>
+        <item name="android:layout_marginBottom">@dimen/material_container_margin</item>
+        <item name="layout_anchorGravity">bottom|right|end</item>
+        <item name="fabSize">normal</item>
+        <!--Hack to support FAB Shadow on Lollipop -->
+        <item name="borderWidth">0dp</item>
+    </style>
+
+    <style name="CardLabel">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+        <item name="android:textColor">@color/grey_dark</item>
+    </style>
+
+    <style name="Color1SwitchStyle">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
+
+    <style name="ColorBlueSwitchStyle">
+        <item name="colorControlNormal">@color/sl_terbium_green</item>
+        <item name="colorControlActivated">@color/sl_terbium_green</item>
+        <item name="colorControlHighlight">@color/sl_terbium_green</item>
+    </style>
+
+    <!-- Demo Environment -->
+
+    <style name="envtitle" parent="sm_silicon_grey">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">left</item>
+        <item name="android:background">@drawable/clear_rect</item>
+    </style>
+
+    <style name="EnvironmentControlLabel" parent="s_silicon_grey"> 
+        <item name="android:gravity">center_horizontal</item> 
+    </style>
+
+    <style name="EnvironmentControlLabel.HallStateTampered"> 
+        <item name="android:textColor">@color/sl_red</item> 
+        <item name="android:textStyle">bold</item> 
+    </style>
+
+    <style name="envbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/white_rect</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:clipChildren">false</item>
+    </style>
+
+    <style name="envcontrol" parent="wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:paddingTop">12dp</item>
+    </style>
+
+    <style name="environment_box">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/space_XXXXL</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="seekbar" parent="block">
+        <item name="android:paddingTop">@dimen/space_S</item>
+        <item name="android:paddingBottom">@dimen/space_S</item>
+    </style>
+</resources>

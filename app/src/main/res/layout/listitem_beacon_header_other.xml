@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/block">
+
+    <TextView
+        android:id="@+id/beacon_header"
+        style="@style/sm_terbium_green"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/space_S"
+        android:layout_marginRight="@dimen/space_S"
+        android:layout_marginTop="@dimen/space_S"
+        android:text="@string/settings_other_devices"
+        android:textAllCaps="true" />
+
+</RelativeLayout>

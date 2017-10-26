@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/beacon_listitem_height">
+
+    <LinearLayout
+        style="@style/wrap"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/space_S"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/s_silicon_grey"
+            android:textColor="@color/sl_grey"
+            android:id="@+id/beacon_state" />
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:id="@+id/beacon_name" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/beacon_action"
+        android:layout_width="@dimen/beacon_button_width"
+        android:layout_height="@dimen/beacon_button_height"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_S"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAllCaps="true"
+        android:textColor="@color/sl_terbium_green"
+        android:textSize="@dimen/text_size_SM" />
+
+    <View
+        style="@style/divider_line"
+        android:layout_marginLeft="@dimen/space_S"
+        android:layout_marginRight="@dimen/space_S"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/environment_box"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        style="@style/envtitle"
+        android:text="@string/environment_hall_strength"
+        />
+
+    <FrameLayout style="@style/envbox">
+
+        <com.silabs.thunderboard.demos.ui.DemoEnvironmentHallStrengthControl
+            android:id="@+id/hall_strength"
+            style="@style/envcontrol"
+            />
+    </FrameLayout>
+</LinearLayout>

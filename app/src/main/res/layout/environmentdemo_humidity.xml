@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/environment_box"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/envtitle"
+        android:text="@string/environment_humidity"
+        tools:text="@string/environment_humidity" />
+
+    <FrameLayout style="@style/envbox">
+        <com.silabs.thunderboard.demos.ui.DemoEnvironmentHumidityControl
+            android:id="@+id/humidity"
+            style="@style/envcontrol" />
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,161 @@
+<resources>
+    <string name="app_name">Thunderboard</string>
+    <string name="thunderboard">Thunderboard</string>
+    <string name="ok">OK</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_history">History</string>
+    <string name="title_activity_scanner">Scanner</string>
+
+    <string name="scanner_signal_strength">%d dBm</string>
+    <string name="scanner_no_devices">No Devices Found</string>
+    <string name="scanner_looking_for_devices">Looking for Devices</string>
+
+    <string name="usb_power">USB Power</string>
+    <string name="unknown_power">--</string>
+    <string name="unknown">Unknown</string>
+
+    <string name="settings_personalize">Personalize</string>
+    <string name="settings_name">Name</string>
+    <string name="settings_title">Title</string>
+    <string name="settings_email">Email</string>
+    <string name="settings_phone">Phone</string>
+
+    <string name="settings_personal_info">Personal Info</string>
+    <string name="settings_cc_myself">CC myself on all emails</string>
+    <string name="settings_ok">OK</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="settings_cancel">Cancel</string>
+
+    <string name="settings_preferences">Preferences</string>
+    <string name="settings_measurements">Measurements</string>
+    <string name="settings_metric">Metric</string>
+    <string name="settings_US">US</string>
+    <string name="settings_temperature">Temperature</string>
+    <string name="settings_model_type">Motion Demo Model</string>
+    <string name="settings_celsius">&#176;C</string>
+    <string name="settings_fahrenheit">&#176;F</string>
+
+    <string-array name="temperature_array">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+
+    <string-array name="measurement_array">
+        <item>Metric</item>
+        <item>U.S.</item>
+    </string-array>
+
+    <string-array name="model_type_array">
+        <item>Board</item>
+        <item>Car</item>
+    </string-array>
+
+    <string name="settings_beacon_notifications">Beacon Notifications</string>
+    <string name="settings_get_notification">You\'ll get a notification when an allowed Bluetooth demo device is on and in range. This helps demonstrate beaconing.</string>
+    <string name="settings_allow_beacon_notifications">Allow Beacon Notifications</string>
+    <string name="settings_allowed_devices">Allowed Demo Devices</string>
+    <string name="settings_other_devices">Other Demo Devices in range</string>
+    <string name="settings_remove">Remove</string>
+    <string name="settings_allow">Allow</string>
+    <string name="settings_found">Found</string>
+    <string name="settings_connected">Connected</string>
+    <string name="settings_not_connected">Not Connected</string>
+
+    <string name="settings_version" formatted="false">Version %s | &#169; Silicon Labs %s </string>
+
+    <string name="demos">Demos</string>
+    <string name="demo_motion">Motion</string>
+    <string name="demo_environment">Environment</string>
+    <string name="demo_io">I/O</string>
+
+    <string name="demo_open_in_browser">Open in browser</string>
+
+    <string name="demo_stream_to_cloud">Stream to cloud</string>
+    <string name="demo_streaming_to_cloud">Streaming to cloud</string>
+
+    <string name="status_connected">Connected to</string>
+    <string name="status_disconnected">Disconnected from</string>
+    <string name="status_connection_lost">Connection Lost</string>
+    <string name="status_connection_lost_long">Connection with %s has been lost.</string>
+    <string name="status_unable_to_connect">Unable to Connect</string>
+    <string name="status_unable_to_connect_long">Unable to connect with %s.</string>
+    <string name="status_connecting">Connecting to</string>
+    <string name="status_disconnecting">Disconnecting from</string>
+    <string name="status_no_firmware_version">- -</string>
+
+    <string name="iodemo">I/O Demo</string>
+    <string name="iodemo_switches">Switches</string>
+    <string name="iodemo_lights">Lights</string>
+    <string name="iodemo_alert_configuration_failed">Could not configure IO</string>
+    <string name="iodemo_alert_action_failed">Could not update IO</string>
+    <string name="iodemo_color">Color</string>
+    <string name="iodemo_brightness">Brightness</string>
+
+    <string name="share">Share</string>
+    <string name="share_link">Share link</string>
+    <string name="share_subject">Silicon Labs Demo Device Data</string>
+    <string name="share_message">Here is the link to access your synced data. It will remain active for 30 days after your sync ends.\n%1$s\n\nLearn more about Thunderboard at %2$s.</string>
+
+    <string name="motion_orientation">Orientation</string>
+    <string name="motion_acceleration">Acceleration</string>
+    <string name="motion_x">X:</string>
+    <string name="motion_y">Y:</string>
+    <string name="motion_z">Z:</string>
+    <string name="motion_orientation_degree">%.0f&#176;</string>
+    <string name="motion_acceleration_g">%.02f g</string>
+
+    <string name="motion_wheel">Wheel</string>
+    <string name="motion_diameter">DIA:</string>
+    <string name="motion_diameter_metric">%.02f cm</string>
+    <string name="motion_diameter_us">%.02f in</string>
+
+    <string name="motion_calibrate">Calibrate</string>
+    <string name="motion_calibrating">Calibrating</string>
+    <string name="motion_calibrating_message">Please don\'t move the Thunderboard while it\'s calibrating its position and orientation.</string>
+    <string name="motion_speed">Speed</string>
+    <string name="motion_distance">Distance</string>
+
+    <string name="motion_rpm">rpm</string>
+    <string name="motion_total_revolutions">Total Revolutions</string>
+
+    <string name="motion_feet_per_second">ft/s</string>
+    <string name="motion_feet">ft</string>
+    <string name="motion_meters_per_second">m/s</string>
+    <string name="motion_meters">m</string>
+
+    <string name="environment_temp">Temperature</string>
+    <string name="environment_humidity">Humidity</string>
+    <string name="environment_ambient">Ambient Light</string>
+    <string name="environment_uv">UV Index</string>
+    <string name="environment_uv_unit">%d</string>
+    <string name="environment_pressure">Air Pressure</string>
+    <string name="environment_sound_level">Sound Level</string>
+    <string name="environment_co2">Carbon Dioxide</string>
+    <string name="environment_vocs">VOCs</string>
+    <string name="environment_hall_strength">Magnetic Field</string>
+    <string name="environment_hall_state">Door State</string>
+
+    <string name="environment_temp_f">%.1f&#176;F</string>
+    <string name="environment_temp_c">%.1f&#176;C</string>
+    <string name="environment_humidity_measure">%d%%</string>
+    <string name="environment_ambient_irradiance">%.2f W / m&#178;</string>
+    <string name="environment_ambient_lx">%d lx</string>
+    <string name="environment_pressure_measure">%d mbar</string>
+    <string name="environment_sound_level_measure">%d dB</string>
+    <string name="environment_co2_measure">%d ppm</string>
+    <string name="environment_voc_measure">%d ppb</string>
+    <string name="environment_hall_strength_measure">%.0f uT</string>
+    <string name="environment_hall_state_opened">Opened</string>
+    <string name="environment_hall_state_tampered">Tampered</string>
+    <string name="environment_hall_state_closed">Closed</string>
+    <string name="environment_hall_state_reset_tamper">Tap to reset</string>
+    <string name="environment_not_initialized">--</string>
+
+    <string name="ble_not_supported_title">Attention</string>
+    <string name="ble_not_supported_message">This device does not support BLE.</string>
+    <string name="ble_not_supported_button">Quit</string>
+
+    <string name="permission_needed_coarse_location">Coarse location access needed to detect beacons in the background.</string>
+</resources>

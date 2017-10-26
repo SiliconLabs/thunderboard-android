@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match">
+
+    <LinearLayout
+        style="@style/block"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/iodemo_margin"
+        android:paddingRight="@dimen/iodemo_margin" >
+
+        <TextView
+            style="@style/m_silicon_grey"
+            android:layout_marginTop="@dimen/space_S"
+            android:layout_gravity="left"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/iodemo_switches"
+            android:textAllCaps="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_XXXXL"
+            android:layout_marginTop="@dimen/space_XS"
+            android:background="@color/sl_white"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.silabs.thunderboard.demos.ui.SwitchControl
+                    style="@style/wrap"
+                    android:id="@+id/switch0"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.silabs.thunderboard.demos.ui.SwitchControl
+                    style="@style/wrap"
+                    android:id="@+id/switch1"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/m_silicon_grey"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/space_S"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/iodemo_lights"
+            android:textAllCaps="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_XXXXL"
+            android:layout_marginTop="@dimen/space_XS"
+            android:layout_marginBottom="@dimen/space_XS"
+            android:background="@color/sl_white"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/space_S"
+            android:paddingBottom="@dimen/space_S"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.silabs.thunderboard.demos.ui.LEDControl
+                    style="@style/wrap"
+                    android:id="@+id/led0"
+                    android:layout_centerInParent="true"
+                    app:highlightColor="green"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.silabs.thunderboard.demos.ui.LEDControl
+                    style="@style/wrap"
+                    android:id="@+id/led1"
+                    android:layout_centerInParent="true"
+                    app:highlightColor="green"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.silabs.thunderboard.demos.ui.ColorLEDControl
+            style="@style/block"
+            android:id="@+id/color_led_control"
+            android:layout_marginTop="@dimen/space_XS"
+            android:layout_marginBottom="@dimen/space_XS" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match"
+    android:background="@color/sl_white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:theme="@style/SearchToolbar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/Popup" />
+
+    <LinearLayout
+        style="@style/match"
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/s_silicon_grey"
+            android:padding="@dimen/space_S"
+            android:text="@string/settings_get_notification" />
+
+        <View
+            style="@style/divider_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/material_listitem_height"
+            android:paddingLeft="@dimen/space_S"
+            android:paddingRight="@dimen/space_S">
+
+            <TextView
+                style="@style/sm_silicon_grey"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:text="@string/settings_allow_beacon_notifications" />
+
+            <Switch
+                style="@style/wrap"
+                android:id="@+id/beacon_switch"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:theme="@style/ColorBlueSwitchStyle"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/divider_line" />
+
+        <android.support.v7.widget.RecyclerView
+            style="@style/match"
+            android:id="@+id/demo_devices_recycler_view" />
+    </LinearLayout>
+</RelativeLayout>

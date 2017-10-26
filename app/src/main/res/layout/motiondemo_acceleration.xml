@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/space_S">
+
+    <TextView
+        style="@style/sm_silicon_grey"
+        android:layout_gravity="left"
+        android:text="@string/motion_acceleration"
+        android:maxLines="1"
+        android:textAllCaps="true" />
+
+    <RelativeLayout
+        style="@style/block"
+        android:layout_marginTop="@dimen/space_XS">
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/motion_x"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:id="@+id/acceleration_x"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/block">
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/motion_y"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:id="@+id/acceleration_y"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/block">
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/motion_z"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:id="@+id/acceleration_z"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light" />
+    </RelativeLayout>
+
+</LinearLayout>

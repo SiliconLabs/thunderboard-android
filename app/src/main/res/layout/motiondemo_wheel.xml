@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match"
+    android:id="@+id/wheel_container"
+    android:layout_marginTop="@dimen/space_S"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/sm_silicon_grey"
+        android:layout_gravity="left"
+        android:text="@string/motion_wheel"
+        android:textAllCaps="true" />
+
+    <RelativeLayout
+        style="@style/block"
+        android:layout_marginTop="@dimen/space_XS">
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/motion_diameter"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/sm_silicon_grey"
+            android:id="@+id/wheel_diameter"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-light" />
+    </RelativeLayout>
+
+</LinearLayout>

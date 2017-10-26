@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/sl_white">
+
+    <LinearLayout
+        android:id="@+id/device_info_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/space_XS"
+        android:layout_marginTop="@dimen/space_XS"
+        android:layout_marginBottom="@dimen/space_XS"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/device_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:textColor="@color/sl_grey"
+            android:textSize="@dimen/text_size_XS"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textColor="@color/sl_silicon_grey"
+            android:textSize="@dimen/text_size_SM"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/device_firmware"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/sl_silicon_grey"
+            android:textSize="@dimen/text_size_XS"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
+
+    <com.silabs.thunderboard.common.ui.BatteryIndicator
+        android:id="@+id/battery_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/space_XS"
+        android:layout_marginBottom="@dimen/space_XS"
+        android:layout_marginRight="@dimen/space_XS"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/device_info_holder"
+        android:indeterminate="true"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal" />
+</RelativeLayout>

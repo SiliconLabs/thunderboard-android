@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/block"
+    android:id="@android:id/text1"
+    android:textColor="@color/sl_silicon_grey"
+    android:textSize="@dimen/text_size_SM" />

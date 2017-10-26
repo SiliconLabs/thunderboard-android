@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/space_S"
+        android:paddingRight="@dimen/space_S"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:id="@+id/indicators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <include layout="@layout/motiondemo_orientation" />
+
+            <include layout="@layout/motiondemo_acceleration" />
+
+            <include layout="@layout/motiondemo_wheel" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/indicators"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/indicators"
+            android:layout_marginRight="@dimen/space_S">
+
+            <TextView
+                android:id="@+id/calibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/space_XS"
+                android:background="@drawable/calibrate_background_selector"
+                android:text="@string/motion_calibrate"
+                android:textAllCaps="true"
+                android:textColor="@color/calibrate_text_selector"
+                android:textSize="@dimen/motion_textsize_small"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/car_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_alignParentTop="true"
+                android:layout_above="@id/calibrate"
+                android:layout_marginTop="@dimen/space_XS"
+                android:layout_marginBottom="@dimen/space_XS"/>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/speed_distance_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/speed_distance_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/space_S"
+            android:paddingRight="@dimen/space_S"
+            android:weightSum="2">
+
+            <include layout="@layout/motiondemo_speed" />
+
+            <include layout="@layout/motiondemo_distance" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

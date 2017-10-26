@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "119272382743",
+    "firebase_url": "https://thundercloud-40c56.firebaseio.com",
+    "project_id": "thundercloud-40c56",
+    "storage_bucket": "thundercloud-40c56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119272382743:android:9c010623746e8c09",
+        "android_client_info": {
+          "package_name": "com.silabs.thunderboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119272382743-s6pueppukm6ahvveujld8l67fphd8s3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi5d0s8e1gxL4KLINc3nO7inC0pizmYIc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119272382743-s6pueppukm6ahvveujld8l67fphd8s3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

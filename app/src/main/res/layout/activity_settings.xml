@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/match"
+    android:background="@color/sl_white">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/SearchToolbar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/Popup" />
+
+    <ScrollView
+        style="@style/match"
+        android:layout_below="@id/toolbar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/block"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/space_S"
+            android:paddingRight="@dimen/space_S">
+
+            <TextView
+                style="@style/sm_terbium_green"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_S"
+                android:layout_gravity="left"
+                android:text="@string/settings_personal_info"
+                android:textAllCaps="true" />
+
+            <!-- name -->
+            <RelativeLayout
+                android:id="@+id/name_display"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/m_silicon_grey"
+                    android:id="@+id/name_display_text"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/space_XXS"
+                    android:hint="@string/settings_name"
+                    android:textColorHint="@color/sl_grey" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="gone">
+
+                <EditText
+                    style="@style/m_silicon_grey"
+                    android:layout_width="match_parent"
+                    android:id="@+id/name_edit_text"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/transparent"
+                    android:padding="0dp"
+                    android:singleLine="true"/>
+
+                <TextView
+                    style="@style/s_terbium_green"
+                    android:layout_above="@id/name_edit_text"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_name" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/sl_terbium_green"/>
+
+            </RelativeLayout>
+
+            <!-- title -->
+            <RelativeLayout
+                android:id="@+id/title_display"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/m_silicon_grey"
+                    android:id="@+id/title_display_text"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/space_XXS"
+                    android:hint="@string/settings_title"
+                    android:textColorHint="@color/sl_grey" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/title_edit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="gone">
+
+                <EditText
+                    style="@style/m_silicon_grey"
+                    android:id="@+id/title_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/transparent"
+                    android:padding="0dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/s_terbium_green"
+                    android:layout_above="@id/title_edit_text"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_title" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/sl_terbium_green" />
+
+            </RelativeLayout>
+
+            <!-- email -->
+            <RelativeLayout
+                android:id="@+id/email_display"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/m_silicon_grey"
+                    android:id="@+id/email_display_text"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/space_XXS"
+                    android:hint="@string/settings_email"
+                    android:textColorHint="@color/sl_grey"/>
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/email_edit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="gone">
+
+                <EditText
+                    style="@style/m_silicon_grey"
+                    android:layout_width="match_parent"
+                    android:id="@+id/email_edit_text"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/transparent"
+                    android:inputType="textEmailAddress"
+                    android:padding="0dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/s_terbium_green"
+                    android:layout_above="@id/email_edit_text"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_email" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/sl_terbium_green" />
+
+            </RelativeLayout>
+
+            <!-- phone -->
+            <RelativeLayout
+                android:id="@+id/phone_display"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/m_silicon_grey"
+                    android:id="@+id/phone_display_text"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/space_XXS"
+                    android:hint="@string/settings_phone"
+                    android:textColorHint="@color/sl_grey" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/phone_edit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_personal_info_height"
+                android:visibility="gone">
+
+                <EditText
+                    style="@style/m_silicon_grey"
+                    android:layout_width="match_parent"
+                    android:id="@+id/phone_edit_text"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/transparent"
+                    android:inputType="phone"
+                    android:padding="0dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    style="@style/s_terbium_green"
+                    android:layout_above="@id/phone_edit_text"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_phone" />
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/sl_terbium_green" />
+
+            </RelativeLayout>
+
+            <!-- not used as per the latest requirement -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="@dimen/material_listitem_height">
+
+                <TextView
+                    style="@style/sm_silicon_grey"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_cc_myself" />
+
+                <Switch
+                    android:id="@+id/cc_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/divider_line" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/sm_terbium_green"
+                android:layout_marginTop="@dimen/space_M"
+                android:layout_gravity="left"
+                android:text="@string/settings_preferences"
+                android:textAllCaps="true" />
+
+            <!-- Measurement -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_listitem_height">
+
+                <LinearLayout
+                    style="@style/block"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/s_terbium_green"
+                        android:layout_marginTop="@dimen/space_S"
+                        android:text="@string/settings_measurements" />
+
+                    <Spinner
+                        style="@style/block"
+                        android:id="@+id/measurement_spinner"
+                        android:layout_marginTop="@dimen/space_XS"
+                        android:layout_marginBottom="@dimen/space_XS"
+                        android:textColor="@color/sl_silicon_grey"
+                        android:textSize="@dimen/text_size_SM" />
+
+                </LinearLayout>
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+            <!-- Temperature -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_listitem_height">
+
+                <LinearLayout
+                    style="@style/block"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/s_terbium_green"
+                        android:layout_marginTop="@dimen/space_S"
+                        android:text="@string/settings_temperature" />
+
+                    <Spinner
+                        style="@style/block"
+                        android:id="@+id/temperature_spinner"
+                        android:layout_marginTop="@dimen/space_XS"
+                        android:layout_marginBottom="@dimen/space_XS"
+                        android:textColor="@color/sl_silicon_grey"
+                        android:textSize="@dimen/text_size_SM" />
+                </LinearLayout>
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+            <!-- Model Type -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_listitem_height">
+
+                <LinearLayout
+                    style="@style/block"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/s_terbium_green"
+                        android:layout_marginTop="@dimen/space_S"
+                        android:text="@string/settings_model_type" />
+
+                    <Spinner
+                        style="@style/block"
+                        android:id="@+id/model_type_spinner"
+                        android:layout_marginTop="@dimen/space_XS"
+                        android:layout_marginBottom="@dimen/space_XS"
+                        android:textColor="@color/sl_silicon_grey"
+                        android:textSize="@dimen/text_size_SM" />
+                </LinearLayout>
+
+                <View
+                    style="@style/divider_line"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/beacon_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/material_listitem_height">
+
+                <TextView
+                    style="@style/sm_silicon_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/settings_beacon_notifications" />
+
+                <TextView
+                    style="@style/sm_silicon_grey"
+                    android:id="@+id/beacons_status"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/material_container_margin" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/s_silicon_grey"
+                android:id="@+id/version_info"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_XS"
+                android:layout_marginBottom="@dimen/space_S"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
