@@ -14,24 +14,24 @@ import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.demos.model.LedRGB;
 import com.silabs.thunderboard.demos.model.LedRGBState;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ColorLEDControl extends FrameLayout {
 
-    @Bind(R.id.iodemo_color_leds)
+    @BindView(R.id.iodemo_color_leds)
     ColorLEDs colorLEDs;
 
-    @Bind(R.id.iodemo_hue_select)
+    @BindView(R.id.iodemo_hue_select)
     SeekBar hueSelect;
 
-    @Bind(R.id.iodemo_brightness_select)
+    @BindView(R.id.iodemo_brightness_select)
     SeekBar brightnessSelect;
 
-    @Bind(R.id.iodemo_color_switch)
+    @BindView(R.id.iodemo_color_switch)
     ColorLEDsSwitch colorSwitch;
 
-    @Bind(R.id.iodemo_hue_background)
+    @BindView(R.id.iodemo_hue_background)
     HueBackgroundView hueBackgroundView;
 
     private float hue; // from 0 to 360

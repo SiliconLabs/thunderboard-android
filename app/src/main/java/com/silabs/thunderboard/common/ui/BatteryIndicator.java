@@ -10,15 +10,15 @@ import android.widget.TextView;
 import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.common.app.ThunderBoardConstants;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BatteryIndicator extends FrameLayout {
 
-    @Bind(R.id.battery_percent)
+    @BindView(R.id.battery_percent)
     TextView batteryPercent;
 
-    @Bind(R.id.battery_meter)
+    @BindView(R.id.battery_meter)
     BatteryMeter batteryMeter;
 
     public BatteryIndicator(Context context) {

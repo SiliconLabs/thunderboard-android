@@ -9,7 +9,7 @@ import com.silabs.thunderboard.demos.model.HallState;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -19,43 +19,43 @@ import static com.silabs.thunderboard.common.app.ThunderBoardConstants.POWER_SOU
 
 public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnvironmentListener {
 
-    @Bind(R.id.temperature)
+    @BindView(R.id.temperature)
     DemoEnvironmentTemperatureControl temperatureControl;
 
-    @Bind(R.id.humidity)
+    @BindView(R.id.humidity)
     DemoEnvironmentHumidityControl humidityControl;
 
-    @Bind(R.id.ambient_light)
+    @BindView(R.id.ambient_light)
     DemoEnvironmentAmbientLightControl ambientLightControl;
 
-    @Bind(R.id.uv_index)
+    @BindView(R.id.uv_index)
     DemoEnvironmentUVControl uvIndexControl;
 
-    @Bind(R.id.environmentdemo_pressure_sound_block)
+    @BindView(R.id.environmentdemo_pressure_sound_block)
     View blockPressureAndSound;
 
-    @Bind(R.id.pressure)
+    @BindView(R.id.pressure)
     DemoEnvironmentPressureControl pressureControl;
 
-    @Bind(R.id.sound_level)
+    @BindView(R.id.sound_level)
     DemoEnvironmentSoundLevelControl soundLevelControl;
 
-    @Bind(R.id.environmentdemo_air_quality_block)
+    @BindView(R.id.environmentdemo_air_quality_block)
     View blockAirQuality;
 
-    @Bind(R.id.co2)
+    @BindView(R.id.co2)
     DemoEnvironmentCO2Control co2Control;
 
-    @Bind(R.id.voc)
+    @BindView(R.id.voc)
     DemoEnvironmentVOCControl vocControl;
 
-    @Bind(R.id.environmentdemo_magnetic_field_block)
+    @BindView(R.id.environmentdemo_magnetic_field_block)
     View blockMagneticField;
 
-    @Bind(R.id.hall_strength)
+    @BindView(R.id.hall_strength)
     DemoEnvironmentHallStrengthControl hallStrengthControl;
 
-    @Bind(R.id.hall_state)
+    @BindView(R.id.hall_state)
     DemoEnvironmentHallStateControl hallStateControl;
 
     private int powerSource;
@@ -79,6 +79,14 @@ public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnv
 
         presenter.setViewListener(this, deviceAddress);
         initControls();
+
+        checkFirebaseConnectivity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.clearViewListener();
     }
 
     @Override

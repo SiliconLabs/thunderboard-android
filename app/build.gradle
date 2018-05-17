@@ -1,6 +1,6 @@
 def versionMajor = 1
 def versionMinor = 2
-def versionPatch = 0
+def versionPatch = 4
 def versionBuild = {
     if (project.hasProperty("buildNumber")) {
         return project.buildNumber as int
@@ -29,8 +29,10 @@ properties.load(project.rootProject.file('keystores/thunderboard.properties').ne
  *   cloud.demo.url=https://fire-inferno-0001.firebaseapp.com/#/
  *
  */
-def cloudDataUrl = properties.getProperty('cloud.data.url')
-def cloudDemoUrl = properties.getProperty('cloud.demo.url')
+def cloudDataUrlDebug = properties.getProperty('cloud.data.url.debug')
+def cloudDemoUrlDebug = properties.getProperty('cloud.demo.url.debug')
+def cloudDataUrlRelease = properties.getProperty('cloud.data.url.release')
+def cloudDemoUrlRelease = properties.getProperty('cloud.demo.url.release')
 
 /* signing configs */
 def sf = properties.getProperty('store.file')  // ../keystores/storeFile.jks
@@ -39,28 +41,37 @@ def ka = properties.getProperty('key.alias')
 def kp = properties.getProperty('key.password')
 
 /* firebase key */
-def keyFirebase = properties.getProperty('key.firebase')
+def keyFirebaseDebug = properties.getProperty('key.firebase.debug')
+def keyFirebaseRelease = properties.getProperty('key.firebase.release')
+
+
+
 
 buildscript {
     repositories {
         jcenter()
+        google()
     }
-
     dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        println("android_studio= " + android_studio.toString())
+        if (android_studio ==3){
+            classpath 'com.android.tools.build:gradle:3.0.0'
+            classpath 'com.google.gms:google-services:3.0.0'
+        } else {
+            classpath 'com.android.tools.build:gradle:2.3.3'
+            classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        }
     }
 }
 
 
 //apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'de.felixschulze.gradle.hockeyapp'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
-
+    buildToolsVersion '26.0.2'
     signingConfigs {
         release {
             storeFile file("${sf}")
@@ -79,10 +90,16 @@ android {
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         buildConfigField "String", "BRANCH_NAME", "\"${gitBranchName}\""
-        buildConfigField 'String', 'CLOUD_DATA_URL', "\"${cloudDataUrl}\""
-        buildConfigField 'String', 'CLOUD_DEMO_URL', "\"${cloudDemoUrl}\""
-        buildConfigField 'String', 'KEY_FIREBASE', "\"${keyFirebase}\""
         buildConfigField 'String', 'MICROSITE_URL', "\"http://www.silabs.com/thunderboard\""
+        //Android 3.0
+        if (android_studio == 3){
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    includeCompileClasspath false
+                }
+            }
+            multiDexEnabled true
+        }
     }
 
     compileOptions {
@@ -93,6 +110,7 @@ android {
     dexOptions {
         preDexLibraries = preDexEnabled
     }
+
 
     packagingOptions {
         // recommended from Firebase
@@ -106,17 +124,32 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField 'String', 'CLOUD_DATA_URL', "\"${cloudDataUrlRelease}\""
+            buildConfigField 'String', 'CLOUD_DEMO_URL', "\"${cloudDemoUrlRelease}\""
+            buildConfigField 'String', 'KEY_FIREBASE', "\"${keyFirebaseRelease}\""
+        }
+        debug {
+            buildConfigField 'String', 'CLOUD_DATA_URL', "\"${cloudDataUrlDebug}\""
+            buildConfigField 'String', 'CLOUD_DEMO_URL', "\"${cloudDemoUrlDebug}\""
+            buildConfigField 'String', 'KEY_FIREBASE', "\"${keyFirebaseDebug}\""
         }
     }
 
     // Rename the output apk
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            // don't use gitSha with dev builds because AS gets confused
-            def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${versionName}-${gitSha}" : "${projectName}-${variant.name}-${versionName}"
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                output.outputFile = file("$project.buildDir/${filePrefix}.apk")
+        if (android_studio == 3){
+            variant.outputs.all {
+                def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${gitSha}" : "${projectName}-${variant.name}"
+                outputFileName = "$project.buildDir/${filePrefix}.apk"
+            }
+        } else {
+            variant.outputs.each { output ->
+                def outputFile = output.outputFile
+                //don't use gitSha with dev builds because AS gets confused
+                def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${gitSha}" : "${projectName}-${variant.name}"
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    output.outputFile = file("$project.buildDir/${filePrefix}.apk")
+                }
             }
         }
     }
@@ -124,6 +157,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.2'
     // Android
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
@@ -131,21 +165,25 @@ dependencies {
     compile 'com.android.support:mediarouter-v7:23.3.0'
     compile 'com.android.support:palette-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
+    // dagger
+    compile 'com.google.dagger:dagger:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
     // Timber
-    compile 'com.jakewharton.timber:timber:3.1.0'
+    compile 'com.jakewharton.timber:timber:4.5.1'
     // Butterknife
-    compile 'com.jakewharton:butterknife:7.0.0'
-    // Dagger 2
-    compile 'com.google.dagger:dagger:2.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile ('com.jakewharton:butterknife:8.8.1'){
+        exclude module: 'support-compat'
+    }
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //annotation?
+    compile 'org.glassfish:javax.annotation:10.0-b28'
     // RxJava, RxAndroid
     compile 'io.reactivex:rxjava:1.1.3'
     compile 'io.reactivex:rxandroid:1.1.0'
     // Gson
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.8.0'
     // Firebase
-    compile 'com.firebase:firebase-client-android:2.3.1'
+    compile 'com.firebase:firebase-client-android:2.5.2'
     // Retrofit
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
@@ -167,4 +205,3 @@ hockeyapp {
 }
 
 apply plugin: 'com.google.gms.google-services'
-

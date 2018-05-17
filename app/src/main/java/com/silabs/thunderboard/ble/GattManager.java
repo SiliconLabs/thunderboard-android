@@ -142,18 +142,19 @@ public class GattManager {
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setTemperature(temperature);
                     bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_HUMIDITY.equals(uuid)) {
                     int humidity = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
                     Timber.d("humidity: %d", humidity);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setHumidity(humidity);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_UV_INDEX.equals(uuid)) {
                     int uvIndex = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                     Timber.d("uv index: %d", uvIndex);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setUvIndex(uvIndex);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT.equals(uuid) ||
                         ThunderBoardUuids.UUID_CHARACTERISTIC_AMBIENT_LIGHT_SENSE.equals(uuid)) {
                     int ambientLight = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
@@ -162,43 +163,43 @@ public class GattManager {
                     Timber.d("ambientLight: %d", ambientLightLong);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setAmbientLight(ambientLightLong);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_SOUND_LEVEL.equals(uuid)) {
                     int soundLevel = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 0);
                     Timber.d("sound level: %d", soundLevel);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setSoundLevel(soundLevel);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_PRESSURE.equals(uuid)) {
                     long pressure = (long) characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
                     Timber.d("pressure: %d", pressure);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setPressure(pressure);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_CO2_READING.equals(uuid)) {
                     int co2Level = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
                     Timber.d("C02 level: %d ppm", co2Level);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setCO2Level(co2Level);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_TVOC_READING.equals(uuid)) {
                     int tvocLevel = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
                     Timber.d("TVOC level: %d ppb", tvocLevel);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setTVOCLevel(tvocLevel);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_FIELD_STRENGTH.equals(uuid)) {
                     long hallStrength = (long) characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT32, 0);
                     Timber.d("hall strength: %d uT", hallStrength);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setHallStrength(hallStrength);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE.equals(uuid)) {
                     @HallState int hallState = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                     Timber.d("hall state: %d", hallState);
                     ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                     sensor.setHallState(hallState);
-                    bleManager.selectedDeviceMonitor.onNext(device);
+                    bleManager.environmentReadMonitor.onNext(new EnvironmentEvent(device, uuid));
                 } else if (ThunderBoardUuids.UUID_CHARACTERISTIC_CSC_FEATURE.equals(uuid)) {
                     byte cscFeature = ba[0];
                     Timber.d("csc feature: %02x %02x", ba[0], ba[1]);

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -40,10 +40,10 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
     @Inject
     DemosPresenter presenter;
 
-    @Bind(R.id.demos_toolbar)
+    @BindView(R.id.demos_toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.demos_list)
+    @BindView(R.id.demos_list)
     RecyclerView demosRecyclerView;
 
     private String deviceName;

@@ -78,6 +78,7 @@ public class DemoIOPresenter extends BaseDemoPresenter {
             public void onNext(ThunderBoardDevice device) {
                 Timber.d("device: %s", device.getName());
                 ThunderBoardSensorIo sensor = device.getSensorIo();
+                deviceAvailable = true;
                 if ( sensor == null ) {
                     return;
                 }

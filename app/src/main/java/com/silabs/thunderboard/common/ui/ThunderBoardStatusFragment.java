@@ -26,7 +26,7 @@ import com.silabs.thunderboard.demos.ui.BaseDemoActivity;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -35,19 +35,19 @@ public class ThunderBoardStatusFragment extends Fragment implements StatusViewLi
     @Inject
     StatusPresenter presenter;
 
-    @Bind(R.id.battery_indicator)
+    @BindView(R.id.battery_indicator)
     BatteryIndicator batteryIndicator;
 
-    @Bind(R.id.device_status)
+    @BindView(R.id.device_status)
     TextView deviceStatus;
 
-    @Bind(R.id.device_name)
+    @BindView(R.id.device_name)
     TextView deviceName;
 
-    @Bind(R.id.device_firmware)
+    @BindView(R.id.device_firmware)
     TextView deviceFirmware;
 
-    @Bind(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
     private ActivityComponent component;

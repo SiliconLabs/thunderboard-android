@@ -20,7 +20,7 @@ import com.silabs.thunderboard.demos.model.LedRGBState;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -29,73 +29,73 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     private static final float SCALE = 0.02f;
 
-    @Bind(R.id.car_animation)
+    @BindView(R.id.car_animation)
     FrameLayout carAnimationHolder;
 
-    @Bind(R.id.orientation_x)
+    @BindView(R.id.orientation_x)
     TextView orientationX;
 
-    @Bind(R.id.orientation_y)
+    @BindView(R.id.orientation_y)
     TextView orientationY;
 
-    @Bind(R.id.orientation_z)
+    @BindView(R.id.orientation_z)
     TextView orientationZ;
 
-    @Bind(R.id.acceleration_x)
+    @BindView(R.id.acceleration_x)
     TextView accelerationX;
 
-    @Bind(R.id.acceleration_y)
+    @BindView(R.id.acceleration_y)
     TextView accelerationY;
 
-    @Bind(R.id.acceleration_z)
+    @BindView(R.id.acceleration_z)
     TextView accelerationZ;
 
-    @Bind(R.id.speed)
+    @BindView(R.id.speed)
     TextView speedText;
 
-    @Bind(R.id.speed_units)
+    @BindView(R.id.speed_units)
     TextView speedUnitsText;
 
-    @Bind(R.id.rpm)
+    @BindView(R.id.rpm)
     TextView rpmText;
 
-    @Bind(R.id.distance)
+    @BindView(R.id.distance)
     TextView distanceText;
 
-    @Bind(R.id.distance_units)
+    @BindView(R.id.distance_units)
     TextView distanceUnitsText;
 
-    @Bind(R.id.revolutions)
+    @BindView(R.id.revolutions)
     TextView revolutionsText;
 
-    @Bind(R.id.wheel_diameter)
+    @BindView(R.id.wheel_diameter)
     TextView wheelDiameterText;
 
-    @Bind(R.id.wheel_container)
+    @BindView(R.id.wheel_container)
     LinearLayout wheelContainer;
 
-    @Bind(R.id.rpm_container)
+    @BindView(R.id.rpm_container)
     LinearLayout rpmContainer;
 
-    @Bind(R.id.linear_speed_container)
+    @BindView(R.id.linear_speed_container)
     LinearLayout linearSpeedContainer;
 
-    @Bind(R.id.revolutions_container)
+    @BindView(R.id.revolutions_container)
     LinearLayout revolutionsContainer;
 
-    @Bind(R.id.linear_distance_container)
+    @BindView(R.id.linear_distance_container)
     LinearLayout linearDistanceContainer;
 
-    @Bind(R.id.speed_distance_container)
+    @BindView(R.id.speed_distance_container)
     LinearLayout speedDistanceContainer;
 
-    @Bind(R.id.speed_distance_scroll)
+    @BindView(R.id.speed_distance_scroll)
     ScrollView speedDistanceScroll;
 
-    @Bind(R.id.speed_container)
+    @BindView(R.id.speed_container)
     LinearLayout speedContainer;
 
-    @Bind(R.id.distance_container)
+    @BindView(R.id.distance_container)
     LinearLayout distanceContainer;
 
     private AlertDialog calibratingDialog;
@@ -141,6 +141,8 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
         gdxAdapter = new DemoMotionGdxAdapter(getContext().getResources().getColor(R.color.sl_light_grey), assetType, presenter.getThunderBoardType());
         initControls();
+
+        checkFirebaseConnectivity();
     }
 
     @Override

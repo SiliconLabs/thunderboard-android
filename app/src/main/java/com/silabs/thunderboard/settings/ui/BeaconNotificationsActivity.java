@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -30,11 +30,11 @@ public class BeaconNotificationsActivity extends ThunderBoardActivity {
     private final ArrayList<ThunderBoardPreferences.Beacon> otherBeaconList = new ArrayList<>();
     @Inject
     PreferenceManager prefsManager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.beacon_switch)
+    @BindView(R.id.beacon_switch)
     Switch beaconSwitch;
-    @Bind(R.id.demo_devices_recycler_view)
+    @BindView(R.id.demo_devices_recycler_view)
     RecyclerView demodevicesRecyclerView;
 
     @Override

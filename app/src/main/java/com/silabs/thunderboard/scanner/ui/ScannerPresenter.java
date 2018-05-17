@@ -72,6 +72,7 @@ public class ScannerPresenter {
                 .subscribeOn(Schedulers.io())
                 .subscribe(discover);
         Timber.d("%d has observers %s", timestamp, bleManager.scanner.hasObservers());
+        bleManager.subscribeInterval();
     }
 
     private void unsubscribe() {
@@ -80,6 +81,7 @@ public class ScannerPresenter {
         }
         discover = null;
         Timber.d("%d has observers %s", timestamp, bleManager.scanner.hasObservers());
+        bleManager.unsubscribeInterval();
     }
 
     public void onBackPressed() {

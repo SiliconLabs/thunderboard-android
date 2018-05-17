@@ -13,7 +13,7 @@ import android.widget.ToggleButton;
 
 import com.silabs.thunderboard.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,10 +24,10 @@ public class LEDControl extends FrameLayout implements CompoundButton.OnCheckedC
     public static final int GREEN_BACKGROUND = 0;
     public static final int BLUE_BACKGROUND = 1;
 
-    @Bind(R.id.button)
+    @BindView(R.id.button)
     ToggleButton button;
 
-    @Bind(R.id.text)
+    @BindView(R.id.text)
     TextView text;
 
     private OnCheckedChangeListener checkedChangeListener;

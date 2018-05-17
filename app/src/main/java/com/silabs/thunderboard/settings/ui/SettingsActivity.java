@@ -22,7 +22,7 @@ import com.silabs.thunderboard.common.ui.ThunderBoardActivity;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
@@ -32,73 +32,73 @@ public class SettingsActivity extends ThunderBoardActivity {
     @Inject
     PreferenceManager prefsManager;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.name_display)
+    @BindView(R.id.name_display)
     View nameDisplay;
 
-    @Bind(R.id.name_display_text)
+    @BindView(R.id.name_display_text)
     TextView nameDisplayText;
 
-    @Bind(R.id.name_edit)
+    @BindView(R.id.name_edit)
     View nameEdit;
 
-    @Bind(R.id.name_edit_text)
+    @BindView(R.id.name_edit_text)
     TextView nameEditText;
 
-    @Bind(R.id.title_display)
+    @BindView(R.id.title_display)
     View titleDisplay;
 
-    @Bind(R.id.title_display_text)
+    @BindView(R.id.title_display_text)
     TextView titleDisplayText;
 
-    @Bind(R.id.title_edit)
+    @BindView(R.id.title_edit)
     View titleEdit;
 
-    @Bind(R.id.title_edit_text)
+    @BindView(R.id.title_edit_text)
     TextView titleEditText;
 
-    @Bind(R.id.email_display)
+    @BindView(R.id.email_display)
     View emailDisplay;
 
-    @Bind(R.id.email_display_text)
+    @BindView(R.id.email_display_text)
     TextView emailDisplayText;
 
-    @Bind(R.id.email_edit)
+    @BindView(R.id.email_edit)
     View emailEdit;
 
-    @Bind(R.id.email_edit_text)
+    @BindView(R.id.email_edit_text)
     TextView emailEditText;
 
-    @Bind(R.id.phone_display)
+    @BindView(R.id.phone_display)
     View phoneDisplay;
 
-    @Bind(R.id.phone_display_text)
+    @BindView(R.id.phone_display_text)
     TextView phoneDisplayText;
 
-    @Bind(R.id.phone_edit)
+    @BindView(R.id.phone_edit)
     View phoneEdit;
 
-    @Bind(R.id.phone_edit_text)
+    @BindView(R.id.phone_edit_text)
     TextView phoneEditText;
 
-    @Bind(R.id.cc_switch)
+    @BindView(R.id.cc_switch)
     Switch ccSwitch;
 
-    @Bind(R.id.measurement_spinner)
+    @BindView(R.id.measurement_spinner)
     Spinner measurementSpinner;
 
-    @Bind(R.id.temperature_spinner)
+    @BindView(R.id.temperature_spinner)
     Spinner temperatureSpinner;
 
-    @Bind(R.id.model_type_spinner)
+    @BindView(R.id.model_type_spinner)
     Spinner modelTypeSpinner;
 
-    @Bind(R.id.beacons_status)
+    @BindView(R.id.beacons_status)
     TextView beaconStatus;
 
-    @Bind(R.id.version_info)
+    @BindView(R.id.version_info)
     TextView versionInfoText;
 
     @Override

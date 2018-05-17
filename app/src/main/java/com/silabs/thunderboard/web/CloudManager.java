@@ -9,9 +9,12 @@ import android.net.NetworkInfo;
 import android.os.CountDownTimer;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
+import com.firebase.client.ValueEventListener;
+import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.ble.ThunderBoardSensor;
 import com.silabs.thunderboard.common.data.PreferenceManager;
 import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
@@ -59,11 +62,15 @@ public class CloudManager implements Firebase.AuthResultHandler {
     private Firebase rootDataSessionsReference;
     private Firebase rootDataSessionsDemoReference;
     private Firebase shortenUrlReference;
+    private Firebase connectedRef;
     private String shortUrl; // sent as web link
 
     Map<Long, Object> data;
 
     public final BehaviorSubject<Boolean> wifiMonitor = BehaviorSubject.create();
+    public final BehaviorSubject<Boolean> firebaseMonitor = BehaviorSubject.create();
+
+    private boolean isRootDataSessionsAvailable;
 
     @Inject
     public CloudManager(
@@ -89,6 +96,8 @@ public class CloudManager implements Firebase.AuthResultHandler {
         Timber.d("demo url: %s", baseDemoUrl);
 
         registerWifiUpdateReceiver();
+
+        isRootDataSessionsAvailable = false;
     }
 
     // AuthResultHandler implementation
@@ -174,12 +183,28 @@ public class CloudManager implements Firebase.AuthResultHandler {
         }
     }
 
+    public void startConnectionMonitor() {
+        connectedRef = new Firebase(baseDataUrl + context.getString(R.string.status_firebase_url_suffix));
+        connectedRef.addValueEventListener(connectionStatusListener);
+    }
+
+    public void stopConnectionMonitor() {
+        connectedRef.removeEventListener(connectionStatusListener);
+        connectedRef = null;
+    }
+
+    public boolean checkRootDataSessionsAvailable() {
+        return isRootDataSessionsAvailable;
+    }
+
     public void push(ThunderBoardSensor sensor) {
 
         try {
             long time = System.currentTimeMillis();
             Timber.d("%d: %s", time, sensor.getSensorData().toString());
-            data.put(time, sensor.getSensorData().clone());
+            if (data != null) {
+                data.put(time, sensor.getSensorData().clone());
+            }
         } catch (FirebaseException e) {
             e.printStackTrace();
             Timber.d(e.getMessage());
@@ -258,11 +283,24 @@ public class CloudManager implements Firebase.AuthResultHandler {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (!isOnline()) {
-                clearFirebaseReference("clear all references");
                 wifiMonitor.onNext(false);
             } else {
                 wifiMonitor.onNext(true);
             }
+        }
+    };
+
+    private ValueEventListener connectionStatusListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            isRootDataSessionsAvailable = dataSnapshot.getValue(Boolean.class);
+            firebaseMonitor.onNext(isRootDataSessionsAvailable);
+            Timber.d("Firebase available: %s", isRootDataSessionsAvailable);
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+            Timber.e("Firebase status notifications cancelled: %s", firebaseError.getMessage());
         }
     };
 

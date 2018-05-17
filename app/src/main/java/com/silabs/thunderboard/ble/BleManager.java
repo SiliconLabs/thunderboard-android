@@ -44,13 +44,16 @@ import org.altbeacon.beacon.Region;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -64,11 +67,15 @@ import timber.log.Timber;
 @Singleton
 public class BleManager implements RangeNotifier {
 
+    private final static long EXPIRATION_TIMER_INTERVAL = 1000;
+    private final static long MAX_AGE = 10000;
+
     public final PublishSubject<List<ThunderBoardDevice>> scanner = PublishSubject.create();
     public final BehaviorSubject<ThunderBoardDevice> selectedDeviceMonitor = BehaviorSubject.create();
     public final BehaviorSubject<StatusEvent> selectedDeviceStatusMonitor = BehaviorSubject.create();
     public final PublishSubject<MotionEvent> motionDetector = PublishSubject.create();
     public final PublishSubject<EnvironmentEvent> environmentDetector = PublishSubject.create();
+    public final PublishSubject<EnvironmentEvent> environmentReadMonitor = PublishSubject.create();
     public final BehaviorSubject<NotificationEvent> notificationsMonitor = BehaviorSubject.create();
 
     private final Context context;
@@ -77,6 +84,8 @@ public class BleManager implements RangeNotifier {
     private final BluetoothAdapter bluetoothAdapter;
 
     private final List<ThunderBoardDevice> devices = new ArrayList<>();
+    private final List<ThunderBoardDevice> activeDevices = new ArrayList<>();
+    private final Map<String, Long> deviceAgeMap = new HashMap<>();
 
     private final BeaconManager beaconManager;
     private final GattManager gattManager;
@@ -86,6 +95,8 @@ public class BleManager implements RangeNotifier {
     private Subscriber<NotificationEvent> configureMotionSubscriber;
     private Subscriber<NotificationEvent> configureEnvironmentSubscriber;
     private Subscriber<ThunderBoardDevice> configureIOSubscriber;
+
+    private Subscriber<Long> intervalSubscriber;
 
     @Inject
     public BleManager(@ForApplication Context context, PreferenceManager prefsManager) {
@@ -156,6 +167,7 @@ public class BleManager implements RangeNotifier {
             if (tbd == null) {
                 tbd = new ThunderBoardDevice(device, 0);
                 devices.add(tbd);
+                deviceAgeMap.put(tbd.getAddress(), System.currentTimeMillis());
             }
             tbd.setState(BluetoothProfile.STATE_CONNECTING);
             selectedDeviceMonitor.onNext(tbd);
@@ -618,7 +630,12 @@ public class BleManager implements RangeNotifier {
     public boolean readHallStrength() {
         return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
                 ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_FIELD_STRENGTH);
-        }
+    }
+
+    public boolean readHallState() {
+        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
+                                           ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE);
+    }
 
 
     public ThunderBoardType getThunderBoardType() {
@@ -741,7 +758,7 @@ public class BleManager implements RangeNotifier {
 
             deviceFound(beacon);
             if (backgroundPowerSaver.isScannerActivityResumed()) {
-                scanner.onNext(devices);
+                publishRecentBeacons();
             } else if (SystemClock.elapsedRealtime() - backgroundPowerSaver.getScannerActivityDestroyedTimestamp() >
                     ThunderBoardPowerSaver.DELAY_NOTIFICATIONS_TIME_THRESHOLD
                     && backgroundPowerSaver.isApplicationBackgrounded()) {
@@ -757,10 +774,12 @@ public class BleManager implements RangeNotifier {
         if (old != null) {
             Timber.d("rssi: %d, has observers: %s, old state: %s", beacon.getRssi(), scanner.hasObservers(), old.getState());
             old.setRssi(beacon.getRssi());
+            deviceAgeMap.put(old.getAddress(), System.currentTimeMillis());
         } else {
             Timber.d("appended, rssi: %d, has observers: %s", beacon.getRssi(), scanner.hasObservers());
             ThunderBoardDevice bleDevice = new ThunderBoardDevice(beacon);
             devices.add(bleDevice);
+            deviceAgeMap.put(bleDevice.getAddress(), System.currentTimeMillis());
         }
     }
 
@@ -769,6 +788,7 @@ public class BleManager implements RangeNotifier {
         if (old == null) {
             devices.add(notificationDevice);
         }
+        deviceAgeMap.put(notificationDevice.getAddress(), System.currentTimeMillis());
     }
 
     private void sendNotification(Beacon beacon) {
@@ -815,10 +835,69 @@ public class BleManager implements RangeNotifier {
         @Override
         public void onFinish() {
             if (devices.size() == 0) {
-                scanner.onNext(devices);
+                publishRecentBeacons();
             }
         }
     };
 
+    private Subscriber<Long> onInterval() {
+        return new Subscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                Timber.d("interval subscriber completed");
+                if (!isUnsubscribed()) {
+                    unsubscribe();
+                }
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                Timber.e("interval subscriber error: %s", e.getMessage());
+                if (!isUnsubscribed()) {
+                    unsubscribe();
+                }
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                publishRecentBeacons();
+            }
+        };
+    }
+
+    public void unsubscribeInterval() {
+        if (intervalSubscriber != null && !intervalSubscriber.isUnsubscribed()) {
+            intervalSubscriber.unsubscribe();
+        }
+        intervalSubscriber = null;
+    }
+
+    public void subscribeInterval() {
+        intervalSubscriber = onInterval();
+        Observable.interval(EXPIRATION_TIMER_INTERVAL, TimeUnit.MILLISECONDS).subscribe(intervalSubscriber);
+    }
+
+    private void publishRecentBeacons() {
+        if (activeDevicesChanged() || activeDevices.isEmpty()) {
+            scanner.onNext(activeDevices);
+        }
+    }
+
+    private boolean activeDevicesChanged() {
+        boolean activeDevicesChanged = false;
+        for (ThunderBoardDevice device : devices) {
+            long age = System.currentTimeMillis() - deviceAgeMap.get(device.getAddress());
+            boolean deviceExpired = age > MAX_AGE;
+            boolean deviceInList = activeDevices.contains(device);
+
+            if (deviceExpired && deviceInList) {
+                activeDevices.remove(device);
+                activeDevicesChanged = true;
+            } else if (!deviceExpired && !deviceInList) {
+                activeDevices.add(device);
+                activeDevicesChanged = true;
+            }
+        }
+        return activeDevicesChanged;
+    }
 }

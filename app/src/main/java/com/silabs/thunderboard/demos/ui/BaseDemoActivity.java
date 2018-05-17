@@ -6,10 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -67,6 +70,13 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
         streamingSwitch = (Switch) findViewById(R.id.streaming_switch);
         streamingIndicator = (TextView) findViewById(R.id.streaming_indicator);
 
+        streamingSwitch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return !getDemoPresenter().isDeviceAvailable();
+            }
+        });
+
         streamingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -82,6 +92,18 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
             }
         });
         streamingIndicator.setText(streamingSwitch.isChecked() ? R.string.demo_streaming_to_cloud : R.string.demo_stream_to_cloud);
+    }
+
+    protected void checkFirebaseConnectivity() {
+        boolean status = getDemoPresenter().isFirebaseAvailable();
+        setStreamingEnabled(status, false);
+        if (!status) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.app_name)
+                    .setMessage(R.string.demo_streaming_disabled_message)
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
+        }
     }
 
     @Override
@@ -155,6 +177,19 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public void setStreamingEnabled(boolean enabled, boolean reconnecting) {
+        streamingSwitch.setEnabled(enabled);
+        if (enabled) {
+            streamingIndicator.setText(streamingSwitch.isChecked() ? R.string.demo_streaming_to_cloud : R.string.demo_stream_to_cloud);
+        } else {
+            streamingIndicator.setText(reconnecting ? R.string.demo_streaming_reconnecting_indicator : R.string.demo_streaming_disabled_indicator);
+            if (reconnecting) {
+                Toast.makeText(this, R.string.demo_streaming_reconnecting_message, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -11,7 +11,7 @@ import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -77,13 +77,13 @@ public class ScannerAdapter extends RecyclerView.Adapter<ScannerAdapter.DeviceHo
 
     public static class DeviceHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.device_name)
+        @BindView(R.id.device_name)
         TextView deviceName;
 
-        @Bind(R.id.device_address)
+        @BindView(R.id.device_address)
         TextView deviceAddress;
 
-        @Bind(R.id.signal_strength)
+        @BindView(R.id.signal_strength)
         SignalStrengthIndicator signalStrengthIndicator;
 
         View rootView;

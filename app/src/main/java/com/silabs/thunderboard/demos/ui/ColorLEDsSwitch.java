@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ColorLEDsSwitch extends FrameLayout implements View.OnClickListener {
@@ -21,10 +21,10 @@ public class ColorLEDsSwitch extends FrameLayout implements View.OnClickListener
 
     private boolean state;
 
-    @Bind(R.id.color_switch_image)
+    @BindView(R.id.color_switch_image)
     ImageView colorSwitchImage;
 
-    @Bind(R.id.color_switch_text)
+    @BindView(R.id.color_switch_text)
     TextView colorSwitchText;
 
     private ColorLEDsSwitchListener colorLEDsSwitchListener;

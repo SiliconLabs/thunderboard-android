@@ -74,6 +74,10 @@
 
     <string name="demo_stream_to_cloud">Stream to cloud</string>
     <string name="demo_streaming_to_cloud">Streaming to cloud</string>
+    <string name="demo_streaming_disabled_message">Could not connect to Thundercloud, streaming is disabled.</string>
+    <string name="demo_streaming_reconnecting_message">Thundercloud is momentarily offline. Reconnecting.</string>
+    <string name="demo_streaming_disabled_indicator">Streaming disabled</string>
+    <string name="demo_streaming_reconnecting_indicator">Reconnecting…</string>
 
     <string name="status_connected">Connected to</string>
     <string name="status_disconnected">Disconnected from</string>
@@ -84,6 +88,7 @@
     <string name="status_connecting">Connecting to</string>
     <string name="status_disconnecting">Disconnecting from</string>
     <string name="status_no_firmware_version">- -</string>
+    <string name="status_firebase_url_suffix">.info/connected</string>
 
     <string name="iodemo">I/O Demo</string>
     <string name="iodemo_switches">Switches</string>

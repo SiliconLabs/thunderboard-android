@@ -7,6 +7,7 @@ import com.silabs.thunderboard.ble.ThunderBoardSensorMotion;
 import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 import com.silabs.thunderboard.common.injection.scope.ActivityScope;
 import com.silabs.thunderboard.demos.model.NotificationEvent;
+import com.silabs.thunderboard.web.CloudManager;
 
 import javax.inject.Inject;
 
@@ -20,6 +21,7 @@ import timber.log.Timber;
 public class DemosPresenter {
 
     private final BleManager bleManager;
+    private final CloudManager cloudManager;
 
     private DemosViewListener viewListener;
 
@@ -30,18 +32,21 @@ public class DemosPresenter {
     private Subscriber<NotificationEvent> notificationsSubscriber;
 
     @Inject
-    public DemosPresenter(BleManager bleManager) {
+    public DemosPresenter(BleManager bleManager, CloudManager cloudManager) {
         this.bleManager = bleManager;
+        this.cloudManager = cloudManager;
     }
 
     public void setViewListener(DemosViewListener viewListener, String deviceAddress) {
         this.viewListener = viewListener;
         subscribe(deviceAddress);
+        cloudManager.startConnectionMonitor();
     }
 
     public void clearViewListener() {
         unsubscribe();
         viewListener = null;
+        cloudManager.stopConnectionMonitor();
     }
 
     public void setNotificationDevice(ThunderBoardDevice notificationDevice) {

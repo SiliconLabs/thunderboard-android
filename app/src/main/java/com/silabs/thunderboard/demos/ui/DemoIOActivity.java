@@ -13,7 +13,7 @@ import com.silabs.thunderboard.demos.model.LedRGBState;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListener, LEDControl.OnCheckedChangeListener, ColorLEDControl.ColorLEDControlListener {
@@ -28,19 +28,19 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
     @Inject
     DemoIOPresenter presenter;
 
-    @Bind(R.id.switch0)
+    @BindView(R.id.switch0)
     SwitchControl switch0;
 
-    @Bind(R.id.switch1)
+    @BindView(R.id.switch1)
     SwitchControl switch1;
 
-    @Bind(R.id.led0)
+    @BindView(R.id.led0)
     LEDControl led0;
 
-    @Bind(R.id.led1)
+    @BindView(R.id.led1)
     LEDControl led1;
 
-    @Bind(R.id.color_led_control)
+    @BindView(R.id.color_led_control)
     ColorLEDControl colorLEDControl;
 
     @Override
@@ -67,6 +67,8 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
         presenter.setViewListener(this, deviceAddress);
 
         colorLEDControl.setColorLEDControlListener(this);
+
+        checkFirebaseConnectivity();
     }
 
     @Override

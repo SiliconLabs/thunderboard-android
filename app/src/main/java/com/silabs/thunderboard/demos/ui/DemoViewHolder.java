@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -15,10 +15,10 @@ import butterknife.ButterKnife;
  */
 public class DemoViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.demo_label)
+    @BindView(R.id.demo_label)
     TextView demoLabel;
 
-    @Bind(R.id.demo_icon)
+    @BindView(R.id.demo_icon)
     ImageView demoIcon;
 
     View rootView;

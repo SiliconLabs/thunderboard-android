@@ -17,7 +17,7 @@ import com.silabs.thunderboard.common.ui.ThunderBoardActivity;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -26,22 +26,22 @@ public class SettingsEditActivity extends ThunderBoardActivity {
     @Inject
     PreferenceManager prefsManager;
 
-    @Bind(R.id.settings_edit_toolbar)
+    @BindView(R.id.settings_edit_toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.settings_edit_name)
+    @BindView(R.id.settings_edit_name)
     EditText editName;
 
-    @Bind(R.id.settings_edit_title)
+    @BindView(R.id.settings_edit_title)
     EditText editTitle;
 
-    @Bind(R.id.settings_edit_email)
+    @BindView(R.id.settings_edit_email)
     EditText editEmail;
 
-    @Bind(R.id.settings_edit_phone)
+    @BindView(R.id.settings_edit_phone)
     EditText editPhone;
 
-    @Bind(R.id.settings_edit_self_cc)
+    @BindView(R.id.settings_edit_self_cc)
     ToggleButton editCCSelf;
 
     private ActivityComponent component;

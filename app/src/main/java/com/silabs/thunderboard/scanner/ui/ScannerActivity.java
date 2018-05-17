@@ -40,7 +40,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -57,28 +57,28 @@ public class ScannerActivity extends ThunderBoardActivity implements ScannerView
     @Inject
     ScannerPresenter presenter;
 
-    @Bind(R.id.scanner_toolbar)
+    @BindView(R.id.scanner_toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.mm_logo)
+    @BindView(R.id.mm_logo)
     ImageView mmLogo;
 
-    @Bind(R.id.bottom_panel)
+    @BindView(R.id.bottom_panel)
     FrameLayout bottomPanel;
 
-    @Bind(R.id.scanner_device_list)
+    @BindView(R.id.scanner_device_list)
     RecyclerView scannerRecyclerView;
 
-    @Bind(R.id.bluetooth_devices_view)
+    @BindView(R.id.bluetooth_devices_view)
     View bluetoothDevicesView;
 
-    @Bind(R.id.bluetooth_no_devices_view)
+    @BindView(R.id.bluetooth_no_devices_view)
     View bluetoothNoDevicesView;
 
-    @Bind(R.id.scanner_status_report)
+    @BindView(R.id.scanner_status_report)
     TextView scannerStatusReport;
 
-    @Bind(R.id.scanner_progress)
+    @BindView(R.id.scanner_progress)
     ProgressBar scannerProgress;
 
     private ScannerAdapter scannerAdapter;

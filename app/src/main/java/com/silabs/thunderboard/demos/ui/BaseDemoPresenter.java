@@ -26,6 +26,7 @@ public abstract class BaseDemoPresenter {
     protected Subscriber<ThunderBoardDevice> deviceSubscriber;
     protected boolean isFirebaseInstantiated;
     protected BehaviorSubject<Boolean> wifiMonitor;
+    protected Subscriber<Boolean> firebaseSubscriber;
 
     // need it to kick the streaming
     protected String uniqueID;
@@ -34,13 +35,17 @@ public abstract class BaseDemoPresenter {
     // the real device name
     protected String cloudDeviceName;
     protected boolean isStreaming;
+    protected boolean reconnecting;
     protected ThunderBoardSensor sensor;
+    protected boolean deviceAvailable;
 
     protected BaseDemoViewListener viewListener;
 
     public BaseDemoPresenter(BleManager bleManager, CloudManager cloudManager) {
         this.bleManager = bleManager;
         this.cloudManager = cloudManager;
+        reconnecting = false;
+        deviceAvailable = false;
     }
 
     public void setViewListener(BaseDemoViewListener viewListener, String deviceAddress) {
@@ -73,6 +78,12 @@ public abstract class BaseDemoPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(onWifi());
+
+        firebaseSubscriber = onFirebaseStatus();
+        cloudManager.firebaseMonitor
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(firebaseSubscriber);
     }
 
     protected void unsubscribe() {
@@ -83,6 +94,11 @@ public abstract class BaseDemoPresenter {
             deviceSubscriber.unsubscribe();
         }
         deviceSubscriber = null;
+
+        if (firebaseSubscriber != null && !firebaseSubscriber.isUnsubscribed()) {
+            firebaseSubscriber.unsubscribe();
+        }
+        firebaseSubscriber = null;
 
         cloudModelName = null;
         sensor = null;
@@ -95,6 +111,18 @@ public abstract class BaseDemoPresenter {
     protected void createCloudDeviceName(String name) {
         cloudModelName = name.replace("#", "").replaceAll(" ", "");
         cloudDeviceName = name;
+    }
+
+    public boolean isFirebaseAvailable() {
+        boolean status = cloudManager.checkRootDataSessionsAvailable();
+        if (status) {
+            reconnecting = true;
+        }
+        return status;
+    }
+
+    public boolean isDeviceAvailable() {
+        return deviceAvailable;
     }
 
     public void startStreaming() {
@@ -115,7 +143,7 @@ public abstract class BaseDemoPresenter {
         return bleManager.getThunderBoardType();
     }
 
-    private void initFirebase() {
+    protected void initFirebase() {
         Timber.d(getClass().getSimpleName());
         uniqueID = UUID.randomUUID().toString();
         String url = cloudManager.createFirebaseReference(cloudModelName, cloudDeviceName, uniqueID, getDemoId(), sensor);
@@ -157,6 +185,28 @@ public abstract class BaseDemoPresenter {
                 if (viewListener != null) {
                     viewListener.onWifi(isConnected);
                 }
+            }
+        };
+    }
+
+    private Subscriber<Boolean> onFirebaseStatus() {
+        return new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Boolean status) {
+                if (status) {
+                    reconnecting = true;
+                }
+                viewListener.setStreamingEnabled(status, reconnecting);
             }
         };
     }

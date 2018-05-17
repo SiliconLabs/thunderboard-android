@@ -12,15 +12,15 @@ import android.widget.TextView;
 import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.common.ui.ButtonSpinnerDrawable;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SwitchControl extends FrameLayout {
 
-    @Bind(R.id.switch_image)
+    @BindView(R.id.switch_image)
     ImageView image;
 
-    @Bind(R.id.switch_text)
+    @BindView(R.id.switch_text)
     TextView text;
 
     ButtonSpinnerDrawable spinnerDrawable;

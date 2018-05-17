@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -20,10 +20,10 @@ import butterknife.ButterKnife;
  */
 public class SignalStrengthIndicator extends FrameLayout {
 
-    @Bind(R.id.signal_strength_meter)
+    @BindView(R.id.signal_strength_meter)
     SignalStrengthMeter signalStrengthMeter;
 
-    @Bind(R.id.signal_strength_text)
+    @BindView(R.id.signal_strength_text)
     TextView signalStrengthText;
 
     private Resources res;

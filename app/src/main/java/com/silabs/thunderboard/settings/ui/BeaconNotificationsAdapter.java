@@ -13,7 +13,7 @@ import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -203,13 +203,13 @@ public class BeaconNotificationsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public static class BeaconViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.beacon_state)
+        @BindView(R.id.beacon_state)
         public TextView beaconStateText;
 
-        @Bind(R.id.beacon_name)
+        @BindView(R.id.beacon_name)
         public TextView beaconNameText;
 
-        @Bind(R.id.beacon_action)
+        @BindView(R.id.beacon_action)
         public TextView beaconAction;
 
         public BeaconViewHolder(View itemView) {
