@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -34,54 +33,6 @@ public class SettingsActivity extends ThunderBoardActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    @BindView(R.id.name_display)
-    View nameDisplay;
-
-    @BindView(R.id.name_display_text)
-    TextView nameDisplayText;
-
-    @BindView(R.id.name_edit)
-    View nameEdit;
-
-    @BindView(R.id.name_edit_text)
-    TextView nameEditText;
-
-    @BindView(R.id.title_display)
-    View titleDisplay;
-
-    @BindView(R.id.title_display_text)
-    TextView titleDisplayText;
-
-    @BindView(R.id.title_edit)
-    View titleEdit;
-
-    @BindView(R.id.title_edit_text)
-    TextView titleEditText;
-
-    @BindView(R.id.email_display)
-    View emailDisplay;
-
-    @BindView(R.id.email_display_text)
-    TextView emailDisplayText;
-
-    @BindView(R.id.email_edit)
-    View emailEdit;
-
-    @BindView(R.id.email_edit_text)
-    TextView emailEditText;
-
-    @BindView(R.id.phone_display)
-    View phoneDisplay;
-
-    @BindView(R.id.phone_display_text)
-    TextView phoneDisplayText;
-
-    @BindView(R.id.phone_edit)
-    View phoneEdit;
-
-    @BindView(R.id.phone_edit_text)
-    TextView phoneEditText;
 
     @BindView(R.id.cc_switch)
     Switch ccSwitch;
@@ -179,23 +130,10 @@ public class SettingsActivity extends ThunderBoardActivity {
      * loadPersonalize
      *
      * Sets the widgets with data from the preferences
-     *
      */
     private void loadPersonalize() {
         ThunderBoardPreferences prefs = prefsManager.getPreferences();
         Timber.d("prefs: %s", prefs.toString());
-
-        nameDisplayText.setText(prefs.userName);
-        nameEditText.setText(prefs.userName);
-
-        titleDisplayText.setText(prefs.userTitle);
-        titleEditText.setText(prefs.userTitle);
-
-        emailDisplayText.setText(prefs.userEmail);
-        emailEditText.setText(prefs.userEmail);
-
-        phoneDisplayText.setText(prefs.userPhone);
-        phoneEditText.setText(prefs.userPhone);
 
         ccSwitch.setChecked(prefs.userCCSelf);
 
@@ -235,11 +173,6 @@ public class SettingsActivity extends ThunderBoardActivity {
     private void saveSettings() {
         ThunderBoardPreferences prefs = prefsManager.getPreferences();
 
-        prefs.userName = nameEditText.getText().toString();
-        prefs.userTitle = titleEditText.getText().toString();
-        prefs.userEmail = emailEditText.getText().toString();
-        prefs.userPhone = phoneEditText.getText().toString();
-
         prefs.userCCSelf = ccSwitch.isChecked();
 
         prefs.measureUnitType = (measurementSpinner.getSelectedItemPosition() == 0)
@@ -258,7 +191,6 @@ public class SettingsActivity extends ThunderBoardActivity {
      * clickBeaconNotifications
      *
      * Launch the Beacon Notifications screen
-     *
      */
     @OnClick(R.id.beacon_notifications)
     void clickBeaconNotifications() {
@@ -272,77 +204,4 @@ public class SettingsActivity extends ThunderBoardActivity {
         }
         startActivity(intent);
     }
-
-    @OnClick(R.id.name_display)
-    void clickNameDisplay() {
-        nameDisplay.setVisibility(View.GONE);
-        nameEdit.setVisibility(View.VISIBLE);
-
-        titleDisplay.setVisibility(View.VISIBLE);
-        titleDisplayText.setText(titleEditText.getText().toString());
-        titleEdit.setVisibility(View.GONE);
-
-        emailDisplay.setVisibility(View.VISIBLE);
-        emailDisplayText.setText(emailEditText.getText().toString());
-        emailEdit.setVisibility(View.GONE);
-
-        phoneDisplay.setVisibility(View.VISIBLE);
-        phoneDisplayText.setText(phoneEditText.getText().toString());
-        phoneEdit.setVisibility(View.GONE);
-    }
-
-    @OnClick(R.id.title_display)
-    void clickTitleDisplay() {
-        nameDisplay.setVisibility(View.VISIBLE);
-        nameDisplayText.setText(nameEditText.getText().toString());
-        nameEdit.setVisibility(View.GONE);
-
-        titleDisplay.setVisibility(View.GONE);
-        titleEdit.setVisibility(View.VISIBLE);
-
-        emailDisplay.setVisibility(View.VISIBLE);
-        emailDisplayText.setText(emailEditText.getText().toString());
-        emailEdit.setVisibility(View.GONE);
-
-        phoneDisplay.setVisibility(View.VISIBLE);
-        phoneDisplayText.setText(phoneEditText.getText().toString());
-        phoneEdit.setVisibility(View.GONE);
-    }
-
-    @OnClick(R.id.email_display)
-    void clickEmailDisplay() {
-        nameDisplay.setVisibility(View.VISIBLE);
-        nameDisplayText.setText(nameEditText.getText().toString());
-        nameEdit.setVisibility(View.GONE);
-
-        titleDisplay.setVisibility(View.VISIBLE);
-        titleDisplayText.setText(titleEditText.getText().toString());
-        titleEdit.setVisibility(View.GONE);
-
-        emailDisplay.setVisibility(View.GONE);
-        emailEdit.setVisibility(View.VISIBLE);
-
-        phoneDisplay.setVisibility(View.VISIBLE);
-        phoneDisplayText.setText(phoneEditText.getText().toString());
-        phoneEdit.setVisibility(View.GONE);
-    }
-
-    @OnClick(R.id.phone_display)
-    void clickPhoneDisplay() {
-        nameDisplay.setVisibility(View.VISIBLE);
-        nameDisplayText.setText(nameEditText.getText().toString());
-        nameEdit.setVisibility(View.GONE);
-
-        titleDisplay.setVisibility(View.VISIBLE);
-        titleDisplayText.setText(titleEditText.getText().toString());
-        titleEdit.setVisibility(View.GONE);
-
-        emailDisplay.setVisibility(View.VISIBLE);
-        emailDisplayText.setText(emailEditText.getText().toString());
-        emailEdit.setVisibility(View.GONE);
-
-        phoneDisplay.setVisibility(View.GONE);
-        phoneEdit.setVisibility(View.VISIBLE);
-    }
-
 }

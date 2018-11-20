@@ -15,10 +15,6 @@ public class ThunderBoardPreferences {
 
     public static final float DEFAULT_WHEEL_RADIUS = 0.01505f; //meters
 
-    public String userName;
-    public String userTitle;
-    public String userEmail;
-    public String userPhone;
     public boolean userCCSelf;
 
     public int measureUnitType;
@@ -42,9 +38,7 @@ public class ThunderBoardPreferences {
 
     @Override
     public String toString() {
-        return String.format("userName: %s, userTitle: %s, userEmail: %s, userPhone: %s, userCCSelf: %s, measureUnitType: %s, temperatureType: %s, modelType: %s, beaconNotifications: %s, beacons: %d",
-                userName, userTitle, userEmail, userPhone,
-                userCCSelf ? "true" : "false",
+        return String.format("measureUnitType: %s, temperatureType: %s, modelType: %s, beaconNotifications: %s, beacons: %d",
                 measureUnitType == UNIT_METRIC ? "metric" : "US",
                 temperatureType == TEMP_CELSIUS ? "celsius" : "fahrenheit",
                 modelType == MODEL_TYPE_BOARD ? "board" : "car",

@@ -24,7 +24,6 @@ import com.silabs.thunderboard.BuildConfig;
 import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.common.app.ThunderBoardConstants;
 import com.silabs.thunderboard.common.data.PreferenceManager;
-import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
 import com.silabs.thunderboard.common.ui.ThunderBoardActivity;
 
 import java.util.ArrayList;
@@ -236,15 +235,8 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
      *
      */
     private void shareURL() {
-        ThunderBoardPreferences prefs = prefsManager.getPreferences();
-
-        String signature = "\n\n"
-                + (!isBadString(prefs.userName) ? (prefs.userName + "\n") : "")
-                + (!isBadString(prefs.userTitle) ? (prefs.userTitle + "\n") : "")
-                + (!isBadString(prefs.userEmail) ? (prefs.userEmail + "\n") : "")
-                + (!isBadString(prefs.userPhone) ? prefs.userPhone : "");
         String url = getSharedUrl();
-        String message = String.format(getString(R.string.share_message), url, BuildConfig.MICROSITE_URL) + signature;
+        String message = String.format(getString(R.string.share_message), url, BuildConfig.MICROSITE_URL);
 
         List<Intent> targetedSharedIntents = new ArrayList<Intent>();
         Intent shareIntent = new Intent();
@@ -259,10 +251,6 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
 
                 Intent targetedSharedIntent = new Intent(Intent.ACTION_SEND);
                 targetedSharedIntent.setType("text/plain");
-
-                if (prefs.userCCSelf) {
-                    targetedSharedIntent.putExtra(Intent.EXTRA_CC, prefs.userEmail);
-                }
 
                 if (TextUtils.equals(packageName, "com.google.android.apps.docs")) {
                     // copy the url to the clipboard

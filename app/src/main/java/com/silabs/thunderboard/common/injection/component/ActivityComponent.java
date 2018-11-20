@@ -9,7 +9,6 @@ import com.silabs.thunderboard.demos.ui.DemosSelectionActivity;
 import com.silabs.thunderboard.scanner.ui.ScannerActivity;
 import com.silabs.thunderboard.settings.ui.BeaconNotificationsActivity;
 import com.silabs.thunderboard.settings.ui.SettingsActivity;
-import com.silabs.thunderboard.settings.ui.SettingsEditActivity;
 
 import dagger.Component;
 
@@ -18,7 +17,6 @@ import dagger.Component;
 public interface ActivityComponent {
     void inject(ScannerActivity object);
     void inject(SettingsActivity object);
-    void inject(SettingsEditActivity object);
     void inject(DemosSelectionActivity object);
     void inject(ThunderBoardStatusFragment object);
     void inject(DemoIOActivity object);

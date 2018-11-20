@@ -1,5 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+// adjust imports to detect your CI builds
+def isCIBuild = System.getenv()['bamboo_planName'] ? true : false
+
 buildscript {
     project.ext.android_studio = 2
     repositories {
@@ -29,6 +32,8 @@ allprojects {
 }
 
 ext {
-    // Open the Git repository in the current directory.
-    grgit = org.ajoberstar.grgit.Grgit.open(dir: '.')
+    if (isCIBuild) {
+        // Open the Git repository in the current directory.
+        grgit = org.ajoberstar.grgit.Grgit.open(dir: '.')
+    }
 }

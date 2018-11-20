@@ -9,5 +9,3 @@
 **/*.iml
 **/.idea
 **/build
-**/*.jks
-/keystores
