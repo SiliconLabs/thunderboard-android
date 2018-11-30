@@ -36,10 +36,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/StatusBarTranslucentTheme" />
         <activity
-            android:name=".settings.ui.SettingsEditActivity"
-            android:label="@string/settings_personal_info"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".demos.ui.DemosSelectionActivity"
             android:label="@string/thunderboard"
             android:parentActivityName=".scanner.ui.ScannerActivity"

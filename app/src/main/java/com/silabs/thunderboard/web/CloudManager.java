@@ -17,7 +17,6 @@ import com.firebase.client.ValueEventListener;
 import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.ble.ThunderBoardSensor;
 import com.silabs.thunderboard.common.data.PreferenceManager;
-import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
 import com.silabs.thunderboard.common.injection.qualifier.ForApplication;
 import com.silabs.thunderboard.common.injection.qualifier.ForCloudData;
 import com.silabs.thunderboard.common.injection.qualifier.ForCloudDemo;
@@ -147,11 +146,6 @@ public class CloudManager implements Firebase.AuthResultHandler {
 
             // push contactInfo
             ContactInfo ci = new ContactInfo();
-            ThunderBoardPreferences prefs = prefsManager.getPreferences();
-            ci.emailAddress = prefs.userEmail;
-            ci.fullName = prefs.userName;
-            ci.title = prefs.userTitle;
-            ci.phoneNumber = prefs.userPhone;
             ci.deviceName = deviceName;
             rootDataSessionsReference.child("contactInfo").setValue(ci);
 
@@ -312,10 +306,6 @@ public class CloudManager implements Firebase.AuthResultHandler {
     }
 
     private static class ContactInfo {
-        public String emailAddress;
-        public String fullName;
-        public String phoneNumber;
-        public String title;
         public String deviceName;
     }
 }
