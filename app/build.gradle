@@ -50,14 +50,15 @@ def keyFirebaseRelease = properties.getProperty('key.firebase.release')
 
 
 buildscript {
+    ext.android_support_version = '26.1.0'
     repositories {
         jcenter()
         google()
     }
     dependencies {
         println("android_studio= " + android_studio.toString())
-        if (android_studio ==3){
-            classpath 'com.android.tools.build:gradle:3.0.0'
+        if (android_studio == 3){
+            classpath 'com.android.tools.build:gradle:3.2.1'
             classpath 'com.google.gms:google-services:3.0.0'
         } else {
             classpath 'com.android.tools.build:gradle:2.3.3'
@@ -72,8 +73,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'de.felixschulze.gradle.hockeyapp'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 26
     signingConfigs {
         release {
             storeFile file("${sf}")
@@ -86,7 +86,7 @@ android {
     defaultConfig {
         applicationId 'com.silabs.thunderboard'
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode versionMajor * 10000000 + versionMinor * 100000 + versionPatch * 1000 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         if (isCIBuild) {
@@ -143,8 +143,7 @@ android {
     applicationVariants.all { variant ->
         if (android_studio == 3){
             variant.outputs.all {
-                def filePrefix = isCIBuild ? "${projectName}-${variant.name}-${gitSha}" : "${projectName}-${variant.name}"
-                outputFileName = "$project.buildDir/${filePrefix}.apk"
+                outputFileName = isCIBuild ? "${projectName}-${variant.name}-${gitSha}.apk" : "${projectName}-${variant.name}.apk"
             }
         } else {
             variant.outputs.each { output ->
@@ -160,39 +159,39 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:multidex:1.0.2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:multidex:1.0.2'
     // Android
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.android.support:cardview-v7:23.3.0'
-    compile 'com.android.support:mediarouter-v7:23.3.0'
-    compile 'com.android.support:palette-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    implementation "com.android.support:appcompat-v7:$android_support_version"
+    implementation "com.android.support:recyclerview-v7:$android_support_version"
+    implementation "com.android.support:cardview-v7:$android_support_version"
+    implementation "com.android.support:mediarouter-v7:$android_support_version"
+    implementation "com.android.support:palette-v7:$android_support_version"
+    implementation "com.android.support:design:$android_support_version"
     // dagger
-    compile 'com.google.dagger:dagger:2.12'
+    implementation 'com.google.dagger:dagger:2.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
     // Timber
-    compile 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.jakewharton.timber:timber:4.5.1'
     // Butterknife
-    compile ('com.jakewharton:butterknife:8.8.1'){
+    implementation ('com.jakewharton:butterknife:8.8.1'){
         exclude module: 'support-compat'
     }
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //annotation?
-    compile 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
     // RxJava, RxAndroid
-    compile 'io.reactivex:rxjava:1.1.3'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    implementation 'io.reactivex:rxjava:1.1.3'
+    implementation 'io.reactivex:rxandroid:1.1.0'
     // Gson
-    compile 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
     // Firebase
-    compile 'com.firebase:firebase-client-android:2.5.2'
+    implementation 'com.firebase:firebase-client-android:2.5.2'
     // Retrofit
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'com.squareup.retrofit:retrofit:1.9.0'
+    implementation 'com.squareup.okhttp:okhttp:2.5.0'
     // AltBeacon Android library
-    compile 'org.altbeacon:android-beacon-library:2.6.1@aar'
+    implementation 'org.altbeacon:android-beacon-library:2.6.1@aar'
 }
 
 hockeyapp {

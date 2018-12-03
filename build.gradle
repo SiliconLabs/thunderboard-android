@@ -4,14 +4,14 @@
 def isCIBuild = System.getenv()['bamboo_planName'] ? true : false
 
 buildscript {
-    project.ext.android_studio = 2
+    project.ext.android_studio = 3
     repositories {
         jcenter()
         google()
     }
     dependencies {
         if (android_studio == 3) {
-            classpath 'com.android.tools.build:gradle:3.0.0'
+            classpath 'com.android.tools.build:gradle:3.2.1'
         } else {
             classpath 'com.android.tools.build:gradle:2.3.3'
         }
