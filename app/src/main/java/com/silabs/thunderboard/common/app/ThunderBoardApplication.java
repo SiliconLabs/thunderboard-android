@@ -1,6 +1,8 @@
 package com.silabs.thunderboard.common.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.silabs.thunderboard.BuildConfig;
 import com.silabs.thunderboard.ble.BleManager;
@@ -38,6 +40,12 @@ public class ThunderBoardApplication extends Application {
         component().inject(this);
 
         Timber.d("created");
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public ThunderBoardComponent component() {

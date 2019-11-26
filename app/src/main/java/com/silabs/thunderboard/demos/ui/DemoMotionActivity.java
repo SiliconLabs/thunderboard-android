@@ -98,6 +98,9 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     @BindView(R.id.distance_container)
     LinearLayout distanceContainer;
 
+    @BindView(R.id.calibrate)
+    TextView calibrate;
+
     private AlertDialog calibratingDialog;
     private View gdx3dView;
     private DemoMotionGdxAdapter gdxAdapter;
@@ -324,7 +327,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
      * Listener method called when the calibration is completed. Closes the alert dialog.
      */
     @Override
-    public void onCalibrateComleted() {
+    public void onCalibrateCompleted() {
         closeCalibratingDialog();
     }
 
@@ -361,8 +364,17 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
         calibratingDialog.dismiss();
     }
 
+    private void setCalibrateVisible(boolean enabled) {
+        if (enabled) {
+            calibrate.setVisibility(View.VISIBLE);
+        } else {
+            calibrate.setVisibility(View.INVISIBLE);
+        }
+    }
+
     @Override
     public void initControls() {
+        setCalibrateVisible(false);
         gdxAdapter.setOnSceneLoadedListener(new DemoMotionGdxAdapter.OnSceneLoadedListener() {
             @Override
             public void onSceneLoaded() {
@@ -370,6 +382,8 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        setCalibrateVisible(true);
+
                         presenter.setViewListener(DemoMotionActivity.this, deviceAddress);
                     }
                 });

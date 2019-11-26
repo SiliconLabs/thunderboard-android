@@ -1,5 +1,7 @@
 package com.silabs.thunderboard.demos.ui;
 
+import android.os.Handler;
+
 import com.silabs.thunderboard.ble.BleManager;
 import com.silabs.thunderboard.ble.ThunderBoardSensorIo;
 import com.silabs.thunderboard.ble.ThunderBoardSensorMotion;
@@ -82,8 +84,20 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
     public void calibrate() {
         if (!isCalibrating) {
             Timber.d("request");
-            isCalibrating = true;
-            bleManager.startCalibration();
+
+            boolean calibrationSubmitted = bleManager.startCalibration();
+            if (!calibrationSubmitted) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        calibrate();
+                    }
+                }, 500);
+                return;
+            } else {
+                isCalibrating = true;
+            }
+
             revolutionsSupported = false;
         }
     }
@@ -159,7 +173,7 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
 
                 Timber.d("motion for device: %s", event.device.getName());
 
-                if (event.action != null ) {
+                if (event.action != null) {
                     if (isCalibrating) {
                         if (event.action == MotionEvent.ACTION_CALIBRATE) {
                             bleManager.resetOrientation();
@@ -170,8 +184,7 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
                             revolutionsSupported = bleManager.resetRevolutions();
                             if (revolutionsSupported) {
                                 return;
-                            }
-                            else {
+                            } else {
                                 finishCalibration();
                                 return;
                             }
@@ -221,7 +234,7 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
     private void finishCalibration() {
         isCalibrating = false;
         if (viewListener != null) {
-            ((DemoMotionListener) viewListener).onCalibrateComleted();
+            ((DemoMotionListener) viewListener).onCalibrateCompleted();
         }
     }
 

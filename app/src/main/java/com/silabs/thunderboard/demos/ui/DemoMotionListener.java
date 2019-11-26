@@ -7,6 +7,6 @@ public interface DemoMotionListener extends BaseDemoViewListener {
     void setAcceleration(float x, float y, float z);
     void setSpeed(double speed, int rpm, int measurementsType);
     void setDistance(double distance, int revolutions, int measurementsType);
-    void onCalibrateComleted();
+    void onCalibrateCompleted();
     void setColorLED(LedRGBState colorLED);
 }

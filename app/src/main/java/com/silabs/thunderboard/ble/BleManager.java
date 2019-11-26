@@ -12,6 +12,7 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -142,6 +143,8 @@ public class BleManager implements RangeNotifier {
         Timber.d("all");
         closeGatt();
         // this will give a chance to complete the timer w/o triggering no devices
+        activeDevices.clear();
+        deviceAgeMap.clear();
         devices.clear();
     }
 
@@ -810,7 +813,7 @@ public class BleManager implements RangeNotifier {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 
         Intent intent = new Intent(context, DemosSelectionActivity.class);
-        intent.putExtra(ThunderBoardConstants.EXTRA_DEVICE_BEACON, beacon);
+        intent.putExtra(ThunderBoardConstants.EXTRA_DEVICE_BEACON, (Parcelable) beacon);
         stackBuilder.addParentStack(DemosSelectionActivity.class);
         stackBuilder.addNextIntent(intent);
 

@@ -18,7 +18,8 @@ public class ThunderBoardDevice implements Comparable<ThunderBoardDevice> {
     public static final String THUNDER_BOARD_REACT_UUID_HEX = "cef797da2e914ea4a424f45082ac0682";
     public static final String THUNDER_BOARD_DEFAULT_NAME = "Thunder";
     private static final String THUNDERBOARD_REACT_MODEL_NUMBER = "RD-0057";
-    private static final String THUNDERBOARD_SENSE_MODEL_NUMBER = "BRD4160A";
+    private static final String THUNDERBOARD_SENSE_MODEL_NUMBER_TB1 = "BRD4160A";
+    private static final String THUNDERBOARD_SENSE_MODEL_NUMBER_TB2 = "BRD4166A";
 
     private final String address;
 
@@ -200,7 +201,7 @@ public class ThunderBoardDevice implements Comparable<ThunderBoardDevice> {
         if ( THUNDERBOARD_REACT_MODEL_NUMBER.equals(this.modelNumber)) {
             return ThunderBoardType.THUNDERBOARD_REACT;
         }
-        if (THUNDERBOARD_SENSE_MODEL_NUMBER.equals((this.modelNumber))) {
+        if (THUNDERBOARD_SENSE_MODEL_NUMBER_TB1.equals((this.modelNumber)) || THUNDERBOARD_SENSE_MODEL_NUMBER_TB2.equals((this.modelNumber)) ) {
             return ThunderBoardType.THUNDERBOARD_SENSE;
         }
         return ThunderBoardType.UNKNOWN;

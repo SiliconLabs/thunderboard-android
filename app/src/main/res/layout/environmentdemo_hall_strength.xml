@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/environment_box"
     android:orientation="vertical"
+    android:layout_height="wrap_content"
     >
 
     <TextView

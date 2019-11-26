@@ -1,23 +1,19 @@
 package com.silabs.thunderboard.demos.ui;
 
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
+import android.os.Build.VERSION;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
@@ -27,6 +23,7 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.android.AndroidApplicationBase;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.backends.android.AndroidApplicationLogger;
 import com.badlogic.gdx.backends.android.AndroidAudio;
 import com.badlogic.gdx.backends.android.AndroidClipboard;
 import com.badlogic.gdx.backends.android.AndroidEventListener;
@@ -37,195 +34,153 @@ import com.badlogic.gdx.backends.android.AndroidInputFactory;
 import com.badlogic.gdx.backends.android.AndroidNet;
 import com.badlogic.gdx.backends.android.AndroidPreferences;
 import com.badlogic.gdx.backends.android.surfaceview.FillResolutionStrategy;
+import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Clipboard;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.SnapshotArray;
 
 import java.lang.reflect.Method;
 
-/**
- * Base class for DemoMotionActivity
- */
 abstract public class GdxDemoActivity extends BaseDemoActivity implements AndroidApplicationBase {
-    static {
-        GdxNativesLoader.load();
-    }
-
     protected AndroidGraphics graphics;
     protected AndroidInput input;
     protected AndroidAudio audio;
     protected AndroidFiles files;
     protected AndroidNet net;
+    protected AndroidClipboard clipboard;
     protected ApplicationListener listener;
     public Handler handler;
     protected boolean firstResume = true;
-    protected final Array<Runnable> runnables = new Array<Runnable>();
-    protected final Array<Runnable> executedRunnables = new Array<Runnable>();
-    protected final Array<LifecycleListener> lifecycleListeners = new Array<LifecycleListener>();
-    private final Array<AndroidEventListener> androidEventListeners = new Array<AndroidEventListener>();
-    protected int logLevel = LOG_INFO;
+    protected final Array<Runnable> runnables = new Array();
+    protected final Array<Runnable> executedRunnables = new Array();
+    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray(LifecycleListener.class);
+    private final Array<AndroidEventListener> androidEventListeners = new Array();
+    protected int logLevel = 2;
+    protected ApplicationLogger applicationLogger;
     protected boolean useImmersiveMode = false;
     protected boolean hideStatusBar = false;
     private int wasFocusChanged = -1;
     private boolean isWaitingForAudio = false;
 
-    /**
-     * This method has to be called in the {@link Activity#onCreate(Bundle)} method. It sets up all the things necessary to get
-     * input, render via OpenGL and so on. Uses a default {@link AndroidApplicationConfiguration}.
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     **/
     public void initialize(ApplicationListener listener) {
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        initialize(listener, config);
+        this.initialize(listener, config);
     }
 
-    /**
-     * This method has to be called in the {@link Activity#onCreate(Bundle)} method. It sets up all the things necessary to get
-     * input, render via OpenGL and so on. You can configure other aspects of the application with the rest of the fields in the
-     * {@link AndroidApplicationConfiguration} instance.
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     * @param config   the {@link AndroidApplicationConfiguration}, defining various settings of the application (use accelerometer,
-     *                 etc.).
-     */
     public void initialize(ApplicationListener listener, AndroidApplicationConfiguration config) {
-        init(listener, config, false);
+        this.init(listener, config, false);
     }
 
-    /**
-     * This method has to be called in the {@link Activity#onCreate(Bundle)} method. It sets up all the things necessary to get
-     * input, render via OpenGL and so on. Uses a default {@link AndroidApplicationConfiguration}.
-     * <p/>
-     * Note: you have to add the returned view to your layout!
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     * @return the GLSurfaceView of the application
-     */
     public View initializeForView(ApplicationListener listener) {
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        return initializeForView(listener, config);
+        return this.initializeForView(listener, config);
     }
 
-    /**
-     * This method has to be called in the {@link Activity#onCreate(Bundle)} method. It sets up all the things necessary to get
-     * input, render via OpenGL and so on. You can configure other aspects of the application with the rest of the fields in the
-     * {@link AndroidApplicationConfiguration} instance.
-     * <p/>
-     * Note: you have to add the returned view to your layout!
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     * @param config   the {@link AndroidApplicationConfiguration}, defining various settings of the application (use accelerometer,
-     *                 etc.).
-     * @return the GLSurfaceView of the application
-     */
     public View initializeForView(ApplicationListener listener, AndroidApplicationConfiguration config) {
-        init(listener, config, true);
-        return graphics.getView();
+        this.init(listener, config, true);
+        return this.graphics.getView();
     }
 
     private void init(ApplicationListener listener, AndroidApplicationConfiguration config, boolean isForView) {
-        if (this.getVersion() < MINIMUM_SDK) {
-            throw new GdxRuntimeException("LibGDX requires Android API Level " + MINIMUM_SDK + " or later.");
-        }
-        graphics = new AndroidGraphics(this, config, config.resolutionStrategy == null ? new FillResolutionStrategy()
-                : config.resolutionStrategy);
-        input = AndroidInputFactory.newAndroidInput(this, this.getContext(), graphics.getView(), config);
-        audio = new AndroidAudio(this.getContext(), config);
-        this.getContext().getFilesDir(); // workaround for Android bug #10515463
-        files = new AndroidFiles(this.getContext().getAssets(), this.getContext().getFilesDir().getAbsolutePath());
-        net = new AndroidNet(this);
-        this.listener = listener;
-        this.handler = new Handler();
-        this.useImmersiveMode = config.useImmersiveMode;
-        this.hideStatusBar = config.hideStatusBar;
+        if (this.getVersion() < 8) {
+            throw new GdxRuntimeException("LibGDX requires Android API Level 8 or later.");
+        } else {
+            this.setApplicationLogger(new AndroidApplicationLogger());
+            this.graphics = new AndroidGraphics(this, config, (ResolutionStrategy) (config.resolutionStrategy == null ? new FillResolutionStrategy() : config.resolutionStrategy));
+            this.input = AndroidInputFactory.newAndroidInput(this, this, this.graphics.view, config);
+            this.audio = new AndroidAudio(this, config);
+            this.getFilesDir();
+            this.files = new AndroidFiles(this.getAssets(), this.getFilesDir().getAbsolutePath());
+            this.net = new AndroidNet(this);
+            this.listener = listener;
+            this.handler = new Handler();
+            this.useImmersiveMode = config.useImmersiveMode;
+            this.hideStatusBar = config.hideStatusBar;
+            this.clipboard = new AndroidClipboard(this);
+            this.addLifecycleListener(new LifecycleListener() {
+                public void resume() {
+                }
 
-        // Add a specialized audio lifecycle listener
-        addLifecycleListener(new LifecycleListener() {
+                public void pause() {
+                    audio.pause();
+                }
 
-            @Override
-            public void resume() {
-                // No need to resume audio here
+                public void dispose() {
+                    audio.dispose();
+                }
+            });
+            Gdx.app = this;
+            Gdx.input = this.getInput();
+            Gdx.audio = this.getAudio();
+            Gdx.files = this.getFiles();
+            Gdx.graphics = this.getGraphics();
+            Gdx.net = this.getNet();
+            if (!isForView) {
+                try {
+                    this.requestWindowFeature(1);
+                } catch (Exception var8) {
+                    this.log("AndroidApplication", "Content already displayed, cannot request FEATURE_NO_TITLE", var8);
+                }
+
+                this.getWindow().setFlags(1024, 1024);
+                this.getWindow().clearFlags(2048);
+                this.setContentView(this.graphics.getView(), this.createLayoutParams());
             }
 
-            @Override
-            public void pause() {
-                audio.pause();
+            this.createWakeLock(config.useWakelock);
+            this.hideStatusBar(this.hideStatusBar);
+            this.useImmersiveMode(this.useImmersiveMode);
+            if (this.useImmersiveMode && this.getVersion() >= 19) {
+                try {
+                    Class<?> vlistener = Class.forName("com.badlogic.gdx.backends.android.AndroidVisibilityListener");
+                    Object o = vlistener.newInstance();
+                    Method method = vlistener.getDeclaredMethod("createListener", AndroidApplicationBase.class);
+                    method.invoke(o, this);
+                } catch (Exception var7) {
+                    this.log("AndroidApplication", "Failed to create AndroidVisibilityListener", var7);
+                }
             }
 
-            @Override
-            public void dispose() {
-                audio.dispose();
-            }
-        });
-
-        Gdx.app = this;
-        Gdx.input = this.getInput();
-        Gdx.audio = this.getAudio();
-        Gdx.files = this.getFiles();
-        Gdx.graphics = this.getGraphics();
-        Gdx.net = this.getNet();
-
-        if (!isForView) {
-            try {
-                supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-            } catch (Exception ex) {
-                log("AndroidApplication", "Content already displayed, cannot request FEATURE_NO_TITLE", ex);
-            }
-
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            setContentView(graphics.getView(), createLayoutParams());
-        }
-
-        createWakeLock(config.useWakelock);
-        hideStatusBar(this.hideStatusBar);
-        useImmersiveMode(this.useImmersiveMode);
-        if (this.useImmersiveMode && getVersion() >= Build.VERSION_CODES.KITKAT) {
-            try {
-                Class<?> vlistener = Class.forName("com.badlogic.gdx.backends.android.AndroidVisibilityListener");
-                Object o = vlistener.newInstance();
-                Method method = vlistener.getDeclaredMethod("createListener", AndroidApplicationBase.class);
-                method.invoke(o, this);
-            } catch (Exception e) {
-                log("AndroidApplication", "Failed to create AndroidVisibilityListener", e);
-            }
         }
     }
 
-    protected FrameLayout.LayoutParams createLayoutParams() {
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParams.gravity = Gravity.CENTER;
+    protected LayoutParams createLayoutParams() {
+        LayoutParams layoutParams = new LayoutParams(-1, -1);
+        layoutParams.gravity = 17;
         return layoutParams;
     }
 
     protected void createWakeLock(boolean use) {
         if (use) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            this.getWindow().addFlags(128);
         }
+
     }
 
     protected void hideStatusBar(boolean hide) {
-        if (!hide || getVersion() < 11) return;
+        if (hide && this.getVersion() >= 11) {
+            View rootView = this.getWindow().getDecorView();
 
-        View rootView = getWindow().getDecorView();
+            try {
+                Method m = View.class.getMethod("setSystemUiVisibility", Integer.TYPE);
+                if (this.getVersion() <= 13) {
+                    m.invoke(rootView, 0);
+                }
 
-        try {
-            Method m = View.class.getMethod("setSystemUiVisibility", int.class);
-            if (getVersion() <= 13) m.invoke(rootView, 0x0);
-            m.invoke(rootView, 0x1);
-        } catch (Exception e) {
-            log("AndroidApplication", "Can't hide status bar", e);
+                m.invoke(rootView, 1);
+            } catch (Exception var4) {
+                this.log("AndroidApplication", "Can't hide status bar", var4);
+            }
+
         }
     }
 
-    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        useImmersiveMode(this.useImmersiveMode);
-        hideStatusBar(this.hideStatusBar);
+        this.useImmersiveMode(this.useImmersiveMode);
+        this.hideStatusBar(this.hideStatusBar);
         if (hasFocus) {
             this.wasFocusChanged = 1;
             if (this.isWaitingForAudio) {
@@ -235,53 +190,43 @@ abstract public class GdxDemoActivity extends BaseDemoActivity implements Androi
         } else {
             this.wasFocusChanged = 0;
         }
+
     }
 
     @TargetApi(19)
-    @Override
     public void useImmersiveMode(boolean use) {
-        if (!use || getVersion() < Build.VERSION_CODES.KITKAT) return;
+        if (use && this.getVersion() >= 19) {
+            View view = this.getWindow().getDecorView();
 
-        View view = getWindow().getDecorView();
-        try {
-            Method m = View.class.getMethod("setSystemUiVisibility", int.class);
-            int code = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            m.invoke(view, code);
-        } catch (Exception e) {
-            log("AndroidApplication", "Can't set immersive mode", e);
+            try {
+                Method m = View.class.getMethod("setSystemUiVisibility", Integer.TYPE);
+                int code = 5894;
+                m.invoke(view, Integer.valueOf(code));
+            } catch (Exception var5) {
+                this.log("AndroidApplication", "Can't set immersive mode", var5);
+            }
+
         }
     }
 
-    @Override
     protected void onPause() {
-        boolean isContinuous = graphics.isContinuousRendering();
+        boolean isContinuous = this.graphics.isContinuousRendering();
         boolean isContinuousEnforced = AndroidGraphics.enforceContinuousRendering;
-
-        // from here we don't want non continuous rendering
         AndroidGraphics.enforceContinuousRendering = true;
-        graphics.setContinuousRendering(true);
-        // calls to setContinuousRendering(false) from other thread (ex: GLThread)
-        // will be ignored at this point...
-        graphics.pause();
-
-        input.onPause();
-
-        if (isFinishing()) {
-            graphics.clearManagedCaches();
-            graphics.destroy();
+        this.graphics.setContinuousRendering(true);
+        this.graphics.pause();
+        this.input.onPause();
+        if (this.isFinishing()) {
+            this.graphics.clearManagedCaches();
+            this.graphics.destroy();
         }
 
         AndroidGraphics.enforceContinuousRendering = isContinuousEnforced;
-        graphics.setContinuousRendering(isContinuous);
-
-        graphics.onPauseGLSurfaceView();
-
+        this.graphics.setContinuousRendering(isContinuous);
+        this.graphics.onPauseGLSurfaceView();
         super.onPause();
     }
 
-    @Override
     protected void onResume() {
         Gdx.app = this;
         Gdx.input = this.getInput();
@@ -289,238 +234,220 @@ abstract public class GdxDemoActivity extends BaseDemoActivity implements Androi
         Gdx.files = this.getFiles();
         Gdx.graphics = this.getGraphics();
         Gdx.net = this.getNet();
-
-        input.onResume();
-
-        if (graphics != null) {
-            graphics.onResumeGLSurfaceView();
+        this.input.onResume();
+        if (this.graphics != null) {
+            this.graphics.onResumeGLSurfaceView();
         }
 
-        if (!firstResume) {
-            graphics.resume();
-        } else
-            firstResume = false;
+        if (!this.firstResume) {
+            this.graphics.resume();
+        } else {
+            this.firstResume = false;
+        }
 
         this.isWaitingForAudio = true;
         if (this.wasFocusChanged == 1 || this.wasFocusChanged == -1) {
             this.audio.resume();
             this.isWaitingForAudio = false;
         }
+
         super.onResume();
     }
 
-    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
-    @Override
     public ApplicationListener getApplicationListener() {
-        return listener;
+        return this.listener;
     }
 
-    @Override
     public Audio getAudio() {
-        return audio;
+        return this.audio;
     }
 
-    @Override
     public Files getFiles() {
-        return files;
+        return this.files;
     }
 
-    @Override
     public Graphics getGraphics() {
-        return graphics;
+        return this.graphics;
     }
 
-    @Override
     public AndroidInput getInput() {
-        return input;
+        return this.input;
     }
 
-    @Override
     public Net getNet() {
-        return net;
+        return this.net;
     }
 
-    @Override
     public ApplicationType getType() {
         return ApplicationType.Android;
     }
 
-    @Override
     public int getVersion() {
-        return android.os.Build.VERSION.SDK_INT;
+        return VERSION.SDK_INT;
     }
 
-    @Override
     public long getJavaHeap() {
         return Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
     }
 
-    @Override
     public long getNativeHeap() {
         return Debug.getNativeHeapAllocatedSize();
     }
 
-    @Override
     public Preferences getPreferences(String name) {
-        return new AndroidPreferences(getContext().getSharedPreferences(name, Context.MODE_PRIVATE));
+        return new AndroidPreferences(this.getSharedPreferences(name, 0));
     }
 
-    AndroidClipboard clipboard;
-
-    @Override
     public Clipboard getClipboard() {
-        if (clipboard == null) {
-            clipboard = new AndroidClipboard(this);
-        }
-        return clipboard;
+        return this.clipboard;
     }
 
-    @Override
     public void postRunnable(Runnable runnable) {
-        synchronized (runnables) {
-            runnables.add(runnable);
+        synchronized (this.runnables) {
+            this.runnables.add(runnable);
             Gdx.graphics.requestRendering();
         }
     }
 
-    @Override
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
         boolean keyboardAvailable = false;
-        if (config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO)
+        if (config.hardKeyboardHidden == 1) {
             keyboardAvailable = true;
-        input.keyboardAvailable = keyboardAvailable;
+        }
+
+        this.input.keyboardAvailable = keyboardAvailable;
     }
 
-    @Override
     public void exit() {
-        handler.post(new Runnable() {
-            @Override
+        this.handler.post(new Runnable() {
             public void run() {
-                GdxDemoActivity.this.finish();
+                finish();
             }
         });
     }
 
-    @Override
     public void debug(String tag, String message) {
-        if (logLevel >= LOG_DEBUG) {
-            Log.d(tag, message);
+        if (this.logLevel >= 3) {
+            this.getApplicationLogger().debug(tag, message);
         }
+
     }
 
-    @Override
     public void debug(String tag, String message, Throwable exception) {
-        if (logLevel >= LOG_DEBUG) {
-            Log.d(tag, message, exception);
+        if (this.logLevel >= 3) {
+            this.getApplicationLogger().debug(tag, message, exception);
         }
+
     }
 
-    @Override
     public void log(String tag, String message) {
-        if (logLevel >= LOG_INFO) Log.i(tag, message);
+        if (this.logLevel >= 2) {
+            this.getApplicationLogger().log(tag, message);
+        }
+
     }
 
-    @Override
     public void log(String tag, String message, Throwable exception) {
-        if (logLevel >= LOG_INFO) Log.i(tag, message, exception);
+        if (this.logLevel >= 2) {
+            this.getApplicationLogger().log(tag, message, exception);
+        }
+
     }
 
-    @Override
     public void error(String tag, String message) {
-        if (logLevel >= LOG_ERROR) Log.e(tag, message);
+        if (this.logLevel >= 1) {
+            this.getApplicationLogger().error(tag, message);
+        }
+
     }
 
-    @Override
     public void error(String tag, String message, Throwable exception) {
-        if (logLevel >= LOG_ERROR) Log.e(tag, message, exception);
+        if (this.logLevel >= 1) {
+            this.getApplicationLogger().error(tag, message, exception);
+        }
+
     }
 
-    @Override
     public void setLogLevel(int logLevel) {
         this.logLevel = logLevel;
     }
 
-    @Override
     public int getLogLevel() {
-        return logLevel;
+        return this.logLevel;
     }
 
-    @Override
+    public void setApplicationLogger(ApplicationLogger applicationLogger) {
+        this.applicationLogger = applicationLogger;
+    }
+
+    public ApplicationLogger getApplicationLogger() {
+        return this.applicationLogger;
+    }
+
     public void addLifecycleListener(LifecycleListener listener) {
-        synchronized (lifecycleListeners) {
-            lifecycleListeners.add(listener);
+        synchronized (this.lifecycleListeners) {
+            this.lifecycleListeners.add(listener);
         }
     }
 
-    @Override
     public void removeLifecycleListener(LifecycleListener listener) {
-        synchronized (lifecycleListeners) {
-            lifecycleListeners.removeValue(listener, true);
+        synchronized (this.lifecycleListeners) {
+            this.lifecycleListeners.removeValue(listener, true);
         }
     }
 
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // forward events to our listeners if there are any installed
-        synchronized (androidEventListeners) {
-            for (int i = 0; i < androidEventListeners.size; i++) {
-                androidEventListeners.get(i).onActivityResult(requestCode, resultCode, data);
+        synchronized (this.androidEventListeners) {
+            for (int i = 0; i < this.androidEventListeners.size; ++i) {
+                ((AndroidEventListener) this.androidEventListeners.get(i)).onActivityResult(requestCode, resultCode, data);
             }
+
         }
     }
 
-    /**
-     * Adds an event listener for Android specific event such as onActivityResult(...).
-     */
     public void addAndroidEventListener(AndroidEventListener listener) {
-        synchronized (androidEventListeners) {
-            androidEventListeners.add(listener);
+        synchronized (this.androidEventListeners) {
+            this.androidEventListeners.add(listener);
         }
     }
 
-    /**
-     * Removes an event listener for Android specific event such as onActivityResult(...).
-     */
     public void removeAndroidEventListener(AndroidEventListener listener) {
-        synchronized (androidEventListeners) {
-            androidEventListeners.removeValue(listener, true);
+        synchronized (this.androidEventListeners) {
+            this.androidEventListeners.removeValue(listener, true);
         }
     }
 
-    @Override
     public Context getContext() {
         return this;
     }
 
-    @Override
     public Array<Runnable> getRunnables() {
-        return runnables;
+        return this.runnables;
     }
 
-    @Override
     public Array<Runnable> getExecutedRunnables() {
-        return executedRunnables;
+        return this.executedRunnables;
     }
 
-    @Override
-    public Array<LifecycleListener> getLifecycleListeners() {
-        return lifecycleListeners;
+    public SnapshotArray<LifecycleListener> getLifecycleListeners() {
+        return this.lifecycleListeners;
     }
 
-    @Override
     public Window getApplicationWindow() {
         return this.getWindow();
     }
 
-    @Override
     public Handler getHandler() {
         return this.handler;
+    }
+
+    static {
+        GdxNativesLoader.load();
     }
 }
