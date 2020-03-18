@@ -23,17 +23,17 @@ public class BatteryMeter extends ImageView {
     }
 
     public void setValue(int value) {
-        int imageResource = R.drawable.battery_0bar;
+        int imageResource = R.drawable.icon_battery_0;
         if (value >= 0 && value <= 9) {
-            imageResource = R.drawable.battery_0bar;
+            imageResource = R.drawable.icon_battery_0;
         } else if (value > 9 && value <= 25) {
-            imageResource = R.drawable.battery_1bar;
+            imageResource = R.drawable.icon_battery_1;
         } else if (value > 25 && value <= 50) {
-            imageResource = R.drawable.battery_2bar;
+            imageResource = R.drawable.icon_battery_2;
         } else if (value > 50 && value <= 75) {
-            imageResource = R.drawable.battery_3bar;
+            imageResource = R.drawable.icon_battery_3;
         } else if (value > 75 && value <= 100) {
-            imageResource = R.drawable.battery_4bar;
+            imageResource = R.drawable.icon_battery_4;
         }
 
         setImageResource(imageResource);

@@ -34,17 +34,17 @@ public class SignalStrengthMeter extends ImageView {
         int bitmapResource;
 
         if (dbValue >= -20) {
-            bitmapResource = R.drawable.signal_5bar;
+            bitmapResource = R.drawable.icon_bars_5;
         } else if (dbValue < -20 && dbValue >= -40) {
-            bitmapResource = R.drawable.signal_4bar;
+            bitmapResource = R.drawable.icon_bars_4;
         } else if (dbValue < -40 && dbValue >= -60) {
-            bitmapResource = R.drawable.signal_3bar;
+            bitmapResource = R.drawable.icon_bars_3;
         } else if (dbValue < -60 && dbValue >= -80) {
-            bitmapResource = R.drawable.signal_2bar;
+            bitmapResource = R.drawable.icon_bars_2;
         } else if (dbValue < -80 && dbValue >= -90) {
-            bitmapResource = R.drawable.signal_1bar;
+            bitmapResource = R.drawable.icon_bars_1;
         } else {
-            bitmapResource = R.drawable.signal_0bar;
+            bitmapResource = R.drawable.icon_bars_0;
         }
         setImageResource(bitmapResource);
 

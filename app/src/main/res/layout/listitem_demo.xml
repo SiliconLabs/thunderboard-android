@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/demo_icon"
         android:layout_marginLeft="@dimen/space_S"
         android:textColor="@color/sl_terbium_green"
-        android:textSize="@dimen/text_size_ML"
+        android:textSize="@dimen/text_size_LXL"
         android:fontFamily="sans-serif-light"/>
 
 </RelativeLayout>

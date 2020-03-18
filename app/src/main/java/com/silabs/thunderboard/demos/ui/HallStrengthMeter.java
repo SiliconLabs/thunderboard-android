@@ -26,11 +26,11 @@ public class HallStrengthMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.icn_demo_magnetic_field;
+        return R.drawable.icon_magneticfield;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.icn_demo_magnetic_field;
+        return R.drawable.icon_magneticfield;
     }
 }

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -29,7 +31,7 @@ public class ColorLEDControl extends FrameLayout {
     SeekBar brightnessSelect;
 
     @BindView(R.id.iodemo_color_switch)
-    ColorLEDsSwitch colorSwitch;
+    SwitchCompat colorSwitch;
 
     @BindView(R.id.iodemo_hue_background)
     HueBackgroundView hueBackgroundView;
@@ -73,7 +75,7 @@ public class ColorLEDControl extends FrameLayout {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 hue = (float) progress;
 
-                setColorLEDs(colorSwitch.getSwitchState(), hue, brightness);
+                setColorLEDs(colorSwitch.isChecked(), hue, brightness);
 
                 colorLEDs.setColor(hsvToRGB(hue, 1));
             }
@@ -95,16 +97,16 @@ public class ColorLEDControl extends FrameLayout {
         brightnessSelect.setOnSeekBarChangeListener(selectBrightnessListener);
 
 
-        colorSwitch.setColorLEDsSwitchListener(new ColorLEDsSwitch.ColorLEDsSwitchListener() {
+        colorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(boolean state) {
-                enableControls(state);
-                setColorLEDs(state, ColorLEDControl.this.hue, ColorLEDControl.this.brightness);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                enableControls(isChecked);
+                setColorLEDs(isChecked, ColorLEDControl.this.hue, ColorLEDControl.this.brightness);
             }
         });
 
         // initial state is off
-        colorSwitch.setSwitchState(false);
+        colorSwitch.setChecked(false);
         enableControls(false);
     }
 
@@ -112,7 +114,7 @@ public class ColorLEDControl extends FrameLayout {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             brightness = findBrightness(progress);
-            setColorLEDs(colorSwitch.getSwitchState(), hue, brightness);
+            setColorLEDs(colorSwitch.isChecked(), hue, brightness);
             colorLEDs.setAlpha(progress);
         }
 
@@ -134,7 +136,7 @@ public class ColorLEDControl extends FrameLayout {
 
     public void setColorLEDsUI(LedRGBState colorLEDsValue) {
         boolean isOn = colorLEDsValue.on;
-        colorSwitch.setSwitchState(isOn);
+        colorSwitch.setChecked(isOn);
         enableControls(isOn);
         float[] hsv = new float[3];
         Color.RGBToHSV(

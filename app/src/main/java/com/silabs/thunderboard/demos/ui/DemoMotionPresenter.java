@@ -124,7 +124,7 @@ public class DemoMotionPresenter extends BaseDemoPresenter {
             @Override
             public void onNext(ThunderBoardDevice device) {
                 ThunderBoardType type = getThunderBoardType();
-                if (type == ThunderBoardType.THUNDERBOARD_SENSE || type == ThunderBoardType.THUNDERBOARD_REACT) {
+                if (type == ThunderBoardType.THUNDERBOARD_SENSE || type == ThunderBoardType.THUNDERBOARD_REACT || type == ThunderBoardType.THUNDERBOARD_BLUE) {
                     ThunderBoardSensorIo sensor = device.getSensorIo();
                     deviceAvailable = true;
                     if (sensor == null) {

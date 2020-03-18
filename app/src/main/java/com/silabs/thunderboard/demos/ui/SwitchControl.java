@@ -43,16 +43,14 @@ public class SwitchControl extends FrameLayout {
         addView(view);
         ButterKnife.bind(this, view);
 
-        spinnerDrawable = new ButtonSpinnerDrawable(context);
-        image.setImageDrawable(spinnerDrawable);
         this.context = context;
     }
 
     public void setChecked(boolean checked) {
         if (checked) {
-            spinnerDrawable.start();
+            image.setImageResource(R.drawable.switch_status_on);
         } else {
-            spinnerDrawable.stop();
+            image.setImageResource(R.drawable.switch_status_off);
         }
 
         text.setText(context.getString(checked ? R.string.on : R.string.off));

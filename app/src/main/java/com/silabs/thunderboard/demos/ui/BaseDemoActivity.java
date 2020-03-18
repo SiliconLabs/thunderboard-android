@@ -25,6 +25,7 @@ import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.common.app.ThunderBoardConstants;
 import com.silabs.thunderboard.common.data.PreferenceManager;
 import com.silabs.thunderboard.common.ui.ThunderBoardActivity;
+import com.silabs.thunderboard.settings.ui.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +110,7 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_demo, menu);
         this.menu = menu;
-        setMenuItemsEnabled(streamingSwitch.isChecked());
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -126,6 +126,11 @@ public abstract class BaseDemoActivity extends ThunderBoardActivity implements B
             return true;
         } else if (id == android.R.id.home) {
             onBackPressed();
+            return true;
+        } else if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra(ThunderBoardConstants.EXTRA_DEVICE_ADDRESS, deviceAddress);
+            startActivity(intent);
             return true;
         }
 

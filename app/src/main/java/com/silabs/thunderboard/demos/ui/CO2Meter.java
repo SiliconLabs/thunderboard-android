@@ -21,12 +21,12 @@ public class CO2Meter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.ic_carbon_dioxide_inactive;
+        return R.drawable.icon_co2;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.ic_carbon_dioxide;
+        return R.drawable.icon_co2;
     }
 
     @Override

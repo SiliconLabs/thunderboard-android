@@ -13,15 +13,21 @@
         android:layout_alignParentTop="true"
         android:theme="@style/SearchToolbar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/Popup" />
+        app:popupTheme="@style/Popup"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/demos_toolbar">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/demos_toolbar"
+
+        android:paddingTop="@dimen/iodemo_margin"
+        android:paddingLeft="@dimen/iodemo_margin"
+        android:paddingRight="@dimen/iodemo_margin"
+        android:paddingBottom="@dimen/iodemo_margin">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/demos_list"
+            android:id="@+id/demos_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

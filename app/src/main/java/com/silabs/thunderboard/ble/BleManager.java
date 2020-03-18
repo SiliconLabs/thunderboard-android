@@ -7,11 +7,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -62,6 +64,20 @@ import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
 import timber.log.Timber;
 
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_CO2_READING;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_FIELD_STRENGTH;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_HUMIDITY;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_PRESSURE;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_SOUND_LEVEL;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_TVOC_READING;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_CHARACTERISTIC_UV_INDEX;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_SERVICE_AMBIENT_LIGHT;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT;
+import static com.silabs.thunderboard.ble.model.ThunderBoardUuids.UUID_SERVICE_INDOOR_AIR_QUALITY;
+
 /**
  * Provides methods for the application to interact with the Android BLE system.
  */
@@ -99,6 +115,29 @@ public class BleManager implements RangeNotifier {
 
     private Subscriber<Long> intervalSubscriber;
 
+    public boolean characteristicHallStateAvailable;
+    public boolean characteristicHallFieldStrengthAvailable;
+    public boolean characteristicCo2ReadingAvailable;
+    public boolean characteristicTvocReadingAvailable;
+    public boolean characteristicPressureAvailable;
+    public boolean characteristicSoundLevelAvailable;
+    public boolean characteristicHumidityAvailable;
+    public boolean characteristicUvIndexAvailable;
+    public boolean characteristicAmbientLightReactAvailable;
+    public boolean characteristicAmbientLightSenseAvailable;
+
+    private LedRGBState ledRGBState;
+
+    private Handler handler;
+
+    private Runnable retryWriteLed = new Runnable() {
+        @Override
+        public void run() {
+            handler.removeCallbacks(retryWriteLed);
+            setColorLEDs(ledRGBState);
+        }
+    };
+
     @Inject
     public BleManager(@ForApplication Context context, PreferenceManager prefsManager) {
         this.context = context;
@@ -122,6 +161,8 @@ public class BleManager implements RangeNotifier {
         backgroundPowerSaver = new ThunderBoardPowerSaver(context, preferenceManager);
 
         beaconManager.setBackgroundBetweenScanPeriod(ThunderBoardPowerSaver.DELAY_BETWEEN_SCANS_INACTIVE);
+
+        handler = new Handler();
     }
 
     public boolean isBluetoothEnabled() {
@@ -394,7 +435,7 @@ public class BleManager implements RangeNotifier {
         if (gatt != null) {
             boolean submitted = BleUtils.unsetCharacteristicNotification(
                     gatt,
-                    ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
+                    UUID_SERVICE_HALL_EFFECT,
                     ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE,
                     ThunderBoardUuids.UUID_DESCRIPTOR_CLIENT_CHARACTERISTIC_CONFIGURATION, false);
             Timber.d("disable hall state submitted: %s", submitted);
@@ -402,7 +443,6 @@ public class BleManager implements RangeNotifier {
     }
 
     /**
-     *
      * @param notificationEvent
      * @return returns true if clear is in progress, false otherwise
      */
@@ -465,10 +505,10 @@ public class BleManager implements RangeNotifier {
                 ThunderBoardUuids.UUID_DESCRIPTOR_CLIENT_CHARACTERISTIC_CONFIGURATION, enabled);
     }
 
-    public  boolean enableHallStateMeasurement(boolean enabled) {
+    public boolean enableHallStateMeasurement(boolean enabled) {
         return BleUtils.setCharacteristicNotification(
                 gatt,
-                ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
+                UUID_SERVICE_HALL_EFFECT,
                 ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE,
                 ThunderBoardUuids.UUID_DESCRIPTOR_CLIENT_CHARACTERISTIC_CONFIGURATION, enabled);
     }
@@ -500,16 +540,19 @@ public class BleManager implements RangeNotifier {
 
     public boolean resetHallEffectTamper() {
         boolean submitted = BleUtils.writeCharacteristics(gatt,
-                                                          ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
-                                                          ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_CONTROL_POINT,
-                                                          HallState.OPENED,
-                                                          BluetoothGattCharacteristic.FORMAT_UINT16,
-                                                          0);
+                UUID_SERVICE_HALL_EFFECT,
+                ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_CONTROL_POINT,
+                HallState.OPENED,
+                BluetoothGattCharacteristic.FORMAT_UINT16,
+                0);
         Timber.d("submitted: %s", submitted);
         return submitted;
     }
 
     public void setColorLEDs(LedRGBState ledRGBState) {
+        this.ledRGBState = ledRGBState;
+        handler.removeCallbacks(retryWriteLed);
+
         ThunderBoardDevice device = getDeviceFromCache(gatt.getDevice().getAddress());
         if (device != null && device.getSensorIo() != null && device.getSensorIo().getSensorData() != null) {
             device.getSensorIo().getSensorData().colorLed = null;
@@ -523,11 +566,16 @@ public class BleManager implements RangeNotifier {
         bytes[3] = (byte) (ledRGBState.on ? 0x0f : 0x00);
 
         int value = ByteBuffer.wrap(bytes).getInt();
-        BleUtils.writeCharacteristics(gatt,
+
+        boolean characteristicsWriteResult = BleUtils.writeCharacteristics(gatt,
                 ThunderBoardUuids.UUID_SERVICE_USER_INTERFACE,
                 ThunderBoardUuids.UUID_CHARACTERISTIC_RGB_LEDS,
                 value,
                 BluetoothGattCharacteristic.FORMAT_UINT32, 0);
+
+        if (!characteristicsWriteResult) {
+            handler.postDelayed(retryWriteLed, 100);
+        }
     }
 
     private Subscriber<NotificationEvent> enableConfigureEnvironment(final ThunderBoardDevice device) {
@@ -581,48 +629,48 @@ public class BleManager implements RangeNotifier {
     }
 
     public boolean readTemperature() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING,
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_ENVIRONMENT_SENSING,
                 ThunderBoardUuids.UUID_CHARACTERISTIC_TEMPERATURE);
     }
 
     public boolean readHumidity() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_HUMIDITY);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_ENVIRONMENT_SENSING,
+                UUID_CHARACTERISTIC_HUMIDITY);
     }
 
     public boolean readUvIndex() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_UV_INDEX);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_ENVIRONMENT_SENSING,
+                UUID_CHARACTERISTIC_UV_INDEX);
     }
 
     public boolean readAmbientLightReact() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_AMBIENT_LIGHT,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_AMBIENT_LIGHT,
+                UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT);
     }
 
     public boolean readAmbientLightSense() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_ENVIRONMENT_SENSING,
+                UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT);
     }
 
     public boolean readSoundLevel() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_SOUND_LEVEL);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_ENVIRONMENT_SENSING,
+                UUID_CHARACTERISTIC_SOUND_LEVEL);
     }
 
     public boolean readPressure() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_ENVIRONMENT_SENSING,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_PRESSURE);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_ENVIRONMENT_SENSING,
+                UUID_CHARACTERISTIC_PRESSURE);
     }
 
     public boolean readCO2Level() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_INDOOR_AIR_QUALITY,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_CO2_READING);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_INDOOR_AIR_QUALITY,
+                UUID_CHARACTERISTIC_CO2_READING);
     }
 
     public boolean readTVOCLevel() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_INDOOR_AIR_QUALITY,
-                ThunderBoardUuids.UUID_CHARACTERISTIC_TVOC_READING);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_INDOOR_AIR_QUALITY,
+                UUID_CHARACTERISTIC_TVOC_READING);
     }
 
     public boolean readColorLEDs() {
@@ -631,13 +679,13 @@ public class BleManager implements RangeNotifier {
     }
 
     public boolean readHallStrength() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_HALL_EFFECT,
                 ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_FIELD_STRENGTH);
     }
 
     public boolean readHallState() {
-        return BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_HALL_EFFECT,
-                                           ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE);
+        return BleUtils.readCharacteristic(gatt, UUID_SERVICE_HALL_EFFECT,
+                ThunderBoardUuids.UUID_CHARACTERISTIC_HALL_STATE);
     }
 
 
@@ -699,8 +747,7 @@ public class BleManager implements RangeNotifier {
                     readSuccessful = BleUtils.readCharacteristic(gatt, ThunderBoardUuids
                             .UUID_SERVICE_DEVICE_INFORMATION, ThunderBoardUuids.UUID_CHARACTERISTIC_SYSTEM_ID);
                     Timber.d("read system id submitted: %s", readSuccessful);
-                }
-                else if (device.isBatteryConfigured == null) {
+                } else if (device.isBatteryConfigured == null) {
                     readSuccessful = BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_BATTERY, ThunderBoardUuids.UUID_CHARACTERISTIC_BATTERY_LEVEL);
                     if (!readSuccessful) {
                         device.isBatteryConfigured = false;
@@ -713,7 +760,7 @@ public class BleManager implements RangeNotifier {
                         device.isBatteryNotificationEnabled = false;
                     }
                 } else if (device.isPowerSourceConfigured == null) {
-                    readSuccessful= BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_POWER_MANAGEMENT, ThunderBoardUuids.UUID_CHARACTERISTIC_POWER_SOURCE);
+                    readSuccessful = BleUtils.readCharacteristic(gatt, ThunderBoardUuids.UUID_SERVICE_POWER_MANAGEMENT, ThunderBoardUuids.UUID_CHARACTERISTIC_POWER_SOURCE);
                     if (!readSuccessful) {
                         device.isPowerSourceConfigured = false;
                     }
@@ -902,5 +949,72 @@ public class BleManager implements RangeNotifier {
             }
         }
         return activeDevicesChanged;
+    }
+
+
+    void checkAvailableCharacteristics() {
+        characteristicHallStateAvailable = false;
+        characteristicHallFieldStrengthAvailable = false;
+        characteristicCo2ReadingAvailable = false;
+        characteristicTvocReadingAvailable = false;
+        characteristicPressureAvailable = false;
+        characteristicSoundLevelAvailable = false;
+        characteristicHumidityAvailable = false;
+        characteristicUvIndexAvailable = false;
+        characteristicAmbientLightReactAvailable = false;
+        characteristicAmbientLightSenseAvailable = false;
+
+        if (gatt == null) {
+            return;
+        }
+
+        for (BluetoothGattService service : gatt.getServices()) {
+            if (service.getUuid().equals(UUID_SERVICE_ENVIRONMENT_SENSING)) {
+                for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+                    if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_HUMIDITY)) {
+                        characteristicHumidityAvailable = true;
+                    }
+                    else if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_UV_INDEX)) {
+                        characteristicUvIndexAvailable = true;
+                    }
+                    else if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT)) {
+                        characteristicAmbientLightReactAvailable = true;
+                    }
+                    else if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_PRESSURE)) {
+                        characteristicPressureAvailable = true;
+                    }
+                    else if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_SOUND_LEVEL)) {
+                        characteristicSoundLevelAvailable = true;
+                    }
+                }
+            }
+            else if (service.getUuid().equals(UUID_SERVICE_AMBIENT_LIGHT)) {
+                for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+                    if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_AMBIENT_LIGHT_REACT)) {
+                        characteristicAmbientLightReactAvailable = true;
+                    }
+                }
+            }
+            else if (service.getUuid().equals(UUID_SERVICE_HALL_EFFECT)) {
+                for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+                    if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_HALL_STATE)) {
+                        characteristicHallStateAvailable = true;
+                    }
+                    else if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_HALL_FIELD_STRENGTH)) {
+                        characteristicHallFieldStrengthAvailable = true;
+                    }
+                }
+            }
+            else if (service.getUuid().equals(UUID_SERVICE_INDOOR_AIR_QUALITY)) {
+                for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+                    if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_CO2_READING)) {
+                        characteristicCo2ReadingAvailable = true;
+                    }
+                    else if (characteristic.getUuid().equals(UUID_CHARACTERISTIC_TVOC_READING)) {
+                        characteristicTvocReadingAvailable = true;
+                    }
+                }
+            }
+        }
     }
 }

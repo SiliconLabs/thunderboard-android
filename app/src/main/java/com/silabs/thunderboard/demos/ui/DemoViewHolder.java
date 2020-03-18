@@ -15,10 +15,13 @@ import butterknife.ButterKnife;
  */
 public class DemoViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.demo_label)
+    @BindView(R.id.textview_menu_title)
     TextView demoLabel;
 
-    @BindView(R.id.demo_icon)
+    @BindView(R.id.textview_menu_description)
+    TextView demoDescription;
+
+    @BindView(R.id.imageview_menu_icon)
     ImageView demoIcon;
 
     View rootView;

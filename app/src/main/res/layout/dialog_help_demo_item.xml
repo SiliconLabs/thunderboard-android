@@ -1,0 +1,132 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/help_button_height"
+        android:background="@color/gray_0"
+        android:gravity="left|center_vertical"
+        android:textSize="@dimen/text_size_M"
+        android:textStyle="bold"
+        android:paddingStart="@dimen/help_text_padding"
+        android:text="@string/help"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/help_text_padding"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/help_text_size"
+                android:text="@string/about_silicon_labs"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_moreinfo_label"
+                android:layout_marginTop="@dimen/help_section_and_body_separation"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:textColorLink="@color/tb_red"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_moreinfo_url"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_support_label"
+                android:layout_marginTop="@dimen/help_section_and_body_separation"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:textColorLink="@color/tb_red"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_support_url"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:textColorLink="@color/tb_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_sourcecode_label"
+                android:layout_marginTop="@dimen/help_section_and_body_separation"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:textColorLink="@color/tb_red"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_sourcecode_url"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_documentation_label"
+                android:layout_marginTop="@dimen/help_section_and_body_separation"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:textColorLink="@color/tb_red"
+                android:autoLink="web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_documentation_url"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_pub_label"
+                android:layout_marginTop="@dimen/help_section_and_body_separation"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:textColorLink="@color/tb_red"
+                android:id="@+id/help_text_playstore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_text_pub_url"
+                android:textSize="@dimen/help_text_size"/>
+
+            <TextView
+                android:id="@+id/dialog_help_version_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/help_body_and_version_separation"
+                android:textSize="@dimen/help_text_size"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/help_ok_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/help_button_height"
+        android:text="@string/ok"
+        android:textColor="@color/white"
+        android:textSize="@dimen/help_dialog_ok_btn_text_size"
+        android:background="@drawable/ok_button_selector"/>
+
+</LinearLayout>

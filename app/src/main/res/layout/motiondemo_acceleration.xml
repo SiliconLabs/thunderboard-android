@@ -6,65 +6,58 @@
     android:layout_marginTop="@dimen/space_S">
 
     <TextView
-        style="@style/sm_silicon_grey"
+        style="@style/tb_robo_medium_14dp"
         android:layout_gravity="left"
         android:text="@string/motion_acceleration"
-        android:maxLines="1"
-        android:textAllCaps="true" />
+        android:maxLines="1" />
 
-    <RelativeLayout
-        style="@style/block"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_XS">
 
         <TextView
-            style="@style/sm_silicon_grey"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            style="@style/tb_robo_regular_12dp_grey"
             android:text="@string/motion_x"
             android:textStyle="bold"/>
 
         <TextView
-            style="@style/sm_silicon_grey"
+            android:layout_marginStart="@dimen/space_S"
+            style="@style/tb_robo_regular_12dp"
             android:id="@+id/acceleration_x"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:fontFamily="sans-serif-light" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        style="@style/block">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
-            style="@style/sm_silicon_grey"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            style="@style/tb_robo_regular_12dp_grey"
             android:text="@string/motion_y"
             android:textStyle="bold"/>
 
         <TextView
-            style="@style/sm_silicon_grey"
+            android:layout_marginStart="@dimen/space_S"
+            style="@style/tb_robo_regular_12dp"
             android:id="@+id/acceleration_y"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:fontFamily="sans-serif-light" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        style="@style/block">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
-            style="@style/sm_silicon_grey"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            style="@style/tb_robo_regular_12dp_grey"
             android:text="@string/motion_z"
             android:textStyle="bold"/>
 
         <TextView
-            style="@style/sm_silicon_grey"
+            android:layout_marginStart="@dimen/space_S"
+            style="@style/tb_robo_regular_12dp"
             android:id="@+id/acceleration_z"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:fontFamily="sans-serif-light" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

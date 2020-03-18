@@ -139,7 +139,8 @@ public class ThunderBoardStatusFragment extends Fragment implements StatusViewLi
         }
         deviceStatus.setText(getString(resourceId));
         int powerSource;
-        if (device.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+
+        if (device.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE || device.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_BLUE) {
             powerSource = device.getPowerSource();
         } else {
             powerSource = ThunderBoardConstants.POWER_SOURCE_TYPE_COIN_CELL;

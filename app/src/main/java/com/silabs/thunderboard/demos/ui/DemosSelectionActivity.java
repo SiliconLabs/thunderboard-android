@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -43,7 +43,7 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
     @BindView(R.id.demos_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.demos_list)
+    @BindView(R.id.demos_grid)
     RecyclerView demosRecyclerView;
 
     private String deviceName;
@@ -64,8 +64,8 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
         component().inject(this);
 
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResourceColor(R.color.sl_terbium_green));
-        toolbar.setTitle(getString(R.string.thunderboard));
+        toolbar.setBackgroundColor(getResourceColor(R.color.tb_red));
+        toolbar.setTitle(getString(R.string.dashboard));
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
         params.height += getStatusBarHeight();
@@ -97,7 +97,7 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
 
         setupDemosList();
 
-        demosRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        demosRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         demosRecyclerView.setAdapter(new DemosAdapter(this, demosList, deviceAddress));
         demosRecyclerView.setVisibility(View.INVISIBLE);
 
@@ -134,7 +134,6 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.action_history).setVisible(true);
 
         return true;
     }
@@ -188,17 +187,20 @@ public class DemosSelectionActivity extends ThunderBoardActivity implements Demo
 
     private void setupDemosList() {
         demosList.add(new Demo(getString(R.string.demo_motion),
-                R.drawable.ic_motion,
+                R.drawable.icon_motion,
                 DemoMotionActivity.class,
-                DemoMotionActivity.isDemoAllowed()));
+                DemoMotionActivity.isDemoAllowed(),
+                getString(R.string.demo_motion_description)));
         demosList.add(new Demo(getString(R.string.demo_environment),
-                R.drawable.ic_environmental,
+                R.drawable.icon_environment,
                 DemoEnvironmentActivity.class,
-                DemoEnvironmentActivity.isDemoAllowed()));
+                DemoEnvironmentActivity.isDemoAllowed(),
+                getString(R.string.demo_environment_description)));
         demosList.add(new Demo(getString(R.string.demo_io),
-                R.drawable.ic_io,
+                R.drawable.icon_power,
                 DemoIOActivity.class,
-                DemoIOActivity.isDemoAllowed()));
+                DemoIOActivity.isDemoAllowed(),
+                getString(R.string.demo_io_description)));
     }
 
     @Override

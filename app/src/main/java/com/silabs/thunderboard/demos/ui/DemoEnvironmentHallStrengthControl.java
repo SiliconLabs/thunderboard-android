@@ -31,24 +31,17 @@ public class DemoEnvironmentHallStrengthControl extends LinearLayout {
     public DemoEnvironmentHallStrengthControl(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        Resources res = context.getResources();
+        inflate(context, R.layout.environmentdemo_tile, this);
 
-        setOrientation(LinearLayout.VERTICAL);
+        TextView textViewDescription = findViewById(R.id.env_description);
+        textViewDescription.setText(R.string.environment_hall_strength);
+        textView = findViewById(R.id.env_value);
 
-        LayoutParams layoutParams =
-                new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        LinearLayout layout = findViewById(R.id.env_layout_meter);
 
         hallStrengthMeter = new HallStrengthMeter(context);
-        addView(hallStrengthMeter, layoutParams);
+        layout.addView(hallStrengthMeter);
         setEnabled(false);
-
-        textView = new TextView(context);
-        textView.setTextColor(res.getColor(R.color.sl_silicon_grey));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_S));
-        textView.setPadding(0, res.getDimensionPixelSize(R.dimen.space_S), 0, 0);
-
-        addView(textView, layoutParams);
 
         setHallStrength(0);
     }

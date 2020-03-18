@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/match"
-    android:background="@color/sl_terbium_green">
+    android:background="@drawable/maskgroup2">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/scanner_toolbar"
@@ -12,7 +12,8 @@
         android:layout_alignParentTop="true"
         android:theme="@style/SearchToolbar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/Popup" />
+        app:popupTheme="@style/Popup"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <LinearLayout
         style="@style/block"
@@ -21,6 +22,7 @@
         android:orientation="vertical">
         
         <ImageView
+            android:visibility="gone"
             style="@style/wrap"
             android:id="@+id/mm_logo"
             android:layout_gravity="center_horizontal"
@@ -30,33 +32,39 @@
             style="@style/wrap"
             android:layout_marginTop="@dimen/space_XXL"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_splash_thunderboard" />
-    </LinearLayout>
+            android:src="@drawable/ic_app_hero" />
 
-    <ImageView
-        style="@style/wrap"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/space_S"
-        android:src="@drawable/logo_splash"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/thunderboard"
+            style="@style/tb_robo_medium_34dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
     <!-- Bottom panel -->
     <FrameLayout
-        style="@style/match"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/bottom_panel"
-        android:layout_below="@id/logo_block"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/space_SM"
-        android:background="@color/sl_white"
+        android:background="@color/transparent"
         android:visibility="invisible">
 
         <!-- Devices found -->
         <RelativeLayout
             android:id="@+id/bluetooth_devices_view"
             style="@style/match"
+            android:background="@color/transparent"
             android:visibility="visible">
 
             <android.support.v7.widget.RecyclerView
-                style="@style/match"
+                android:layout_marginBottom="@dimen/space_XS"
+                android:background="@color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/scanner_device_list"
                 android:scrollbars="vertical" />
 
@@ -68,7 +76,9 @@
             android:id="@+id/bluetooth_no_devices_view"
             android:paddingLeft="@dimen/space_SM"
             android:paddingRight="@dimen/space_SM"
-            android:visibility="gone">
+            android:layout_marginBottom="@dimen/space_XS"
+            android:visibility="gone"
+            android:background="@color/transparent">
 
             <LinearLayout
                 style="@style/wrap"
@@ -76,7 +86,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/l_silicon_grey"
+                    style="@style/tb_robo_medium_18dp_white"
                     android:id="@+id/scanner_status_report"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal" />

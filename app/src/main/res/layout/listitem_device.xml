@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<RelativeLayout android:background="@drawable/listitem_device_rounded_bg"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/device_item_height">
-
-    <com.silabs.thunderboard.scanner.ui.SignalStrengthIndicator
-        style="@style/wrap"
-        android:id="@+id/signal_strength"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/space_S"
-        android:layout_centerVertical="true" />
+    android:layout_height="@dimen/device_item_height"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         style="@style/wrap"
@@ -21,19 +19,20 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/l_silicon_grey"
+            style="@style/tb_robo_medium_18dp"
+            tools:text="Thunderboard"
             android:id="@+id/device_name"
             android:ellipsize="end"
             android:maxLines="2" />
 
-        <TextView
-            style="@style/s_silicon_grey"
-            android:id="@+id/device_address" />
-
     </LinearLayout>
 
-    <View
-        style="@style/divider_line"
-        android:layout_alignParentBottom="true" />
+    <com.silabs.thunderboard.scanner.ui.SignalStrengthIndicator
+        style="@style/wrap"
+        android:id="@+id/signal_strength"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_S"
+        android:layout_centerVertical="true" />
+
 </RelativeLayout>
 

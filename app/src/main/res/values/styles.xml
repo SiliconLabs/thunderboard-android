@@ -113,9 +113,19 @@
         <item name="android:textSize">@dimen/text_size_SM</item>
     </style>
 
+
+    <style name="sm_red" parent="terbium_green_text">
+        <item name="android:textColor">@color/tb_red</item>
+    </style>
+
     <style name="s_terbium_green" parent="terbium_green_text">
         <item name="android:textSize">@dimen/text_size_S</item>
     </style>
+
+    <style name="s_red" parent="terbium_green_text">
+        <item name="android:textColor">@color/tb_red</item>
+    </style>
+
 
     <!-- General Text style to be used throughout the app for TextListCell -->
     <style name="TextTitle">
@@ -239,12 +249,8 @@
         <item name="android:background">@drawable/clear_rect</item>
     </style>
 
-    <style name="EnvironmentControlLabel" parent="s_silicon_grey"> 
-        <item name="android:gravity">center_horizontal</item> 
-    </style>
-
-    <style name="EnvironmentControlLabel.HallStateTampered"> 
-        <item name="android:textColor">@color/sl_red</item> 
+    <style name="EnvironmentControlLabel_HallStateTampered" parent="tb_robo_medium_18dp"> 
+        <item name="android:textColor">@color/tb_red</item> 
         <item name="android:textStyle">bold</item> 
     </style>
 
@@ -276,4 +282,91 @@
         <item name="android:paddingTop">@dimen/space_S</item>
         <item name="android:paddingBottom">@dimen/space_S</item>
     </style>
+
+    <!--RESKINNING-->
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/text_size_XL</item>
+    </style>
+
+    <style name="tb_text_color_black" parent="wrap">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="tb_text_color_grey" parent="wrap">
+        <item name="android:textColor">@color/tb_font_grey</item>
+    </style>
+
+    <style name="tb_text_color_blue" parent="wrap">
+        <item name="android:textColor">@color/tb_blue</item>
+    </style>
+
+    <style name="tb_text_color_white" parent="wrap">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="tb_robo_medium_34dp" prent="tb_text_color_white">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_size_XL</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="tb_robo_medium_18dp" parent="tb_text_color_black">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_size_ML</item>
+    </style>
+
+    <style name="tb_robo_medium_18dp_white" parent="tb_text_color_white">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_size_ML</item>
+    </style>
+
+    <style name="tb_robo_medium_18dp_grey" parent="tb_text_color_grey">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_size_ML</item>
+    </style>
+
+    <style name="tb_robo_regular_18dp_grey" parent="tb_text_color_grey">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/text_size_ML</item>
+    </style>
+
+    <style name="tb_robo_regular_14dp_grey" parent="tb_text_color_grey">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="tb_robo_regular_12dp_grey" parent="tb_text_color_grey">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/text_size_S</item>
+    </style>
+
+    <style name="tb_robo_regular_12dp" parent="tb_text_color_black">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/text_size_S</item>
+    </style>
+
+    <style name="tb_robo_bolt_14dp" parent="tb_text_color_black">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="tb_robo_medium_14dp" parent="tb_text_color_black">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="tb_robo_medium_14dp_blue" parent="tb_text_color_blue">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="divider_line_grey">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:background">@color/main_background</item>
+    </style>
+
 </resources>

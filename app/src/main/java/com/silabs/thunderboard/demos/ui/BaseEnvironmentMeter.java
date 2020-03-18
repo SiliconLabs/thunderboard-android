@@ -12,10 +12,10 @@ import android.view.View;
 
 import com.silabs.thunderboard.R;
 
-public abstract class BaseEnvironmentMeter extends View {
+public class BaseEnvironmentMeter extends View {
 
     protected final Paint backgroundBrush;
-    protected final Bitmap inactiveBitmap;
+    protected Bitmap inactiveBitmap;
     protected Bitmap activeBitmap;
 
     private int color;
@@ -88,9 +88,15 @@ public abstract class BaseEnvironmentMeter extends View {
         }
     }
 
-    protected abstract int getColorResource(float value);
+    protected int getInactiveIconResource() {
+        return R.drawable.ic_temp_inactive;
+    }
 
-    protected abstract int getInactiveIconResource();
+    protected int getActiveIconResource() {
+        return R.drawable.ic_temp;
+    }
 
-    protected abstract int getActiveIconResource();
+    protected int getColorResource(float value) {
+        return RangeColor.Temperature.getColorRes(value);
+    }
 }

@@ -22,12 +22,12 @@ public class TemperatureMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.ic_temp_inactive;
+        return R.drawable.icon_temp;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.ic_temp;
+        return R.drawable.icon_temp;
     }
 
     @Override

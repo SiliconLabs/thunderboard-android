@@ -46,19 +46,19 @@ public class HallStateMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.icn_demo_hall_effect_opened;
+        return R.drawable.icon_doorstate;
     }
 
     @Override
     protected int getActiveIconResource() {
         switch (hallState) {
             case HallState.CLOSED:
-                return R.drawable.icn_demo_hall_effect_closed;
+                return R.drawable.icon_doorstate;
             case HallState.TAMPERED:
-                return R.drawable.icn_demo_hall_effect_tampered;
+                return R.drawable.icon_doorstate;
             case HallState.OPENED:
             default:
-                return R.drawable.icn_demo_hall_effect_opened;
+                return R.drawable.icon_doorstate;
         }
     }
 }

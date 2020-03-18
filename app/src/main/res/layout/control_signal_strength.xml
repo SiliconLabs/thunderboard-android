@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <com.silabs.thunderboard.scanner.ui.SignalStrengthMeter
         android:id="@+id/signal_strength_meter"
@@ -12,10 +12,11 @@
         android:layout_gravity="center_horizontal"/>
 
     <TextView
-        style="@style/wrap"
+        tools:text="-20"
+        style="@style/tb_robo_regular_12dp"
         android:id="@+id/signal_strength_text"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textColor="@color/sl_silicon_grey"
-        android:textSize="@dimen/text_size_XS"/>
+        android:textSize="@dimen/text_size_S"/>
 </LinearLayout>

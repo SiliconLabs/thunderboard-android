@@ -13,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:theme="@style/SearchToolbar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/Popup" />
+        app:popupTheme="@style/Popup"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <LinearLayout
         style="@style/match"

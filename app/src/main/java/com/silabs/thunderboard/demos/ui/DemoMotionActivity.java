@@ -1,12 +1,15 @@
 package com.silabs.thunderboard.demos.ui;
 
 import android.graphics.Color;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -105,6 +108,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
     private View gdx3dView;
     private DemoMotionGdxAdapter gdxAdapter;
     private int assetType;
+    private int measureUnitType;
     private boolean sceneLoaded;
 
     public static boolean isDemoAllowed() {
@@ -120,7 +124,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
         component().inject(this);
 
-        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE || presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_BLUE) {
             View view = LayoutInflater.from(this).inflate(R.layout.activity_demo_motion_sense, null, false);
             mainSection.addView(view);
         } else {
@@ -132,20 +136,53 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
 
         assetType = prefsManager.getPreferences().modelType;
-        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE || assetType == ThunderBoardPreferences.MODEL_TYPE_BOARD) {
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE || presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_BLUE
+                || assetType == ThunderBoardPreferences.MODEL_TYPE_BOARD) {
             setupBoardView();
         }
 
         // temp
+        measureUnitType = prefsManager.getPreferences().measureUnitType;
         setOrientation(0f, 0f, 0f);
         setAcceleration(0f, 0f, 0f);
         setSpeed(0f, 0, 0);
         setDistance(0f, 0, 0);
 
-        gdxAdapter = new DemoMotionGdxAdapter(getContext().getResources().getColor(R.color.sl_light_grey), assetType, presenter.getThunderBoardType());
+        gdxAdapter = new DemoMotionGdxAdapter(getContext().getResources().getColor(R.color.white), assetType, presenter.getThunderBoardType());
         initControls();
 
-        checkFirebaseConnectivity();
+
+        final View divider = findViewById(R.id.divider);
+        if (divider != null) {
+            ViewTreeObserver vto = divider.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    View parent = (View) divider.getParent();
+                    divider.setMinimumHeight(parent.getHeight());
+
+                    ViewTreeObserver obs = divider.getViewTreeObserver();
+                    obs.removeOnGlobalLayoutListener(this);
+                }
+
+            });
+        }
+
+        setWheelDiameterText();
+//        disable firebase for reskinning
+//        checkFirebaseConnectivity();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_REACT && (assetType != prefsManager.getPreferences().modelType || prefsManager.getPreferences().measureUnitType != measureUnitType)) {
+            assetType = prefsManager.getPreferences().modelType;
+            measureUnitType = prefsManager.getPreferences().measureUnitType;
+            this.recreate();
+        }
+
     }
 
     @Override
@@ -173,7 +210,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
         speedDistanceContainer.setOrientation(LinearLayout.HORIZONTAL);
 
-        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
+        if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE || presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_BLUE) {
             wheelContainer.setVisibility(View.GONE);
             speedDistanceScroll.setVisibility(View.GONE);
         } else {
@@ -188,7 +225,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
 
     @Override
     public int getToolbarColor() {
-        return getResourceColor(R.color.sl_terbium_green);
+        return getResourceColor(R.color.tb_red);
     }
 
     @Override
@@ -253,7 +290,7 @@ public class DemoMotionActivity extends GdxDemoActivity implements DemoMotionLis
                 ? ThunderBoardPreferences.DEFAULT_WHEEL_RADIUS : preferences.wheelRadius;
 
         String outString = "";
-        if (preferences.measureUnitType == ThunderBoardPreferences.UNIT_METRIC) {
+        if (measureUnitType == ThunderBoardPreferences.UNIT_METRIC) {
             outString = String.format(getString(R.string.motion_diameter_metric), wheelRadius * 200.0f);
         } else {
             outString = String.format(getString(R.string.motion_diameter_us), wheelRadius * 2.0f * 39.37f);

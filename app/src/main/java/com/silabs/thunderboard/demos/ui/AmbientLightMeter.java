@@ -21,12 +21,12 @@ public class AmbientLightMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.ic_ambient_inactive;
+        return R.drawable.icon_light;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.ic_ambient;
+        return R.drawable.icon_light;
     }
 
     @Override

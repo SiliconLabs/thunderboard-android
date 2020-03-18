@@ -37,7 +37,7 @@
             android:theme="@style/StatusBarTranslucentTheme" />
         <activity
             android:name=".demos.ui.DemosSelectionActivity"
-            android:label="@string/thunderboard"
+            android:label="@string/dashboard"
             android:parentActivityName=".scanner.ui.ScannerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/StatusBarTranslucentTheme">

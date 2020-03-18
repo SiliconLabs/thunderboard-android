@@ -1,10 +1,7 @@
 package com.silabs.thunderboard.demos.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +16,7 @@ import com.silabs.thunderboard.common.data.model.ThunderBoardPreferences;
  */
 public class DemoEnvironmentTemperatureControl extends LinearLayout {
 
-    private TemperatureMeter temperatureMeter;
+    private BaseEnvironmentMeter temperatureMeter;
     private TextView textView;
 
     public DemoEnvironmentTemperatureControl(Context context) {
@@ -33,23 +30,17 @@ public class DemoEnvironmentTemperatureControl extends LinearLayout {
     public DemoEnvironmentTemperatureControl(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        Resources res = context.getResources();
+        inflate(context, R.layout.environmentdemo_tile, this);
 
-        setOrientation(LinearLayout.VERTICAL);
+        TextView textViewDescription = findViewById(R.id.env_description);
+        textViewDescription.setText(R.string.environment_temp);
+        textView = findViewById(R.id.env_value);
 
-        LinearLayout.LayoutParams layoutParams =
-                new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        LinearLayout layout = findViewById(R.id.env_layout_meter);
 
         temperatureMeter = new TemperatureMeter(context);
-        addView(temperatureMeter, layoutParams);
+        layout.addView(temperatureMeter);
         setEnabled(false);
-
-        textView = new TextView(context);
-        textView.setTextColor(res.getColor(R.color.sl_silicon_grey));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, res.getDimensionPixelSize(R.dimen.text_size_S));
-        textView.setPadding(0, res.getDimensionPixelSize(R.dimen.space_S), 0, 0);
-        addView(textView, layoutParams);
 
         setTemperature(0, 0);
     }

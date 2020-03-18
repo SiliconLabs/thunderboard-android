@@ -13,14 +13,16 @@
         android:layout_alignParentTop="true"
         android:theme="@style/SearchToolbar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/Popup" />
+        app:popupTheme="@style/Popup"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <RelativeLayout
         android:id="@+id/streaming_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_XL"
         android:layout_below="@id/toolbar"
-        android:background="@color/sl_grey">
+        android:background="@color/sl_grey"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/streaming_indicator"
@@ -55,7 +57,7 @@
         android:id="@+id/main_section"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/streaming_layout"
+        android:layout_below="@id/toolbar"
         android:layout_above="@id/bluegecko_status_fragment"/>
 
 

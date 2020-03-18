@@ -27,4 +27,5 @@ public interface DemoEnvironmentListener extends BaseDemoViewListener {
     void setHallStateEnabled(boolean enabled);
 
     void setPowerSource(int powerSource);
+    void intGrid();
 }

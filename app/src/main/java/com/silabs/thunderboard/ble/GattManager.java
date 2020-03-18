@@ -84,6 +84,7 @@ public class GattManager {
             ThunderBoardDevice device = bleManager.getDeviceFromCache(gatt.getDevice().getAddress());
             device.isServicesDiscovered = true;
             bleManager.readRequiredCharacteristics();
+            bleManager.checkAvailableCharacteristics();
         }
 
         @Override

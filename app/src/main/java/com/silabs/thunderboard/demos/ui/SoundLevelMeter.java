@@ -20,12 +20,12 @@ public class SoundLevelMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.ic_sound_level_inactive;
+        return R.drawable.icon_sound;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.ic_sound_level;
+        return R.drawable.icon_sound;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class BatteryIndicator extends FrameLayout {
             batteryMeter.setImageResource(R.drawable.icn_signal_unknown);
         } else if (powerSource == ThunderBoardConstants.POWER_SOURCE_TYPE_USB) {
             batteryPercent.setText(R.string.usb_power);
-            batteryMeter.setImageResource(R.drawable.icn_usb);
+            batteryMeter.setImageResource(R.drawable.icon_usb);
         } else {
             batteryPercent.setText(String.format("%d%%", batteryValue));
             batteryMeter.setValue(batteryValue);

@@ -4,8 +4,14 @@ import static com.silabs.thunderboard.common.app.ThunderBoardConstants.POWER_SOU
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.silabs.thunderboard.R;
 import com.silabs.thunderboard.common.app.ThunderBoardType;
@@ -16,7 +22,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListener, LEDControl.OnCheckedChangeListener, ColorLEDControl.ColorLEDControlListener {
+public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListener, CompoundButton.OnCheckedChangeListener, ColorLEDControl.ColorLEDControlListener {
 
     public static boolean isDemoAllowed() {
         return true;
@@ -35,13 +41,16 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
     SwitchControl switch1;
 
     @BindView(R.id.led0)
-    LEDControl led0;
+    SwitchCompat led0;
 
     @BindView(R.id.led1)
-    LEDControl led1;
+    SwitchCompat led1;
 
     @BindView(R.id.color_led_control)
     ColorLEDControl colorLEDControl;
+
+    @BindView(R.id.lightsTitle)
+    TextView lightsTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +77,8 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
 
         colorLEDControl.setColorLEDControlListener(this);
 
-        checkFirebaseConnectivity();
+//        disable firebase for reskinning
+//        checkFirebaseConnectivity();
     }
 
     @Override
@@ -78,7 +88,7 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
 
     @Override
     public int getToolbarColor() {
-        return getResourceColor(R.color.sl_terbium_green);
+        return getResourceColor(R.color.tb_red);
     }
 
     @Override
@@ -90,11 +100,10 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
 
     /**
      * setButton0State
-     *
+     * <p>
      * Listens for button 0 press
      *
      * @param state
-     *
      */
     @Override
     public void setButton0State(int state) {
@@ -107,11 +116,10 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
 
     /**
      * setButton1State
-     *
+     * <p>
      * Listens for button 1 press state
      *
      * @param state
-     *
      */
     @Override
     public void setButton1State(int state) {
@@ -126,21 +134,21 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
 
     /**
      * onCheckedChanged
-     *
+     * <p>
      * Turns the LED on or off while preserving the state of the other LED.
      *
      * @param ledControl
      * @param isChecked
      */
     @Override
-    public void onCheckedChanged(LEDControl ledControl, boolean isChecked) {
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         Resources res = getResources();
         int action = 0;
 
-        if (ledControl == led0) {
+        if (buttonView == led0) {
             if (isChecked) action = res.getInteger(R.integer.led0_on);
             if (led1.isChecked()) action |= res.getInteger(R.integer.led1_on);
-        } else if (ledControl == led1) {
+        } else if (buttonView == led1) {
             if (isChecked) action = res.getInteger(R.integer.led1_on);
             if (led0.isChecked()) action |= res.getInteger(R.integer.led0_on);
         }
@@ -176,7 +184,7 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
 
     @Override
     public void setPowerSource(int powerSource) {
-        switch(powerSource) {
+        switch (powerSource) {
             case POWER_SOURCE_TYPE_COIN_CELL:
                 colorLEDControl.setVisibility(View.GONE);
                 break;
@@ -192,12 +200,14 @@ public class DemoIOActivity extends BaseDemoActivity implements DemoIOViewListen
         if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_SENSE) {
             colorLEDControl.setVisibility(View.VISIBLE);
             colorLEDControl.setColorLEDControlListener(this);
-            led0.setBackgroundResource(R.drawable.red_button_selector);
-            led1.setBackgroundResource(R.drawable.green_button_selector);
+        } else if (presenter.getThunderBoardType() == ThunderBoardType.THUNDERBOARD_BLUE) {
+            colorLEDControl.setVisibility(View.GONE);
+
+            lightsTitle.setText("Led");
+            led1.setVisibility(View.GONE);
+            switch1.setVisibility(View.GONE);
         } else {
             colorLEDControl.setVisibility(View.GONE);
-            led0.setBackgroundResource(R.drawable.blue_button_selector);
-            led1.setBackgroundResource(R.drawable.green_button_selector);
         }
     }
 

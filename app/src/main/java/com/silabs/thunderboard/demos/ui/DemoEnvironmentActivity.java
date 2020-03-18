@@ -1,6 +1,7 @@
 package com.silabs.thunderboard.demos.ui;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -11,52 +12,34 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-import static android.view.View.GONE;
 import static com.silabs.thunderboard.common.app.ThunderBoardConstants.POWER_SOURCE_TYPE_COIN_CELL;
 import static com.silabs.thunderboard.common.app.ThunderBoardConstants.POWER_SOURCE_TYPE_UNKNOWN;
 
 public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnvironmentListener {
 
-    @BindView(R.id.temperature)
     DemoEnvironmentTemperatureControl temperatureControl;
 
-    @BindView(R.id.humidity)
     DemoEnvironmentHumidityControl humidityControl;
 
-    @BindView(R.id.ambient_light)
     DemoEnvironmentAmbientLightControl ambientLightControl;
 
-    @BindView(R.id.uv_index)
     DemoEnvironmentUVControl uvIndexControl;
 
-    @BindView(R.id.environmentdemo_pressure_sound_block)
-    View blockPressureAndSound;
-
-    @BindView(R.id.pressure)
     DemoEnvironmentPressureControl pressureControl;
 
-    @BindView(R.id.sound_level)
     DemoEnvironmentSoundLevelControl soundLevelControl;
 
-    @BindView(R.id.environmentdemo_air_quality_block)
-    View blockAirQuality;
-
-    @BindView(R.id.co2)
     DemoEnvironmentCO2Control co2Control;
 
-    @BindView(R.id.voc)
     DemoEnvironmentVOCControl vocControl;
 
-    @BindView(R.id.environmentdemo_magnetic_field_block)
-    View blockMagneticField;
-
-    @BindView(R.id.hall_strength)
     DemoEnvironmentHallStrengthControl hallStrengthControl;
 
-    @BindView(R.id.hall_state)
     DemoEnvironmentHallStateControl hallStateControl;
+
+    @BindView(R.id.env_grid)
+    android.support.v7.widget.GridLayout envGrid;
 
     private int powerSource;
 
@@ -78,9 +61,59 @@ public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnv
         component().inject(this);
 
         presenter.setViewListener(this, deviceAddress);
+
+        setupEnvList();
         initControls();
 
-        checkFirebaseConnectivity();
+//        disable firebase for reskinning
+//        checkFirebaseConnectivity();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.checkSettings();
+    }
+
+    private void setupEnvList() {
+        temperatureControl = new DemoEnvironmentTemperatureControl(this);
+        humidityControl = new DemoEnvironmentHumidityControl(this);
+        ambientLightControl = new DemoEnvironmentAmbientLightControl(this);
+        uvIndexControl = new DemoEnvironmentUVControl(this);
+        pressureControl = new DemoEnvironmentPressureControl(this);
+        soundLevelControl = new DemoEnvironmentSoundLevelControl(this);
+        co2Control = new DemoEnvironmentCO2Control(this);
+        vocControl = new DemoEnvironmentVOCControl(this);
+        hallStrengthControl = new DemoEnvironmentHallStrengthControl(this);
+        hallStateControl = new DemoEnvironmentHallStateControl(this);
+
+        temperatureControl.setLayoutParams(getLayoutParams());
+        soundLevelControl.setLayoutParams(getLayoutParams());
+        ambientLightControl.setLayoutParams(getLayoutParams());
+        uvIndexControl.setLayoutParams(getLayoutParams());
+        humidityControl.setLayoutParams(getLayoutParams());
+        pressureControl.setLayoutParams(getLayoutParams());
+        co2Control.setLayoutParams(getLayoutParams());
+        vocControl.setLayoutParams(getLayoutParams());
+        hallStrengthControl.setLayoutParams(getLayoutParams());
+        hallStateControl.setLayoutParams(getLayoutParams());
+
+        hallStateControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onHallStateClick();
+            }
+        });
+    }
+
+    private GridLayout.LayoutParams getLayoutParams() {
+        GridLayout.LayoutParams layoutParams;
+        layoutParams = new GridLayout.LayoutParams(
+                GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                GridLayout.spec(GridLayout.UNDEFINED, 1f));
+        layoutParams.width = 0;
+        return layoutParams;
     }
 
     @Override
@@ -96,7 +129,7 @@ public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnv
 
     @Override
     public int getToolbarColor() {
-        return getResourceColor(R.color.sl_terbium_green);
+        return getResourceColor(R.color.tb_red);
     }
 
     @Override
@@ -196,49 +229,31 @@ public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnv
 
     @Override
     public void setSoundLevelEnabled(boolean enabled) {
-        if (enabled) {
-            blockPressureAndSound.setVisibility(View.VISIBLE);
-        }
         soundLevelControl.setEnabled(enabled);
     }
 
     @Override
     public void setPressureEnabled(boolean enabled) {
-        if (enabled) {
-            blockPressureAndSound.setVisibility(View.VISIBLE);
-        }
         pressureControl.setEnabled(enabled);
     }
 
     @Override
     public void setCO2LevelEnabled(boolean enabled) {
-        if (enabled && sufficientPower()){
-            blockAirQuality.setVisibility(View.VISIBLE);
-        }
         co2Control.setEnabled(enabled);
     }
 
     @Override
     public void setTVOCLevelEnabled(boolean enabled) {
-        if (enabled && sufficientPower()){
-            blockAirQuality.setVisibility(View.VISIBLE);
-        }
         vocControl.setEnabled(enabled);
     }
 
     @Override
     public void setHallStrengthEnabled(boolean enabled) {
-        if (enabled) {
-            blockMagneticField.setVisibility(View.VISIBLE);
-        }
         hallStrengthControl.setEnabled(enabled);
     }
 
     @Override
     public void setHallStateEnabled(boolean enabled) {
-        if (enabled) {
-            blockMagneticField.setVisibility(View.VISIBLE);
-        }
         hallStateControl.setEnabled(enabled);
     }
 
@@ -259,11 +274,40 @@ public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnv
     }
 
     @Override
-    public void initControls() {
-        blockPressureAndSound.setVisibility(GONE);
-        blockAirQuality.setVisibility(GONE);
-        blockMagneticField.setVisibility(GONE);
+    public void intGrid() {
+        envGrid.addView(temperatureControl);
 
+        if (presenter.bleManager.characteristicHumidityAvailable) {
+            envGrid.addView(humidityControl);
+        }
+        if (presenter.bleManager.characteristicAmbientLightReactAvailable || presenter.bleManager.characteristicAmbientLightSenseAvailable) {
+            envGrid.addView(ambientLightControl);
+        }
+        if (presenter.bleManager.characteristicUvIndexAvailable) {
+            envGrid.addView(uvIndexControl);
+        }
+        if (presenter.bleManager.characteristicPressureAvailable) {
+            envGrid.addView(pressureControl);
+        }
+        if (presenter.bleManager.characteristicSoundLevelAvailable) {
+            envGrid.addView(soundLevelControl);
+        }
+        if (presenter.bleManager.characteristicCo2ReadingAvailable && sufficientPower()) {
+            envGrid.addView(co2Control);
+        }
+        if (presenter.bleManager.characteristicTvocReadingAvailable && sufficientPower()) {
+            envGrid.addView(vocControl);
+        }
+        if (presenter.bleManager.characteristicHallFieldStrengthAvailable) {
+            envGrid.addView(hallStrengthControl);
+        }
+        if (presenter.bleManager.characteristicHallStateAvailable) {
+            envGrid.addView(hallStateControl);
+        }
+    }
+
+    @Override
+    public void initControls() {
         // disable everything at first...
         setTemperatureEnabled(false);
         setHumidityEnabled(false);
@@ -277,8 +321,11 @@ public class DemoEnvironmentActivity extends BaseDemoActivity implements DemoEnv
         setHallStateEnabled(false);
     }
 
-    @OnClick(R.id.hall_state_container)
-    public void onHallStateClick() {
-        presenter.onHallStateClick();
+
+    private void addViewToGridIfNotAddedYet(View view) {
+        if (view.getParent() == null) {
+            envGrid.addView(view);
+        }
+
     }
 }

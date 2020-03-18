@@ -10,8 +10,7 @@
     <TextView
         style="@style/sm_silicon_grey"
         android:fontFamily="sans-serif-light"
-        android:text="@string/motion_speed"
-        android:textAllCaps="true" />
+        android:text="@string/motion_speed" />
 
     <LinearLayout
         android:layout_width="match_parent"

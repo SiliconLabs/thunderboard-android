@@ -1,5 +1,5 @@
-def versionMajor = 1
-def versionMinor = 4
+def versionMajor = 2
+def versionMinor = 0
 def versionPatch = 0
 def versionBuild = {
     if (project.hasProperty("buildNumber")) {
@@ -86,7 +86,7 @@ android {
 
     defaultConfig {
         applicationId 'com.silabs.thunderboard'
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode versionMajor * 10000000 + versionMinor * 100000 + versionPatch * 1000 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -169,6 +169,7 @@ dependencies {
     implementation "com.android.support:mediarouter-v7:$android_support_version"
     implementation "com.android.support:palette-v7:$android_support_version"
     implementation "com.android.support:design:$android_support_version"
+    implementation "com.android.support:gridlayout-v7:$android_support_version"
     // dagger
     implementation 'com.google.dagger:dagger:2.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.12'

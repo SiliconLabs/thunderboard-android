@@ -20,12 +20,12 @@ public class VOCMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.ic_voc_inactive;
+        return R.drawable.icon_vocs;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.ic_voc;
+        return R.drawable.icon_vocs;
     }
 
     @Override

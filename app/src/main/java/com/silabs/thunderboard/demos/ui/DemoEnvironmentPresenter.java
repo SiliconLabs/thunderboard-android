@@ -3,10 +3,10 @@ package com.silabs.thunderboard.demos.ui;
 import android.os.Handler;
 
 import com.silabs.thunderboard.ble.BleManager;
-import com.silabs.thunderboard.ble.ThunderBoardSensor;
 import com.silabs.thunderboard.ble.ThunderBoardSensorEnvironment;
 import com.silabs.thunderboard.ble.model.ThunderBoardDevice;
 import com.silabs.thunderboard.ble.model.ThunderBoardUuids;
+import com.silabs.thunderboard.common.app.ThunderBoardType;
 import com.silabs.thunderboard.common.data.PreferenceManager;
 import com.silabs.thunderboard.common.injection.scope.ActivityScope;
 import com.silabs.thunderboard.demos.model.EnvironmentEvent;
@@ -127,8 +127,11 @@ public class DemoEnvironmentPresenter extends BaseDemoPresenter {
                 ThunderBoardSensorEnvironment sensor = device.getSensorEnvironment();
                 DemoEnvironmentPresenter.this.sensor = sensor;
 
-                if (device.isPowerSourceConfigured != null && device.isPowerSourceConfigured && viewListener != null) {
-                    ((DemoEnvironmentListener) viewListener).setPowerSource(device.getPowerSource());
+                if (viewListener != null){
+                    if (device.isPowerSourceConfigured != null && device.isPowerSourceConfigured){
+                        ((DemoEnvironmentListener) viewListener).setPowerSource(device.getPowerSource());
+                    }
+                    ((DemoEnvironmentListener) viewListener).intGrid();
                 }
 
                 if (sensor != null && sensor.isSensorDataChanged && viewListener != null) {
@@ -216,70 +219,102 @@ public class DemoEnvironmentPresenter extends BaseDemoPresenter {
                     // temperature submitted already
                     case 0x01:
                         ((DemoEnvironmentListener) viewListener).setTemperature(sensorData.getTemperature(),
-                                                                                sensor.TEMPERATURE_TYPE);
-                        submitted = bleManager.readHumidity();
-                        ((DemoEnvironmentListener) viewListener).setHumidityEnabled(submitted);
+                                sensor.temperatureType);
                         readStatus |= 0x04;
-                        Timber.d("readStatus: %02x, submitted: %s", readStatus, submitted);
-                        break;
-                    // temperature and humidity submitted already
+                        if (bleManager.characteristicHumidityAvailable) {
+                            submitted = bleManager.readHumidity();
+                            ((DemoEnvironmentListener) viewListener).setHumidityEnabled(submitted);
+                            Timber.d("readStatus: %02x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
+                        // temperature and humidity submitted already
                     case 0x05:
-                        ((DemoEnvironmentListener) viewListener).setHumidity(sensorData.getHumidity());
-                        submitted = bleManager.readUvIndex();
-                        ((DemoEnvironmentListener) viewListener).setUvIndexEnabled(submitted);
+                        if (bleManager.characteristicHumidityAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setHumidity(sensorData.getHumidity());
+                        }
                         readStatus |= 0x10;
-                        Timber.d("readStatus: %02x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicUvIndexAvailable) {
+                            submitted = bleManager.readUvIndex();
+                            ((DemoEnvironmentListener) viewListener).setUvIndexEnabled(submitted);
+                            Timber.d("readStatus: %02x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     // temperature and humidity and uv index submitted already
                     case 0x15:
-                        ((DemoEnvironmentListener) viewListener).setUvIndex(sensorData.getUvIndex());
-                        submitted = bleManager.readAmbientLightReact() || bleManager.readAmbientLightSense();
-                        ((DemoEnvironmentListener) viewListener).setAmbientLightEnabled(submitted);
+                        if (bleManager.characteristicUvIndexAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setUvIndex(sensorData.getUvIndex());
+                        }
                         readStatus |= 0x40;
-                        Timber.d("readStatus: %02x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicAmbientLightReactAvailable || bleManager.characteristicAmbientLightSenseAvailable) {
+                            submitted = bleManager.readAmbientLightReact() || bleManager.readAmbientLightSense();
+                            ((DemoEnvironmentListener) viewListener).setAmbientLightEnabled(submitted);
+                            Timber.d("readStatus: %02x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     // temperature, humidity, uv index, and ambient light submitted already
                     case 0x55:
-                        ((DemoEnvironmentListener) viewListener).setAmbientLight(sensorData.getAmbientLight());
-                        submitted = bleManager.readSoundLevel();
-                        ((DemoEnvironmentListener) viewListener).setSoundLevelEnabled(submitted);
+                        if (bleManager.characteristicAmbientLightReactAvailable || bleManager.characteristicAmbientLightSenseAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setAmbientLight(sensorData.getAmbientLight());
+                        }
                         readStatus |= 0x100;
-                        Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicSoundLevelAvailable) {
+                            submitted = bleManager.readSoundLevel();
+                            ((DemoEnvironmentListener) viewListener).setSoundLevelEnabled(submitted);
+                            Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     // temperature, humidity, uv index, ambient light, and sound level submitted already
                     case 0x155:
-                        ((DemoEnvironmentListener) viewListener).setSoundLevel(sensorData.getSound());
-                        submitted = bleManager.readPressure();
-                        ((DemoEnvironmentListener) viewListener).setPressureEnabled(submitted);
+                        if (bleManager.characteristicSoundLevelAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setSoundLevel(sensorData.getSound());
+                        }
                         readStatus |= 0x400;
-                        Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicPressureAvailable) {
+                            submitted = bleManager.readPressure();
+                            ((DemoEnvironmentListener) viewListener).setPressureEnabled(submitted);
+                            Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     case 0x555:
-                        ((DemoEnvironmentListener) viewListener).setPressure(sensorData.getPressure());
-                        submitted = bleManager.readCO2Level();
-                        ((DemoEnvironmentListener) viewListener).setCO2LevelEnabled(submitted);
+                        if (bleManager.characteristicPressureAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setPressure(sensorData.getPressure());
+                        }
                         readStatus |= 0x1000;
-                        Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicCo2ReadingAvailable) {
+                            submitted = bleManager.readCO2Level();
+                            ((DemoEnvironmentListener) viewListener).setCO2LevelEnabled(submitted);
+                            Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     case 0x1555:
-                        ((DemoEnvironmentListener) viewListener).setCO2Level(sensorData.getCO2Level());
-                        submitted = bleManager.readTVOCLevel();
-                        ((DemoEnvironmentListener) viewListener).setTVOCLevelEnabled(submitted);
+                        if (bleManager.characteristicCo2ReadingAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setCO2Level(sensorData.getCO2Level());
+                        }
                         readStatus |= 0x4000;
-                        Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicTvocReadingAvailable) {
+                            submitted = bleManager.readTVOCLevel();
+                            ((DemoEnvironmentListener) viewListener).setTVOCLevelEnabled(submitted);
+                            Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     case 0x5555:
-                        ((DemoEnvironmentListener) viewListener).setTVOCLevel(sensorData.getTVOCLevel());
-                        submitted = bleManager.readHallStrength();
-                        ((DemoEnvironmentListener) viewListener).setHallStrengthEnabled(submitted);
+                        if (bleManager.characteristicTvocReadingAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setTVOCLevel(sensorData.getTVOCLevel());
+                        }
                         readStatus |= 0x10000;
-                        Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
-                        break;
+                        if (bleManager.characteristicHallFieldStrengthAvailable) {
+                            submitted = bleManager.readHallStrength();
+                            ((DemoEnvironmentListener) viewListener).setHallStrengthEnabled(submitted);
+                            Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
+                            break;
+                        }
                     case 0x15555:
-                        ((DemoEnvironmentListener) viewListener).setHallStrength(sensorData.getHallStrength());
+                        if (bleManager.characteristicHallFieldStrengthAvailable) {
+                            ((DemoEnvironmentListener) viewListener).setHallStrength(sensorData.getHallStrength());
+                        }
+                        readStatus = 0;
                         submitted = bleManager.readTemperature();
                         ((DemoEnvironmentListener) viewListener).setTemperatureEnabled(submitted);
-                        readStatus = 0;
                         Timber.d("readStatus: %04x, submitted: %s", readStatus, submitted);
                         break;
                     default:
@@ -359,5 +394,11 @@ public class DemoEnvironmentPresenter extends BaseDemoPresenter {
     public void clearEnvironmentNotifications() {
         Timber.d("stop environment notifications");
         bleManager.clearHallStateNotifications();
+    }
+
+    public void checkSettings() {
+        if (sensor != null) {
+            ((ThunderBoardSensorEnvironment) sensor).setTemperatureType(preferenceManager.getPreferences().temperatureType);
+        }
     }
 }

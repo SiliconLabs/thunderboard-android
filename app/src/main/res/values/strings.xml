@@ -36,6 +36,8 @@
     <string name="settings_model_type">Motion Demo Model</string>
     <string name="settings_celsius">&#176;C</string>
     <string name="settings_fahrenheit">&#176;F</string>
+    <string name="settings_board">Board</string>
+    <string name="settings_car">Car</string>
 
     <string-array name="temperature_array">
         <item>Celsius</item>
@@ -163,4 +165,28 @@
     <string name="ble_not_supported_button">Quit</string>
 
     <string name="permission_needed_coarse_location">Coarse location access needed to detect beacons in the background.</string>
+
+    <!--RESKINNING-->
+
+    <string name="dashboard">Dashboard</string>
+    <string name="strength">Strength</string>
+    <string name="demo_motion_description">Control a 3D rendering of the physical board.</string>
+    <string name="demo_environment_description">Read and display data from the board sensors.</string>
+    <string name="demo_io_description">Button and LED control.</string>
+
+    <string name="help_text_moreinfo_label">For more information visit:</string>
+    <string name="help_text_moreinfo_url"><a href="www.silabs.com/products/wireless">silabs.com/products/wireless</a></string>
+    <string name="help_text_sourcecode_label">Source code:</string>
+    <string name="help_text_sourcecode_url"><a href="https://github.com/SiliconLabs/Tunderboard-android">github.com/SiliconLabs/Thunderboard-android</a></string>
+    <string name="help_text_support_label">Support:</string>
+    <string name="help_text_support_url"><a href="www.silabs.com/support">silabs.com/support</a></string>
+    <string name="help_text_documentation_label">Additional documentation:</string>
+    <string name="help_text_documentation_url"><a href="https://docs.silabs.com/bluetooth/latest/">docs.silabs.com/bluetooth/latest</a></string>
+    <string name="help_text_pub_label">Additional Apps released by Silicon Labs:</string>
+    <string name="help_text_pub_url"><a href="https://play.google.com/store/search?q=pub:Silicon Labs Web Team">Google Play App Store</a></string>
+    <string name="version_text">Version %s</string>
+    <string name="about_silicon_labs">ABOUT SILICON LABS</string>
+    <string name="help">Help</string>
+
+
 </resources>

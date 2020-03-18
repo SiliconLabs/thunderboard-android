@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_env_tile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/space_XXXS"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_XSS"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_XXXS"
+                android:id="@+id/env_layout_meter" >
+            </LinearLayout>
+
+            <TextView
+                style="@style/tb_robo_regular_12dp_grey"
+                android:id="@+id/env_description"
+                android:layout_marginLeft="@dimen/space_XXXS"
+                android:layout_marginRight="@dimen/space_XXXS"
+                android:layout_marginBottom="@dimen/space_XXXS"
+                android:layout_marginTop="@dimen/space_XS"
+                android:text="Temperature" />
+
+            <TextView
+                android:id="@+id/env_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_XXXS"
+                android:layout_marginRight="@dimen/space_XXXS"
+                tools:text="43%"
+                style="@style/tb_robo_medium_18dp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

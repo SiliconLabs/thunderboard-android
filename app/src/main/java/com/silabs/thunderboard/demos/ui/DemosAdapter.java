@@ -32,7 +32,7 @@ public class DemosAdapter extends RecyclerView.Adapter<DemoViewHolder> {
     @Override
     public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(activity);
-        View view = inflater.inflate(R.layout.listitem_demo, parent, false);
+        View view = inflater.inflate(R.layout.menu_tile, parent, false);
 
         return new DemoViewHolder(view);
     }
@@ -43,6 +43,7 @@ public class DemosAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
         holder.demoLabel.setText(demo.demoName);
         holder.demoIcon.setImageResource(demo.demoImageResource);
+        holder.demoDescription.setText(demo.demoDescription);
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
 

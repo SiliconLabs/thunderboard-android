@@ -69,6 +69,7 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
     private enum ModelType {
         REACT,
         SENSE,
+        BLUE,
         CAR
     }
 
@@ -85,6 +86,9 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
         this.instances = new ArrayList<>();
 
         switch (thunderBoardType) {
+            case THUNDERBOARD_BLUE:
+                this.modelType = ModelType.BLUE;
+                break;
             case THUNDERBOARD_SENSE:
                 this.modelType = ModelType.SENSE;
                 break;
@@ -109,7 +113,7 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
 
         // TODO The pinewood model is not lit correctly using the EmissiveShader - need to
         // troubleshoot so we can use the same shader for all models
-        if (ModelType.SENSE.equals(modelType)) {
+        if (ModelType.SENSE.equals(modelType) || ModelType.BLUE.equals(modelType)) {
             DefaultShader.Config config = new EmissiveShader.Config(
                     EmissiveShader.getDefaultVertexShader(),
                     EmissiveShader.getDefaultFragmentShader());
@@ -118,12 +122,18 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
             modelBatch = new ModelBatch();
         }
         environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 1.0f, 1.0f, 1.0f, 1f));
-        environment.add(new DirectionalLight().set(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 10.0f));
 
+        if(ModelType.CAR.equals(modelType)) {
+            environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+            environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+        }
+        else {
+            environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 1.0f, 1.0f, 1.0f, 1f));
+            environment.add(new DirectionalLight().set(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 10.0f));
+        }
 
         float fieldOfView = (ModelType.REACT.equals(modelType) || ModelType.SENSE.equals(
-                modelType)) ? 1.5f : 67f;
+                modelType) || ModelType.BLUE.equals(modelType)) ? 1.75f : 67f;
         cam = new PerspectiveCamera(fieldOfView, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(0, 0, 175f);
 
@@ -154,6 +164,8 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
                 return "data/Thunderboard_React.g3dj";
             case SENSE:
                 return "data/TBSense_Rev_Lowpoly.g3dj";
+            case BLUE:
+                return "data/BRD4184A_LowPoly.g3dj";
             default:
                 return "data/pinewood_car.g3dj";
         }
@@ -165,6 +177,10 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
                 initMatrix.setToRotation(0, 1, 0, -90);
                 break;
             case SENSE:
+                initMatrix.setToRotation(1, 0, 0, 90);
+                initMatrix.scale(0.4f, 0.4f, 0.4f);
+                break;
+            case BLUE:
                 initMatrix.setToRotation(1, 0, 0, 90);
                 initMatrix.scale(0.4f, 0.4f, 0.4f);
                 break;
@@ -189,7 +205,7 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
         model = assets.get(getModelFilename(), Model.class);
         instance = new ModelInstance(model);
 // Example of adding parts to which will get toggled when the light comes on
-        if (ModelType.SENSE.equals(modelType)) {
+        if (ModelType.SENSE.equals(modelType) || ModelType.BLUE.equals(modelType)) {
             for (Node node : instance.nodes) {
                 for (Node child : node.getChildren()) {
                     for (NodePart part : child.parts) {
@@ -237,7 +253,7 @@ public class DemoMotionGdxAdapter extends ApplicationAdapter {
         if (instance != null) {
             instance.transform.set(initMatrix);
 //            instance.transform.translate(-100, -2, 2);
-            if (ModelType.REACT.equals(modelType) || ModelType.SENSE.equals(modelType)) {
+            if (ModelType.REACT.equals(modelType) || ModelType.SENSE.equals(modelType) || ModelType.BLUE.equals(modelType)) {
                 instance.transform.rotate(0, 1, 0, z);
                 instance.transform.rotate(0, 0, 1, y);
                 instance.transform.rotate(1, 0, 0, -x);

@@ -49,7 +49,6 @@ public class ScannerAdapter extends RecyclerView.Adapter<ScannerAdapter.DeviceHo
 
         final ThunderBoardDevice device = dataSet.get(position);
         holder.deviceName.setText(device.getName());
-        holder.deviceAddress.setText(device.getAddress());
         holder.signalStrengthIndicator.setSignalStrength(device.getRssi());
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -79,9 +78,6 @@ public class ScannerAdapter extends RecyclerView.Adapter<ScannerAdapter.DeviceHo
 
         @BindView(R.id.device_name)
         TextView deviceName;
-
-        @BindView(R.id.device_address)
-        TextView deviceAddress;
 
         @BindView(R.id.signal_strength)
         SignalStrengthIndicator signalStrengthIndicator;

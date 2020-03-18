@@ -20,12 +20,12 @@ public class PressureMeter extends BaseEnvironmentMeter {
 
     @Override
     protected int getInactiveIconResource() {
-        return R.drawable.ic_atmospheric_pressure_inactive;
+        return R.drawable.icon_airpressure;
     }
 
     @Override
     protected int getActiveIconResource() {
-        return R.drawable.ic_atmospheric_pressure;
+        return R.drawable.icon_airpressure;
     }
 
     @Override

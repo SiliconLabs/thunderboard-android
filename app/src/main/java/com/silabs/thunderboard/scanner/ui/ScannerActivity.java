@@ -356,7 +356,7 @@ public class ScannerActivity extends ThunderBoardActivity implements ScannerView
         bottomPanel.setVisibility(View.INVISIBLE);
         toolbar.setVisibility(View.INVISIBLE);
 
-        mmLogo.setVisibility(View.VISIBLE);
+        mmLogo.setVisibility(View.GONE);
     }
 
     private void animateItems() {

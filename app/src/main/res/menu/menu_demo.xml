@@ -8,11 +8,20 @@
         android:id="@+id/action_open_in_browser"
         android:icon="@drawable/ic_open_in_browser"
         android:title="@string/demo_open_in_browser"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:title="@string/share"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="200"
         app:showAsAction="always" />
 </menu>

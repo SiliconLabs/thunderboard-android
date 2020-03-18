@@ -128,4 +128,14 @@
     <color name="text_color">@color/white</color>
 
     <color name="divider_line">@color/silicon_grey</color>
+
+    <!--RESKINNING-->
+
+    <color name="main_background">#ececec</color>
+    <color name="tb_font_grey">#7c7c7c</color>
+    <color name="tb_red">#d91e2a</color>
+    <color name="tb_green_dot">#32d74b</color>
+    <color name="tb_blue">#0086d9</color>
+    <color name="tb_grey">#cccccc</color>
+
 </resources>

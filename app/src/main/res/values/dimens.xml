@@ -1,6 +1,7 @@
 <resources>
     <dimen name="space_XXXS">2dp</dimen>
     <dimen name="space_XXS">4dp</dimen>
+    <dimen name="space_XSS">6dp</dimen>
     <dimen name="space_XS">8dp</dimen>
     <dimen name="space_S">16dp</dimen>
     <dimen name="space_SM">24dp</dimen>
@@ -15,8 +16,9 @@
     <dimen name="text_size_S">12sp</dimen>
     <dimen name="text_size_SM">14sp</dimen>
     <dimen name="text_size_M">16sp</dimen>
+    <dimen name="text_size_ML">18sp</dimen>
     <dimen name="text_size_L">20sp</dimen>
-    <dimen name="text_size_ML">30sp</dimen>
+    <dimen name="text_size_LXL">30sp</dimen>
     <dimen name="text_size_XL">34sp</dimen>
 
     <!-- Material Dimensions -->
@@ -66,7 +68,7 @@
     <dimen name="avatar_height">40dp</dimen>
     <dimen name="avatar_width">40dp</dimen>
 
-    <dimen name="device_item_height">80dp</dimen>
+    <dimen name="device_item_height">70dp</dimen>
 
     <dimen name="movie_trailer_image_width">128dp</dimen>
 
@@ -114,4 +116,22 @@
     <dimen name="color_led_separation">8dp</dimen>
 
     <dimen name="color_hue_selection_line_height">4dp</dimen>
+
+    <!--RESKINNING-->
+
+    <dimen name="card_title_text_size">14sp</dimen>
+    <dimen name="card_body_text_size">12sp</dimen>
+    <dimen name="env_card_body_text_size">12sp</dimen>
+
+    <dimen name="color_led_height">10dp</dimen>
+    <dimen name="help_dialog_title_text_size">18sp</dimen>
+    <dimen name="help_text_padding">22dp</dimen>
+    <dimen name="help_text_size">14sp</dimen>
+    <dimen name="help_button_height">50dp</dimen>
+    <dimen name="help_line_margin">10dp</dimen>
+    <dimen name="help_section_and_body_separation">10dp</dimen>
+    <dimen name="help_body_and_version_separation">10dp</dimen>
+    <dimen name="help_dialog_ok_btn_text_size">16sp</dimen>
+
+
 </resources>

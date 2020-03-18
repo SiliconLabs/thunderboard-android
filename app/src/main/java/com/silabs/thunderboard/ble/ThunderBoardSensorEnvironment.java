@@ -6,7 +6,7 @@ import com.silabs.thunderboard.demos.model.HallState;
 
 public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
 
-    public final int TEMPERATURE_TYPE;
+    public int temperatureType;
     public final int MAX_AMBIENT_LIGHT = 99999;
 
     private int readStatus;
@@ -14,7 +14,11 @@ public class ThunderBoardSensorEnvironment extends ThunderBoardSensor {
     private SensorData sensorData = new SensorData();
 
     public ThunderBoardSensorEnvironment(int temperatureType) {
-        this.TEMPERATURE_TYPE = temperatureType;
+        this.temperatureType = temperatureType;
+    }
+
+    public void setTemperatureType(int temperatureType) {
+        this.temperatureType = temperatureType;
     }
 
     public int getReadStatus() {

@@ -1,25 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/switch_image"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_gravity="center" />
-
+        android:layout_width="@dimen/space_SM"
+        android:layout_height="@dimen/space_SM"
+        android:layout_gravity="center"
+        android:src="@drawable/switch_status_off"
+        android:id="@+id/switch_image"/>
 
     <TextView
+        android:layout_marginTop="@dimen/space_XXS"
+        android:layout_gravity="center"
+        android:text="OFF"
         android:id="@+id/switch_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/space_XS"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center_horizontal"
-        android:textAllCaps="true"
-        android:textColor="@color/sl_silicon_grey"
-        android:textSize="@dimen/text_size_S" />
+        style="@style/tb_robo_regular_12dp_grey"/>
+
 </LinearLayout>
