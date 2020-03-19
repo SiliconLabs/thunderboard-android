@@ -21,7 +21,9 @@ import timber.log.Timber;
 public class DemosPresenter {
 
     private final BleManager bleManager;
-    private final CloudManager cloudManager;
+
+//    disable firebase for reskinning
+//    private final CloudManager cloudManager;
 
     private DemosViewListener viewListener;
 
@@ -34,19 +36,25 @@ public class DemosPresenter {
     @Inject
     public DemosPresenter(BleManager bleManager, CloudManager cloudManager) {
         this.bleManager = bleManager;
-        this.cloudManager = cloudManager;
+
+//        disable firebase for reskinning
+//        this.cloudManager = cloudManager;
     }
 
     public void setViewListener(DemosViewListener viewListener, String deviceAddress) {
         this.viewListener = viewListener;
         subscribe(deviceAddress);
-        cloudManager.startConnectionMonitor();
+
+//        disable firebase for reskinning
+//        cloudManager.startConnectionMonitor();
     }
 
     public void clearViewListener() {
         unsubscribe();
         viewListener = null;
-        cloudManager.stopConnectionMonitor();
+
+//        disable firebase for reskinning
+//        cloudManager.stopConnectionMonitor();
     }
 
     public void setNotificationDevice(ThunderBoardDevice notificationDevice) {
