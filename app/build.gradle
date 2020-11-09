@@ -1,6 +1,6 @@
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 0
+def versionPatch = 1
 def versionBuild = {
     if (project.hasProperty("buildNumber")) {
         return project.buildNumber as int
